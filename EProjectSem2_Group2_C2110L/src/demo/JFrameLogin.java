@@ -62,6 +62,8 @@ public class JFrameLogin extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("BOOK SEARCH");
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setBackground(new Color(128, 128, 192));
 		btnNewButton.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnNewButton.setBounds(220, 54, 156, 36);
 		btnNewButton.setHorizontalTextPosition(SwingConstants.CENTER);
