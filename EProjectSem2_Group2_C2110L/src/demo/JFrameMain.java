@@ -69,6 +69,7 @@ public class JFrameMain extends JFrame {
 		
 		JPanel jpanelBookList = new JPanel();
 		tabbedPane.addTab("Book List", null, jpanelBookList, null);
+		jpanelBookList.setLayout(null);
 		
 		JPanel jpanelIssue = new JPanel();
 		tabbedPane.addTab("Issue Register", null, jpanelIssue, null);
@@ -79,8 +80,7 @@ public class JFrameMain extends JFrame {
 		JPanel jpanelUserList = new JPanel();
 		tabbedPane.addTab("Customer List", null, jpanelUserList, null);
 		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Employee List", null, panel, null);
+		JPanel jpanelEmployee = new JPanel();
+		tabbedPane.addTab("Employee List", null, jpanelEmployee, null);
 	}
-
 }
