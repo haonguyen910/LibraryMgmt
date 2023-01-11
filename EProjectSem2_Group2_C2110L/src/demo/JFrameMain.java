@@ -11,10 +11,17 @@ import javax.swing.UIManager;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class JFrameMain extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel jpanelMain;
 
 	/**
 	 * Launch the application.
@@ -47,40 +54,79 @@ public class JFrameMain extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Action");
+		JMenu mnNewMenu_1 = new JMenu("Add");
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Book");
+		mnNewMenu_1.add(mntmNewMenuItem_2);
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Employee");
+		mnNewMenu_1.add(mntmNewMenuItem_3);
+		
+		JMenuItem jmenuItemAddReader = new JMenuItem("Reader");
+		jmenuItemAddReader.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jmenuItemAddReader_actionPerformed(e);
+			}
+		});
+		mnNewMenu_1.add(jmenuItemAddReader);
+		
+		JMenu mnNewMenu = new JMenu("Account");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Issue Book");
+		JMenuItem mntmNewMenuItem = new JMenuItem("Profile");
 		mnNewMenu.add(mntmNewMenuItem);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Return Book");
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Log-out");
 		mnNewMenu.add(mntmNewMenuItem_1);
-		
-		JMenu mnNewMenu_1 = new JMenu("Account");
-		menuBar.add(mnNewMenu_1);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		JToolBar toolBar = new JToolBar();
+		toolBar.setFloatable(false);
+		contentPane.add(toolBar, BorderLayout.NORTH);
 		
-		JPanel jpanelBookList = new JPanel();
-		tabbedPane.addTab("Book List", null, jpanelBookList, null);
-		jpanelBookList.setLayout(null);
+		JButton btnNewButton = new JButton("Check-in");
+		toolBar.add(btnNewButton);
 		
-		JPanel jpanelIssue = new JPanel();
-		tabbedPane.addTab("Issue Register", null, jpanelIssue, null);
+		JButton btnNewButton_1 = new JButton("Check-out");
+		toolBar.add(btnNewButton_1);
 		
-		JPanel jpanelStatistic = new JPanel();
-		tabbedPane.addTab("Statistic Report", null, jpanelStatistic, null);
+		jpanelMain = new JPanel();
+		contentPane.add(jpanelMain, BorderLayout.WEST);
+		jpanelMain.setLayout(new BorderLayout(0, 0));
 		
-		JPanel jpanelUserList = new JPanel();
-		tabbedPane.addTab("Customer List", null, jpanelUserList, null);
+		JPanel panel = new JPanel();
+		jpanelMain.add(panel, BorderLayout.WEST);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JPanel jpanelEmployee = new JPanel();
-		tabbedPane.addTab("Employee List", null, jpanelEmployee, null);
+		JButton btnNewButton_2 = new JButton("Book List");
+		btnNewButton_2.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
+		panel.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Issue Register");
+		btnNewButton_3.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/sign.png")));
+		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("Statistic Report");
+		btnNewButton_4.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/report.png")));
+		panel.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("Reader List");
+		btnNewButton_5.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/user.png")));
+		panel.add(btnNewButton_5);
+		
+		JButton btnNewButton_6 = new JButton("Employee List");
+		btnNewButton_6.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/employee.png")));
+		panel.add(btnNewButton_6);
+	}
+	
+	public void jmenuItemAddReader_actionPerformed(ActionEvent e) {
+		JPanelAddReader jpanelAddReader = new JPanelAddReader();
+		jpanelMain.add(jpanelAddReader);
+		jpanelAddReader.setVisible(true);
 	}
 }
