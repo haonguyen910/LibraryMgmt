@@ -17,12 +17,13 @@ import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 
 public class JFrameMain extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel jpanelMain;
+	private JPanel jpanelRight;
+	private JButton jbuttonBookList;
 
 	/**
 	 * Launch the application.
@@ -51,19 +52,19 @@ public class JFrameMain extends JFrame {
 	public JFrameMain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 500);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnNewMenu_1 = new JMenu("Add");
 		menuBar.add(mnNewMenu_1);
-		
+
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Book");
 		mnNewMenu_1.add(mntmNewMenuItem_2);
-		
+
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Employee");
 		mnNewMenu_1.add(mntmNewMenuItem_3);
-		
+
 		JMenuItem jmenuItemAddReader = new JMenuItem("Reader");
 		jmenuItemAddReader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,14 +72,14 @@ public class JFrameMain extends JFrame {
 			}
 		});
 		mnNewMenu_1.add(jmenuItemAddReader);
-		
+
 		JMenu mnNewMenu = new JMenu("Account");
 		mnNewMenu.setHorizontalAlignment(SwingConstants.TRAILING);
 		menuBar.add(mnNewMenu);
-		
+
 		JMenuItem mntmNewMenuItem = new JMenuItem("Profile");
 		mnNewMenu.add(mntmNewMenuItem);
-		
+
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Log-out");
 		mnNewMenu.add(mntmNewMenuItem_1);
 		contentPane = new JPanel();
@@ -86,17 +87,17 @@ public class JFrameMain extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		contentPane.add(toolBar, BorderLayout.NORTH);
-		
+
 		JButton btnNewButton = new JButton("Check-in");
 		toolBar.add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("Check-out");
 		toolBar.add(btnNewButton_1);
-		
+
 		jpanelMain = new JPanel();
 		contentPane.add(jpanelMain, BorderLayout.WEST);
 		jpanelMain.setLayout(new BorderLayout(0, 0));
@@ -105,30 +106,48 @@ public class JFrameMain extends JFrame {
 		jpanelMain.add(panel, BorderLayout.WEST);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JButton jbuttonBookList = new JButton("Book List");
-		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
-		panel.add(jbuttonBookList);
+		JButton btnNewButton_2 = new JButton("Book List");
+		btnNewButton_2.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
+		panel.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Issue Register");
 		btnNewButton_3.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/sign.png")));
-		panel.add(btnNewButton_3);
-		
+		panelLeft.add(btnNewButton_3);
+
 		JButton btnNewButton_4 = new JButton("Statistic Report");
 		btnNewButton_4.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/report.png")));
-		panel.add(btnNewButton_4);
-		
+		panelLeft.add(btnNewButton_4);
+
 		JButton btnNewButton_5 = new JButton("Reader List");
 		btnNewButton_5.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/user.png")));
-		panel.add(btnNewButton_5);
-		
+		panelLeft.add(btnNewButton_5);
+
 		JButton btnNewButton_6 = new JButton("Employee List");
 		btnNewButton_6.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/employee.png")));
-		panel.add(btnNewButton_6);
+		panelLeft.add(btnNewButton_6);
+
+		jpanelRight = new JPanel();
+		contentPane.add(jpanelRight, BorderLayout.CENTER);
+		jpanelRight.setLayout(new BoxLayout(jpanelRight, BoxLayout.X_AXIS));
 	}
-	
-	public void jmenuItemAddReader_actionPerformed(ActionEvent e) {
+
+//	Functions
+	private void jmenuItemAddReader_actionPerformed(ActionEvent e) {
 		JPanelAddReader jpanelAddReader = new JPanelAddReader();
 		jpanelMain.add(jpanelAddReader);
 		jpanelAddReader.setVisible(true);
+	}
+
+	private void jbuttonBookList_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelBookList jPanelBookList = new JPanelBookList();
+		jpanelRight.add(jPanelBookList);
+		jPanelBookList.setVisible(true);
+	}
+
+//	Components
+	private void clearScreen() {
+		jpanelRight.removeAll();
+		jpanelRight.revalidate();
 	}
 }

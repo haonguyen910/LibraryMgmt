@@ -2,12 +2,12 @@ package demo;
 
 import javax.swing.JPanel;
 
-public class JPanelAddBook extends JPanel {
+public class JPanelBookAdd extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public JPanelAddBook() {
+	public JPanelBookAdd() {
 
 	}
 

@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.Arrays;
+import java.util.Date;
+
 public class Book {
 
 	private String callNumber;
@@ -7,26 +10,37 @@ public class Book {
 	private String title;
 	private int quantity;
 	private double price;
-	private String photo;
 	private String description;
 	private boolean status;
+	private byte[] photo;
 	private String author;
 	private String category;
+	private Date created;
+
+//	ToString
+	@Override
+	public String toString() {
+		return "Book [callNumber=" + callNumber + ", ISBN=" + ISBN + ", title=" + title + ", quantity=" + quantity
+				+ ", price=" + price + ", description=" + description + ", status=" + status + ", photo="
+				+ Arrays.toString(photo) + ", author=" + author + ", category=" + category + ", created=" + created
+				+ "]";
+	}
 
 //	Constructor
-	public Book(String callNumber, String iSBN, String title, int quantity, double price, String photo,
-			String description, boolean status, String author, String category) {
+	public Book(String callNumber, String iSBN, String title, int quantity, double price, String description,
+			boolean status, byte[] photo, String author, String category, Date created) {
 		super();
 		this.callNumber = callNumber;
 		ISBN = iSBN;
 		this.title = title;
 		this.quantity = quantity;
 		this.price = price;
-		this.photo = photo;
 		this.description = description;
 		this.status = status;
+		this.photo = photo;
 		this.author = author;
 		this.category = category;
+		this.created = created;
 	}
 
 	public Book() {
@@ -74,14 +88,6 @@ public class Book {
 		this.price = price;
 	}
 
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -98,6 +104,14 @@ public class Book {
 		this.status = status;
 	}
 
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
 	public String getAuthor() {
 		return author;
 	}
@@ -112,6 +126,14 @@ public class Book {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 }
