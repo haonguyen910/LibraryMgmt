@@ -61,14 +61,19 @@ public class JFrameLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("BOOK SEARCH");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(128, 128, 192));
-		btnNewButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-		btnNewButton.setBounds(220, 54, 156, 36);
-		btnNewButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		contentPane.add(btnNewButton);
+		JButton jbuttonBookSearch = new JButton("BOOK SEARCH");
+		jbuttonBookSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonBookSearch_actionPerformed(e);
+			}
+		});
+		jbuttonBookSearch.setForeground(new Color(255, 255, 255));
+		jbuttonBookSearch.setBackground(new Color(128, 128, 192));
+		jbuttonBookSearch.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonBookSearch.setBounds(220, 54, 156, 36);
+		jbuttonBookSearch.setHorizontalTextPosition(SwingConstants.CENTER);
+		jbuttonBookSearch.setAlignmentX(Component.CENTER_ALIGNMENT);
+		contentPane.add(jbuttonBookSearch);
 		
 		JPanel jpanelLogin = new JPanel();
 		jpanelLogin.setBounds(140, 130, 323, 199);
@@ -108,5 +113,16 @@ public class JFrameLogin extends JFrame {
 		});
 		btnNewButton_1_1.setBounds(175, 145, 90, 28);
 		jpanelLogin.add(btnNewButton_1_1);
+	}
+	
+	private void initJframe() {
+		
+
+	}
+	
+	public void jbuttonBookSearch_actionPerformed(ActionEvent e) {
+		JFrameSearch jframeSearch = new JFrameSearch();
+		jframeSearch.setVisible(true);
+		this.setVisible(false);
 	}
 }

@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class JFrameMain extends JFrame {
 
@@ -72,6 +73,7 @@ public class JFrameMain extends JFrame {
 		mnNewMenu_1.add(jmenuItemAddReader);
 		
 		JMenu mnNewMenu = new JMenu("Account");
+		mnNewMenu.setHorizontalAlignment(SwingConstants.TRAILING);
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Profile");
@@ -103,9 +105,9 @@ public class JFrameMain extends JFrame {
 		jpanelMain.add(panel, BorderLayout.WEST);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JButton btnNewButton_2 = new JButton("Book List");
-		btnNewButton_2.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
-		panel.add(btnNewButton_2);
+		JButton jbuttonBookList = new JButton("Book List");
+		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
+		panel.add(jbuttonBookList);
 		
 		JButton btnNewButton_3 = new JButton("Issue Register");
 		btnNewButton_3.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/sign.png")));
