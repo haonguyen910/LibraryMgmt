@@ -8,6 +8,30 @@ import java.util.List;
 import entities.Category;
 
 public class CategoryModel {
+	public Category findByName(String name) {
+		Category category = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM category WHERE name = ?");
+
+			preparedStatement.setString(1, name);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				category = new Category();
+				category.setId(resultSet.getInt("id"));
+				category.setName(resultSet.getString("name"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			category = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return category;
+	}
+
 	public List<Category> findAll() {
 		List<Category> categoryList = new ArrayList<Category>();
 		try {

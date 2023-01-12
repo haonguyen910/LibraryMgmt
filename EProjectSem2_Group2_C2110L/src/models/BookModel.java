@@ -34,6 +34,90 @@ public class BookModel {
 		return result;
 	}
 
+	public boolean update(Book book) {
+		boolean result = true;
+		try {
+//			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
+//					"UPDATE book set ISBN = ?, title = ?, quantity = ?, price = ?, photo = ?, description = ?, status = ?, created = ? WHERE callNumber = ?");
+
+			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
+					"UPDATE book set ISBN = ?, title = ?, quantity = ?, price = ?, description = ?, status = ?, created = ? WHERE callNumber = ?");
+
+			preparedStatement.setString(1, book.getISBN());
+			preparedStatement.setString(2, book.getTitle());
+			preparedStatement.setInt(3, book.getQuantity());
+			preparedStatement.setDouble(4, book.getPrice());
+//			preparedStatement.setBytes(5, book.getPhoto());
+			preparedStatement.setString(5, book.getDescription());
+			preparedStatement.setBoolean(6, book.isStatus());
+			preparedStatement.setDate(7, new java.sql.Date(book.getCreated().getTime()));
+			preparedStatement.setString(8, book.getCallNumber());
+
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
+	public boolean delete(String callNumber) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("DELETE FROM book WHERE callNumber = ?");
+
+			preparedStatement.setString(1, callNumber);
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
+	public Book find(String callNumber) {
+		Book book = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT book.*, author.name AS author, category.name as category\r\n"
+							+ "FROM book \r\n" + "LEFT JOIN book_author ON book.callNumber = book_author.id_book\r\n"
+							+ "LEFT JOIN author ON author.id = book_author.id_author\r\n"
+							+ "LEFT JOIN book_category ON book.callNumber = book_category.id_book\r\n"
+							+ "LEFT JOIN category ON category.id = book_category.id_category\r\n"
+							+ "WHERE book.callNumber = ?");
+
+			preparedStatement.setString(1, callNumber);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				book = new Book();
+				book.setCallNumber(resultSet.getString("callNumber"));
+				book.setISBN(resultSet.getString("ISBN"));
+				book.setTitle(resultSet.getString("title"));
+				book.setDescription(resultSet.getString("description"));
+				book.setPrice(resultSet.getDouble("price"));
+				book.setQuantity(resultSet.getInt("quantity"));
+				book.setStatus(resultSet.getBoolean("status"));
+				book.setCreated(resultSet.getDate("created"));
+				book.setPhoto(resultSet.getBytes("photo"));
+				book.setAuthor(resultSet.getString("author"));
+				book.setCategory(resultSet.getString("category"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			book = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return book;
+	}
+
 	public List<Book> findAll() {
 		List<Book> bookList = new ArrayList<Book>();
 		try {
@@ -192,7 +276,7 @@ public class BookModel {
 		return bookList;
 	}
 
-	public List<Book> findByAuhtor(String auhtor) {
+	public List<Book> findByAuthor(String auhtor) {
 		List<Book> bookList = new ArrayList<Book>();
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
