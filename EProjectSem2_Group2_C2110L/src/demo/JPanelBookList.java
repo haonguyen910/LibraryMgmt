@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -24,8 +25,16 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import entities.Author;
 import entities.Book;
+import entities.Book_Author;
+import entities.Book_Category;
+import entities.Category;
+import models.AuthorModel;
 import models.BookModel;
+import models.Book_AuthorModel;
+import models.Book_CategoryModel;
+import models.CategoryModel;
 
 import javax.swing.JButton;
 import java.awt.BorderLayout;
@@ -43,13 +52,17 @@ public class JPanelBookList extends JPanel {
 	private JTextField jtextFieldKeyword;
 	private JButton jbuttonSearch;
 	private JTable jtableBook;
-	BookModel bookModel = new BookModel();
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private JComboBox jcomboBoxSearchType;
 	private JButton jbuttonCancelSearch;
 	private JButton jbuttonAdd;
 	private JButton jbuttonDelete;
 	private JButton jbuttonEdit;
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	BookModel bookModel = new BookModel();
+	AuthorModel authorModel = new AuthorModel();
+	CategoryModel categoryModel = new CategoryModel();
+	Book_AuthorModel book_AuthorModel = new Book_AuthorModel();
+	Book_CategoryModel book_CategoryModel = new Book_CategoryModel();
 
 	/**
 	 * Create the panel.
@@ -154,8 +167,8 @@ public class JPanelBookList extends JPanel {
 		fillDataToJTable(bookModel.findAll());
 		fillDataToJComboBox();
 		jbuttonCancelSearch.setVisible(false);
-		jbuttonDelete.setVisible(false);
-		jbuttonEdit.setVisible(false);
+		jbuttonDelete.setEnabled(false);
+		jbuttonEdit.setEnabled(false);
 	}
 
 	private void jbuttonSearch_actionPerformed(ActionEvent e) {
@@ -186,18 +199,43 @@ public class JPanelBookList extends JPanel {
 	}
 
 	public void jtableBook_mouseClicked(MouseEvent e) {
-
+		jbuttonEdit.setEnabled(true);
+		jbuttonDelete.setEnabled(true);
 	}
 
 	public void jbuttonDelete_actionPerformed(ActionEvent e) {
+		deleteBook();
+		jbuttonEdit.setEnabled(false);
+	}
 
+	public void deleteBook() {
+		int result = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+		if (result == JOptionPane.YES_OPTION) {
+			int selectedRow = jtableBook.getSelectedRow();
+			String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
+
+			Book book = bookModel.find(callNumber);
+			Author author = authorModel.findByName(book.getAuthor());
+			Category category = categoryModel.findByName(book.getCategory());
+			Book_Author book_Author = book_AuthorModel.find(callNumber, author.getId());
+			Book_Category book_Category = book_CategoryModel.find(callNumber, category.getId());
+
+			if (book_AuthorModel.delete(book_Author.getId()) && book_CategoryModel.delete(book_Category.getId())
+					&& bookModel.delete(callNumber)) {
+				JOptionPane.showMessageDialog(this, "Success");
+				fillDataToJTable(bookModel.findAll());
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed");
+			}
+		}
+		jbuttonDelete.setEnabled(false);
 	}
 
 	public void jbuttonEdit_actionPerformed(ActionEvent e) {
 		int selectedRow = jtableBook.getSelectedRow();
 		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
 
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("callNumber", callNumber);
 
 		JFrameBookEdit jFrameBookEdit = new JFrameBookEdit(data);
@@ -224,11 +262,13 @@ public class JPanelBookList extends JPanel {
 		defaultTableModel.addColumn("Quantity");
 		defaultTableModel.addColumn("Price");
 		defaultTableModel.addColumn("Issue Status");
+		defaultTableModel.addColumn("Created");
 
 		for (Book book : bookList) {
 			defaultTableModel.addRow(new Object[] { book.getCallNumber(), book.getISBN(), book.getPhoto(),
 					book.getTitle(), book.getAuthor(), book.getDescription(), book.getCategory().toUpperCase(),
-					book.getQuantity(), book.getPrice(), book.isStatus() ? "In Library" : "Out of Stock" });
+					book.getQuantity(), book.getPrice(), book.isStatus() ? "In Library" : "Out of Stock",
+					simpleDateFormat.format(book.getCreated()) });
 		}
 
 		jtableBook.setModel(defaultTableModel);
