@@ -166,7 +166,7 @@ public class JPanelBookList extends JPanel {
 		} else if (searchType.equalsIgnoreCase("Title")) {
 			fillDataToJTable(bookModel.findByTitle(keyword));
 		} else if (searchType.equalsIgnoreCase("Author")) {
-			fillDataToJTable(bookModel.findByAuhtor(keyword));
+			fillDataToJTable(bookModel.findByAuthor(keyword));
 		} else {
 			fillDataToJTable(bookModel.findByCallNumber(keyword));
 		}

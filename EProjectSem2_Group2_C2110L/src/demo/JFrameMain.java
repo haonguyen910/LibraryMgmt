@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
-import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -51,7 +50,7 @@ public class JFrameMain extends JFrame {
 	 */
 	public JFrameMain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 500);
+		setBounds(100, 100, 939, 630);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -74,7 +73,6 @@ public class JFrameMain extends JFrame {
 		mnNewMenu_1.add(jmenuItemAddReader);
 
 		JMenu mnNewMenu = new JMenu("Account");
-		mnNewMenu.setHorizontalAlignment(SwingConstants.TRAILING);
 		menuBar.add(mnNewMenu);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Profile");
@@ -102,29 +100,39 @@ public class JFrameMain extends JFrame {
 		contentPane.add(jpanelMain, BorderLayout.WEST);
 		jpanelMain.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		jpanelMain.add(panel, BorderLayout.WEST);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		JPanel jpanelLeft = new JPanel();
+		jpanelMain.add(jpanelLeft, BorderLayout.WEST);
+		jpanelLeft.setLayout(new BoxLayout(jpanelLeft, BoxLayout.Y_AXIS));
 		
-		JButton btnNewButton_2 = new JButton("Book List");
-		btnNewButton_2.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
-		panel.add(btnNewButton_2);
+		jbuttonBookList = new JButton("Book List");
+		jbuttonBookList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonBookList_actionPerformed(e);
+			}
+		});
+		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
+		jpanelLeft.add(jbuttonBookList);
 		
 		JButton btnNewButton_3 = new JButton("Issue Register");
 		btnNewButton_3.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/sign.png")));
-		panelLeft.add(btnNewButton_3);
+		jpanelLeft.add(btnNewButton_3);
 
 		JButton btnNewButton_4 = new JButton("Statistic Report");
 		btnNewButton_4.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/report.png")));
-		panelLeft.add(btnNewButton_4);
+		jpanelLeft.add(btnNewButton_4);
 
 		JButton btnNewButton_5 = new JButton("Reader List");
 		btnNewButton_5.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/user.png")));
-		panelLeft.add(btnNewButton_5);
+		jpanelLeft.add(btnNewButton_5);
 
-		JButton btnNewButton_6 = new JButton("Employee List");
-		btnNewButton_6.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/employee.png")));
-		panelLeft.add(btnNewButton_6);
+		JButton jbuttonEmployeeList = new JButton("Employee List");
+		jbuttonEmployeeList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonEmployeeList_actionPerformed(e);
+			}
+		});
+		jbuttonEmployeeList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/employee.png")));
+		jpanelLeft.add(jbuttonEmployeeList);
 
 		jpanelRight = new JPanel();
 		contentPane.add(jpanelRight, BorderLayout.CENTER);
@@ -143,6 +151,13 @@ public class JFrameMain extends JFrame {
 		JPanelBookList jPanelBookList = new JPanelBookList();
 		jpanelRight.add(jPanelBookList);
 		jPanelBookList.setVisible(true);
+	}
+	
+	public void jbuttonEmployeeList_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelEmployee jpanelEmployee = new JPanelEmployee();
+		jpanelRight.add(jpanelEmployee);
+		jpanelEmployee.setVisible(true);
 	}
 
 //	Components

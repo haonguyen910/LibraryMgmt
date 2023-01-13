@@ -192,7 +192,7 @@ public class BookModel {
 		return bookList;
 	}
 
-	public List<Book> findByAuhtor(String auhtor) {
+	public List<Book> findByAuthor(String author) {
 		List<Book> bookList = new ArrayList<Book>();
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
@@ -203,7 +203,7 @@ public class BookModel {
 							+ "LEFT JOIN category ON category.id = book_category.id_category\r\n"
 							+ "WHERE author.name LIKE ?");
 
-			preparedStatement.setString(1, "%" + auhtor + "%");
+			preparedStatement.setString(1, "%" + author + "%");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -231,5 +231,4 @@ public class BookModel {
 		}
 		return bookList;
 	}
-
 }

@@ -25,9 +25,10 @@ import javax.swing.JScrollPane;
 public class JFrameSearch extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField jtextFieldSearch;
+	private JTextField jtextFieldSearchTitle;
 	private JTable jtableSearch;
-	private JButton jbuttonSearch;
+	private JButton jbuttonSearchTitle;
+	private JTextField jtextFieldSearchAuthor;
 
 	/**
 	 * Launch the application.
@@ -78,26 +79,40 @@ public class JFrameSearch extends JFrame {
 		contentPane.add(jpanelSearch);
 		jpanelSearch.setLayout(null);
 		
-		jtextFieldSearch = new JTextField();
-		jtextFieldSearch.setBounds(308, 6, 328, 33);
-		jpanelSearch.add(jtextFieldSearch);
-		jtextFieldSearch.setColumns(10);
+		jtextFieldSearchTitle = new JTextField();
+		jtextFieldSearchTitle.setBounds(46, 24, 271, 33);
+		jpanelSearch.add(jtextFieldSearchTitle);
+		jtextFieldSearchTitle.setColumns(10);
 		
-		jbuttonSearch = new JButton("Search");
-		jbuttonSearch.addActionListener(new ActionListener() {
+		jbuttonSearchTitle = new JButton("Search by Title");
+		jbuttonSearchTitle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonSearch_actionPerformed(e);
 			}
 		});
-		jbuttonSearch.setBounds(648, 8, 89, 28);
-		jpanelSearch.add(jbuttonSearch);
+		jbuttonSearchTitle.setBounds(329, 26, 129, 28);
+		jpanelSearch.add(jbuttonSearchTitle);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(6, 70, 1046, 357);
+		scrollPane.setBounds(6, 97, 1046, 330);
 		jpanelSearch.add(scrollPane);
 		
 		jtableSearch = new JTable();
 		scrollPane.setViewportView(jtableSearch);
+		
+		jtextFieldSearchAuthor = new JTextField();
+		jtextFieldSearchAuthor.setColumns(10);
+		jtextFieldSearchAuthor.setBounds(556, 24, 271, 33);
+		jpanelSearch.add(jtextFieldSearchAuthor);
+		
+		JButton jbuttonSearchAuthor = new JButton("Search by Author");
+		jbuttonSearchAuthor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonSearchAuthor_actionPerformed(e);
+			}
+		});
+		jbuttonSearchAuthor.setBounds(839, 26, 129, 28);
+		jpanelSearch.add(jbuttonSearchAuthor);
 		
 		initJFrame();
 	}
@@ -143,8 +158,14 @@ public class JFrameSearch extends JFrame {
 	}
 	
 	public void jbuttonSearch_actionPerformed(ActionEvent e) {
-		String keyword = jtextFieldSearch.getText().trim();
+		String keywordTitle = jtextFieldSearchTitle.getText().trim();
 		BookModel bookModel = new BookModel(); 
-		fillDataToJTable(bookModel.findByKeyword(keyword));
+		fillDataToJTable(bookModel.findByTitle(keywordTitle));
+	}
+	
+	public void jbuttonSearchAuthor_actionPerformed(ActionEvent e) {
+		String keywordAuthor = jtextFieldSearchAuthor.getText().trim();
+		BookModel bookModel = new BookModel(); 
+		fillDataToJTable(bookModel.findByAuthor(keywordAuthor));
 	}
 }
