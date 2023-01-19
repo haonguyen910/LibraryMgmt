@@ -8,6 +8,7 @@ import java.util.List;
 import entities.Book;
 
 public class BookModel {
+//	One
 	public boolean create(Book book) {
 		boolean result = true;
 		try {
@@ -118,6 +119,7 @@ public class BookModel {
 		return book;
 	}
 
+//	List
 	public List<Book> findAll() {
 		List<Book> bookList = new ArrayList<Book>();
 		try {
@@ -276,7 +278,7 @@ public class BookModel {
 		return bookList;
 	}
 
-	public List<Book> findByAuthor(String auhtor) {
+	public List<Book> findByAuthor(String author) {
 		List<Book> bookList = new ArrayList<Book>();
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
