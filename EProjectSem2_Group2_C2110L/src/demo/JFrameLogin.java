@@ -117,7 +117,7 @@ public class JFrameLogin extends JFrame {
 	}
 	
 	public void jbuttonBookSearch_actionPerformed(ActionEvent e) {
-		JFrameSearch jframeSearch = new JFrameSearch();
+		JFrameLoginSearch jframeSearch = new JFrameLoginSearch();
 		jframeSearch.setVisible(true);
 		this.setVisible(false);
 	}

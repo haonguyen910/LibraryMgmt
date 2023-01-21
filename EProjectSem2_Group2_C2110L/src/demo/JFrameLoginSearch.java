@@ -22,7 +22,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
-public class JFrameSearch extends JFrame {
+public class JFrameLoginSearch extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField jtextFieldSearchTitle;
@@ -42,7 +42,7 @@ public class JFrameSearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrameSearch frame = new JFrameSearch();
+					JFrameLoginSearch frame = new JFrameLoginSearch();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class JFrameSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JFrameSearch() {
+	public JFrameLoginSearch() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1084, 547);
 		

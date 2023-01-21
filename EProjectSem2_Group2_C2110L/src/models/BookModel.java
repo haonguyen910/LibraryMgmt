@@ -276,7 +276,7 @@ public class BookModel {
 		return bookList;
 	}
 
-	public List<Book> findByAuthor(String auhtor) {
+	public List<Book> findByAuthor(String author) {
 		List<Book> bookList = new ArrayList<Book>();
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
