@@ -1,10 +1,12 @@
 package entities;
 
+import java.util.List;
+
 public class BorrowDetail {
 	private int id;
 	private int id_borrow;
 	private String id_book;
-	private int quantity;
+	public int quantity;
 	private double price;
 
 //	ToString

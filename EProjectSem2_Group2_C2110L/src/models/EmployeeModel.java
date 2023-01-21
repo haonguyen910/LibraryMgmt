@@ -5,10 +5,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Author;
 import entities.Employee;
 
 public class EmployeeModel {
-
+//One
 	public boolean create(Employee employee) {
 		boolean result = true;
 		try {
@@ -33,7 +34,7 @@ public class EmployeeModel {
 		}
 		return result;
 	}
-	
+
 	public boolean update(Employee employee) {
 		boolean result = true;
 		try {
@@ -56,8 +57,41 @@ public class EmployeeModel {
 		}
 		return result;
 	}
-	
-	public List<Employee> findAll(){
+
+	public Employee find(int id) {
+		Employee employee = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM employee WHERE id = ?");
+
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				employee = new Employee();
+				employee.setId(resultSet.getInt("id"));
+				employee.setName(resultSet.getString("name"));
+				employee.setAddress(resultSet.getString("address"));
+				employee.setPhone(resultSet.getString("phone"));
+				employee.setDepartment(resultSet.getString("department"));
+				employee.setUsername(resultSet.getString("username"));
+				employee.setPassword(resultSet.getString("password"));
+				employee.setCreated(resultSet.getDate("created"));
+				employee.setIs_admin(resultSet.getBoolean("is_admin"));
+				employee.setPhoto(resultSet.getBytes("photo"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			employee = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return employee;
+	}
+
+//List
+	public List<Employee> findAll() {
 		List<Employee> employees = new ArrayList<Employee>();
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement("select * from employee");
@@ -76,7 +110,69 @@ public class EmployeeModel {
 				employee.setPhoto(resultSet.getBytes("photo"));
 				employees.add(employee);
 			}
-			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			employees = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return employees;
+	}
+
+	public List<Employee> findById(int id) {
+		List<Employee> employees = new ArrayList<Employee>();
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM employee WHERE id = ?");
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Employee employee = new Employee();
+				employee.setId(resultSet.getInt("id"));
+				employee.setName(resultSet.getString("name"));
+				employee.setAddress(resultSet.getString("address"));
+				employee.setPhone(resultSet.getString("phone"));
+				employee.setDepartment(resultSet.getString("department"));
+				employee.setUsername(resultSet.getString("username"));
+				employee.setPassword(resultSet.getString("password"));
+				employee.setCreated(resultSet.getDate("created"));
+				employee.setIs_admin(resultSet.getBoolean("is_admin"));
+				employee.setPhoto(resultSet.getBytes("photo"));
+				employees.add(employee);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			employees = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return employees;
+	}
+
+	public List<Employee> findByName(String name) {
+		List<Employee> employees = new ArrayList<Employee>();
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM employee WHERE name LIKE ?");
+			preparedStatement.setString(1, "%" + name + "%");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Employee employee = new Employee();
+				employee.setId(resultSet.getInt("id"));
+				employee.setName(resultSet.getString("name"));
+				employee.setAddress(resultSet.getString("address"));
+				employee.setPhone(resultSet.getString("phone"));
+				employee.setDepartment(resultSet.getString("department"));
+				employee.setUsername(resultSet.getString("username"));
+				employee.setPassword(resultSet.getString("password"));
+				employee.setCreated(resultSet.getDate("created"));
+				employee.setIs_admin(resultSet.getBoolean("is_admin"));
+				employee.setPhoto(resultSet.getBytes("photo"));
+				employees.add(employee);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			employees = null;

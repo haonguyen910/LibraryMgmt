@@ -34,11 +34,12 @@ public class BorrowModel {
 		boolean result = true;
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
-					.prepareStatement("UPDATE borrow SET id_customer = ?, id_employee = ?, deposit = ?");
+					.prepareStatement("UPDATE borrow SET id_customer = ?, id_employee = ?, deposit = ? WHERE id = ?");
 
 			preparedStatement.setInt(1, borrow.getId_customer());
 			preparedStatement.setInt(2, borrow.getId_employee());
 			preparedStatement.setDouble(3, borrow.getDeposit());
+			preparedStatement.setInt(4, borrow.getId());
 
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
