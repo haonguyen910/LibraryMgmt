@@ -24,9 +24,7 @@ public class JFrameMain extends JFrame {
 	private JPanel jpanelMain;
 	private JPanel jpanelRight;
 	private JButton jbuttonBookList;
-	private JButton jbuttonAuthorList;
-	private JButton jbuttonCategory;
-	private JButton jbuttonBorrowList;
+	private JButton jbuttonStatistic;
 
 	/**
 	 * Launch the application.
@@ -53,7 +51,8 @@ public class JFrameMain extends JFrame {
 	 * Create the frame.
 	 */
 	public JFrameMain() {
-		setBounds(100, 100, 1002, 701);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1020, 720);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -68,6 +67,11 @@ public class JFrameMain extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 
 		JMenuItem jmenuItemAddReader = new JMenuItem("Reader");
+		jmenuItemAddReader.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jmenuItemAddReader_actionPerformed(e);
+			}
+		});
 		mnNewMenu_1.add(jmenuItemAddReader);
 
 		JMenu mnNewMenu = new JMenu("Account");
@@ -109,7 +113,10 @@ public class JFrameMain extends JFrame {
 				jbuttonBookList_actionPerformed(e);
 			}
 		});
-		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book.png")));
+		
+		JButton jbuttonHomePage = new JButton("Home Page");
+		jpanelLeft.add(jbuttonHomePage);
+		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book_color.png")));
 		jpanelLeft.add(jbuttonBookList);
 
 		jbuttonAuthorList = new JButton("Author");
@@ -121,39 +128,23 @@ public class JFrameMain extends JFrame {
 		});
 		jpanelLeft.add(jbuttonAuthorList);
 
-		jbuttonCategory = new JButton("Category");
-		jbuttonCategory.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/category.png")));
-		jbuttonCategory.addActionListener(new ActionListener() {
+		jbuttonStatistic = new JButton("Statistic Report");
+		jbuttonStatistic.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jbuttonCategory_actionPerformed(e);
+				jbuttonStatistic_actionPerformed(e);
 			}
 		});
-		jpanelLeft.add(jbuttonCategory);
+		jbuttonStatistic.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/report.png")));
+		jpanelLeft.add(jbuttonStatistic);
 
-		jbuttonBorrowList = new JButton("Borrow List");
-		jbuttonBorrowList.addActionListener(new ActionListener() {
+		JButton jbuttonCustList = new JButton("Customer List");
+		jbuttonCustList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jbuttonBorrowList_actionPerformed(e);
+				jbuttonCustList_actionPerformed(e);
 			}
 		});
-		jbuttonBorrowList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrow.png")));
-		jpanelLeft.add(jbuttonBorrowList);
-
-		JButton jbuttonBorrowedList = new JButton("Borrowed List");
-		jbuttonBorrowedList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrowed.png")));
-		jpanelLeft.add(jbuttonBorrowedList);
-
-		JButton btnNewButton_3 = new JButton("Issue Register");
-		btnNewButton_3.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/issue.png")));
-		jpanelLeft.add(btnNewButton_3);
-
-		JButton btnNewButton_4 = new JButton("Statistic Report");
-		btnNewButton_4.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/reportStatic.png")));
-		jpanelLeft.add(btnNewButton_4);
-
-		JButton btnNewButton_5 = new JButton("Reader List");
-		btnNewButton_5.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/reader.png")));
-		jpanelLeft.add(btnNewButton_5);
+		jbuttonCustList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/user.png")));
+		jpanelLeft.add(jbuttonCustList);
 
 		JButton jbuttonEmployeeList = new JButton("Employee List");
 		jbuttonEmployeeList.addActionListener(new ActionListener() {
@@ -172,24 +163,26 @@ public class JFrameMain extends JFrame {
 	}
 
 //	Functions
-	private void initJFrame() {
+
+	private void jbuttonBookList_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight);
 		jpanelRight.add(jPanelBookList);
 		jPanelBookList.setVisible(true);
 	}
-
-	private void jmenuItemAddReader_actionPerformed(ActionEvent e) {
-		JPanelAddReader jpanelAddReader = new JPanelAddReader();
-		jpanelMain.add(jpanelAddReader);
-		jpanelAddReader.setVisible(true);
+	
+	public void jbuttonStatistic_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelStatistic jpanelStatistic = new JPanelStatistic();
+		jpanelRight.add(jpanelStatistic);
+		jpanelStatistic.setVisible(true);
 	}
-
+	
 	public void jbuttonEmployeeList_actionPerformed(ActionEvent e) {
 		clearScreen();
-		JPanelEmpList jpanelEmpList = new JPanelEmpList();
-		jpanelRight.add(jpanelEmpList);
-		jpanelEmpList.setVisible(true);
+		JPanelEmployee jpanelEmployee = new JPanelEmployee();
+		jpanelRight.add(jpanelEmployee);
+		jpanelEmployee.setVisible(true);
 	}
 	
 	public void jbuttonCustList_actionPerformed(ActionEvent e) {
@@ -197,38 +190,6 @@ public class JFrameMain extends JFrame {
 		JPanelCustList jpanelCustList = new JPanelCustList();
 		jpanelRight.add(jpanelCustList);
 		jpanelCustList.setVisible(true);
-	}
-
-//Ai
-	private void jbuttonBookList_actionPerformed(ActionEvent e) {
-		clearScreen();
-		JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight);
-		JPanelBookAdd jPanelBookAdd = new JPanelBookAdd(jpanelRight);
-
-		jpanelRight.add(jPanelBookList);
-		jPanelBookList.setVisible(true);
-	}
-
-	public void jbuttonAuthorList_actionPerformed(ActionEvent e) {
-		clearScreen();
-		JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight);
-		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight);
-		jpanelRight.add(jPanelAuthorList);
-		jPanelAuthorList.setVisible(true);
-	}
-
-	public void jbuttonCategory_actionPerformed(ActionEvent e) {
-		clearScreen();
-		JPanelCategoryList jPanelCategoryList = new JPanelCategoryList(jpanelRight);
-		jpanelRight.add(jPanelCategoryList);
-		jPanelCategoryList.setVisible(true);
-	}
-
-	public void jbuttonBorrowList_actionPerformed(ActionEvent e) {
-		clearScreen();
-		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
-		jpanelRight.add(jPanelBorrowList);
-		jPanelBorrowList.setVisible(true);
 	}
 
 //	Components

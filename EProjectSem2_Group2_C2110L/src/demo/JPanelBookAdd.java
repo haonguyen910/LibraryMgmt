@@ -1,6 +1,7 @@
 package demo;
 
 import javax.swing.JPanel;
+<<<<<<< HEAD
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -79,10 +80,15 @@ public class JPanelBookAdd extends JPanel {
 	private Book_Author book_Author;
 	private Book_Category book_Category;
 	private File file;
+=======
+
+public class JPanelBookAdd extends JPanel {
+>>>>>>> parent of f4fba70 (New update)
 
 	/**
 	 * Create the panel.
 	 */
+<<<<<<< HEAD
 	public JPanelBookAdd(JPanel JpanelRight) {
 		jpanelRight = JpanelRight;
 
@@ -390,4 +396,10 @@ public class JPanelBookAdd extends JPanel {
 			return super.getListCellRendererComponent(list, s.toUpperCase(), index, isSelected, cellHasFocus);
 		}
 	}
+=======
+	public JPanelBookAdd() {
+
+	}
+
+>>>>>>> parent of f4fba70 (New update)
 }

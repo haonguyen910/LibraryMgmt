@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
 import entities.Employee;
 
 public class EmployeeModel {
@@ -31,21 +32,6 @@ public class EmployeeModel {
 			ConnectDB.disconnect();
 		}
 		return result;
-	}
-	
-	public boolean delete(int id) {
-		boolean result = true;
-		try {
-			PreparedStatement ps = ConnectDB.connection().prepareStatement("select * from employee where id = ?");
-			ps.setInt(1, id);
-			result = ps.executeUpdate() > 0;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = false;
-		} finally {
-			ConnectDB.disconnect();
-		} return result;
 	}
 	
 	public boolean update(Employee employee) {
@@ -98,35 +84,6 @@ public class EmployeeModel {
 			ConnectDB.disconnect();
 		}
 		return employees;
-	}
-	
-	public Employee find(int id){
-		Employee employee = null;
-		try {
-			PreparedStatement ps = ConnectDB.connection().prepareStatement("select * from employee where id = ?");
-			ps.setInt(1, id);
-			ResultSet resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				employee = new Employee();
-				employee.setId(resultSet.getInt("id"));
-				employee.setName(resultSet.getString("name"));
-				employee.setAddress(resultSet.getString("address"));
-				employee.setPhone(resultSet.getString("phone"));
-				employee.setDepartment(resultSet.getString("department"));
-				employee.setUsername(resultSet.getString("username"));
-				employee.setPassword(resultSet.getString("password"));
-				employee.setCreated(resultSet.getDate("created"));
-				employee.setIs_admin(resultSet.getBoolean("is_admin"));
-				employee.setPhoto(resultSet.getBytes("photo"));
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			employee = null;
-		} finally {
-			ConnectDB.disconnect();
-		}
-		return employee;
 	}
 
 }

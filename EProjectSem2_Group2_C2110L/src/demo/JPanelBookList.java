@@ -3,10 +3,12 @@ package demo;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
@@ -14,6 +16,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +41,7 @@ import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
