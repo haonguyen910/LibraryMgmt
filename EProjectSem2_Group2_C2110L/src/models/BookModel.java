@@ -289,7 +289,7 @@ public class BookModel {
 							+ "LEFT JOIN category ON category.id = book_category.id_category\r\n"
 							+ "WHERE author.name LIKE ?");
 
-			preparedStatement.setString(1, "%" + author + "%");
+			preparedStatement.setString(1, "%" + auhtor + "%");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
