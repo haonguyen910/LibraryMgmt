@@ -1,43 +1,24 @@
 package demo;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Color;
-import java.awt.Component;
 
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-
-import org.mindrot.jbcrypt.BCrypt;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -52,29 +33,45 @@ import models.Book_AuthorModel;
 import models.Book_CategoryModel;
 import models.CategoryModel;
 
-import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
+import java.awt.Dimension;
+import java.awt.Component;
+import javax.swing.SwingConstants;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.awt.ComponentOrientation;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import javax.swing.JScrollPane;
 
-public class JFrameBookEdit extends JFrame {
+public class JPanelBookEdit extends JPanel {
+//	JPanel Right Of JFrameMain
+	private JPanel jpanelRight;
 
-	private JPanel contentPane;
+	private JTextField jtextFieldPrice;
+	private JTextField jtextFieldQuantity;
+	private JTextField jtextFieldTitle;
+	private JTextField jtextFieldISBN;
+	private JTextField jtextFieldCallNumber;
 	private JLabel jlabelPhoto;
 	private JButton jbuttonBrowser;
-	private File file;
-	private JLabel lblNewLabel_1;
-	private JTextField jtextFieldCallNumber;
-	private JTextField jtextFieldISBN;
-	private JTextField jtextFieldTitle;
-	private JTextField jtextFieldQuantity;
-	private JTextField jtextFieldPrice;
-	private JButton jbuttonSave;
-	private JButton jbuttonCancel;
-	private JButton jbuttonAddAuthor;
-	private JTextArea jtextAreaDescription;
 	private JComboBox jcomboBoxAuthor;
 	private JComboBox jcomboBoxCategory;
-	private JDateChooser jdateChooserCreated;
+	private JButton jbuttonAddAuthor;
+	private JButton jbuttonAddCategory;
+	private JButton jbuttonSave;
+	private JButton jbuttonCancel;
 	private JCheckBox jcheckBoxStatus;
+	private JDateChooser jdateChooserCreated;
+	private JTextArea jtextAreaDescription;
+
+//	Global Variable
 	AuthorModel authorModel = new AuthorModel();
 	CategoryModel categoryModel = new CategoryModel();
 	BookModel bookModel = new BookModel();
@@ -86,189 +83,203 @@ public class JFrameBookEdit extends JFrame {
 	private Book_Author book_Author;
 	private Book_Category book_Category;
 	private Map<String, Object> data;
+	private File file;
 
 	/**
-	 * Launch the application.
+	 * Create the panel.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrameBookEdit frame = new JFrameBookEdit();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public JPanelBookEdit(JPanel JpanelRight) {
+		jpanelRight = JpanelRight;
 
-	/**
-	 * Create the frame.
-	 */
-	public JFrameBookEdit() {
-		setTitle("Edit Book");
-		setBounds(100, 100, 800, 650);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		JPanel panel = new JPanel();
+		panel.setMaximumSize(new Dimension(32767, 200));
+		panel.setBackground(new Color(128, 128, 192));
+		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
+		fl_panel.setAlignment(FlowLayout.LEFT);
+		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Edit Book");
-		lblNewLabel.setForeground(new Color(128, 128, 192));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setBounds(38, 22, 114, 25);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		panel.add(lblNewLabel);
+
+		JPanel panel_1 = new JPanel();
+		add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
+
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2, BorderLayout.CENTER);
+		panel_2.setLayout(null);
 
 		jlabelPhoto = new JLabel("");
 		jlabelPhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		jlabelPhoto.setBounds(48, 63, 150, 150);
-		contentPane.add(jlabelPhoto);
+		jlabelPhoto.setBounds(30, 30, 150, 150);
+		panel_2.add(jlabelPhoto);
 
 		jbuttonBrowser = new JButton("Browser");
-		jbuttonBrowser.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonBrowser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonBrowser_actionPerformed(e);
 			}
 		});
-		jbuttonBrowser.setBounds(74, 223, 100, 30);
-		contentPane.add(jbuttonBrowser);
+		jbuttonBrowser.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jbuttonBrowser.setBounds(55, 190, 100, 30);
+		panel_2.add(jbuttonBrowser);
 
-		lblNewLabel_1 = new JLabel("Call Number:");
+		JLabel lblNewLabel_1 = new JLabel("Call Number:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(250, 63, 90, 13);
-		contentPane.add(lblNewLabel_1);
-
-		jtextFieldCallNumber = new JTextField();
-		jtextFieldCallNumber.setEditable(false);
-		jtextFieldCallNumber.setBounds(350, 58, 200, 30);
-		contentPane.add(jtextFieldCallNumber);
-		jtextFieldCallNumber.setColumns(10);
+		lblNewLabel_1.setBounds(251, 30, 90, 13);
+		panel_2.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("ISBN:");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(250, 98, 90, 13);
-		contentPane.add(lblNewLabel_1_1);
+		lblNewLabel_1_1.setBounds(251, 70, 90, 13);
+		panel_2.add(lblNewLabel_1_1);
 
-		jtextFieldISBN = new JTextField();
-		jtextFieldISBN.setColumns(10);
-		jtextFieldISBN.setBounds(350, 93, 200, 30);
-		contentPane.add(jtextFieldISBN);
-
-		JLabel lblNewLabel_1_2 = new JLabel("Title:");
+		JLabel lblNewLabel_1_2 = new JLabel("Title");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(250, 133, 90, 13);
-		contentPane.add(lblNewLabel_1_2);
-
-		jtextFieldTitle = new JTextField();
-		jtextFieldTitle.setColumns(10);
-		jtextFieldTitle.setBounds(350, 128, 200, 30);
-		contentPane.add(jtextFieldTitle);
+		lblNewLabel_1_2.setBounds(251, 111, 90, 13);
+		panel_2.add(lblNewLabel_1_2);
 
 		JLabel lblNewLabel_1_3 = new JLabel("Quantity:");
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_3.setBounds(250, 175, 90, 13);
-		contentPane.add(lblNewLabel_1_3);
-
-		jtextFieldQuantity = new JTextField();
-		jtextFieldQuantity.setColumns(10);
-		jtextFieldQuantity.setBounds(350, 170, 200, 30);
-		contentPane.add(jtextFieldQuantity);
+		lblNewLabel_1_3.setBounds(251, 280, 90, 13);
+		panel_2.add(lblNewLabel_1_3);
 
 		JLabel lblNewLabel_1_4 = new JLabel("Price:");
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_4.setBounds(250, 210, 90, 13);
-		contentPane.add(lblNewLabel_1_4);
-
-		jtextFieldPrice = new JTextField();
-		jtextFieldPrice.setColumns(10);
-		jtextFieldPrice.setBounds(350, 205, 200, 30);
-		contentPane.add(jtextFieldPrice);
+		lblNewLabel_1_4.setBounds(251, 315, 90, 13);
+		panel_2.add(lblNewLabel_1_4);
 
 		JLabel lblNewLabel_1_5 = new JLabel("Description:");
 		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_5.setBounds(250, 247, 90, 13);
-		contentPane.add(lblNewLabel_1_5);
+		lblNewLabel_1_5.setBounds(251, 156, 90, 13);
+		panel_2.add(lblNewLabel_1_5);
 
 		JLabel lblNewLabel_1_7 = new JLabel("Created:");
 		lblNewLabel_1_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_7.setBounds(250, 379, 90, 13);
-		contentPane.add(lblNewLabel_1_7);
+		lblNewLabel_1_7.setBounds(251, 354, 90, 13);
+		panel_2.add(lblNewLabel_1_7);
 
 		JLabel lblNewLabel_1_8 = new JLabel("Author:");
 		lblNewLabel_1_8.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_8.setBounds(250, 423, 90, 13);
-		contentPane.add(lblNewLabel_1_8);
+		lblNewLabel_1_8.setBounds(251, 402, 90, 13);
+		panel_2.add(lblNewLabel_1_8);
 
 		JLabel lblNewLabel_1_9 = new JLabel("Category:");
 		lblNewLabel_1_9.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_9.setBounds(250, 465, 90, 13);
-		contentPane.add(lblNewLabel_1_9);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(350, 247, 201, 112);
-		contentPane.add(scrollPane);
-
-		jtextAreaDescription = new JTextArea();
-		scrollPane.setViewportView(jtextAreaDescription);
-
-		jdateChooserCreated = new JDateChooser();
-		jdateChooserCreated.setBounds(350, 375, 200, 30);
-		contentPane.add(jdateChooserCreated);
-
-		jcomboBoxAuthor = new JComboBox();
-		jcomboBoxAuthor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jcomboBoxAuthor_actionPerformed(e);
-			}
-		});
-		jcomboBoxAuthor.setBounds(350, 418, 200, 30);
-		contentPane.add(jcomboBoxAuthor);
-
-		jcomboBoxCategory = new JComboBox();
-		jcomboBoxCategory.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jcomboBoxCategory_actionPerformed(e);
-			}
-		});
-		jcomboBoxCategory.setBounds(350, 460, 200, 30);
-		contentPane.add(jcomboBoxCategory);
-
-		jbuttonAddAuthor = new JButton("Add Author");
-		jbuttonAddAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonAddAuthor.setBounds(560, 418, 120, 30);
-		contentPane.add(jbuttonAddAuthor);
-
-		JButton btnNewButton_1 = new JButton("Add Category");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnNewButton_1.setBounds(560, 460, 120, 30);
-		contentPane.add(btnNewButton_1);
+		lblNewLabel_1_9.setBounds(251, 442, 90, 13);
+		panel_2.add(lblNewLabel_1_9);
 
 		jbuttonSave = new JButton("Save");
-		jbuttonSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonSave_actionPerformed(e);
 			}
 		});
-		jbuttonSave.setBounds(250, 557, 100, 30);
-		contentPane.add(jbuttonSave);
+		jbuttonSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jbuttonSave.setBounds(251, 524, 100, 30);
+		panel_2.add(jbuttonSave);
 
 		jbuttonCancel = new JButton("Cancel");
+		jbuttonCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonCancel_actionPerformed(e);
+			}
+		});
 		jbuttonCancel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonCancel.setBounds(370, 557, 100, 30);
-		contentPane.add(jbuttonCancel);
+		jbuttonCancel.setBounds(366, 524, 100, 30);
+		panel_2.add(jbuttonCancel);
 
 		jcheckBoxStatus = new JCheckBox("Issue Status");
+		jcheckBoxStatus.setSelected(true);
 		jcheckBoxStatus.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jcheckBoxStatus.setBounds(350, 502, 93, 30);
-		contentPane.add(jcheckBoxStatus);
+		jcheckBoxStatus.setBounds(351, 475, 93, 30);
+		panel_2.add(jcheckBoxStatus);
+
+		jcomboBoxCategory = new JComboBox();
+		jcomboBoxCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jcomboBoxCategory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jcomboBoxCategory_actionPerformed(e);
+			}
+		});
+		jcomboBoxCategory.setBounds(351, 434, 200, 30);
+		panel_2.add(jcomboBoxCategory);
+
+		jcomboBoxAuthor = new JComboBox();
+		jcomboBoxAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jcomboBoxAuthor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jcomboBoxAuthor_actionPerformed(e);
+			}
+		});
+		jcomboBoxAuthor.setBounds(351, 394, 200, 30);
+		panel_2.add(jcomboBoxAuthor);
+
+		jdateChooserCreated = new JDateChooser();
+		jdateChooserCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jdateChooserCreated.setBounds(351, 354, 200, 30);
+		panel_2.add(jdateChooserCreated);
+
+		jtextFieldPrice = new JTextField();
+		jtextFieldPrice.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldPrice.setColumns(10);
+		jtextFieldPrice.setBounds(351, 312, 200, 30);
+		panel_2.add(jtextFieldPrice);
+
+		jtextFieldQuantity = new JTextField();
+		jtextFieldQuantity.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldQuantity.setColumns(10);
+		jtextFieldQuantity.setBounds(351, 273, 200, 30);
+		panel_2.add(jtextFieldQuantity);
+
+		jtextFieldTitle = new JTextField();
+		jtextFieldTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldTitle.setColumns(10);
+		jtextFieldTitle.setBounds(351, 111, 200, 30);
+		panel_2.add(jtextFieldTitle);
+
+		jtextFieldISBN = new JTextField();
+		jtextFieldISBN.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldISBN.setColumns(10);
+		jtextFieldISBN.setBounds(351, 70, 200, 30);
+		panel_2.add(jtextFieldISBN);
+
+		jtextFieldCallNumber = new JTextField();
+		jtextFieldCallNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldCallNumber.setEditable(false);
+		jtextFieldCallNumber.setColumns(10);
+		jtextFieldCallNumber.setBounds(351, 30, 200, 30);
+		panel_2.add(jtextFieldCallNumber);
+
+		jbuttonAddAuthor = new JButton("Add Author");
+		jbuttonAddAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jbuttonAddAuthor.setBounds(588, 393, 120, 30);
+		panel_2.add(jbuttonAddAuthor);
+
+		jbuttonAddCategory = new JButton("Add Category");
+		jbuttonAddCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jbuttonAddCategory.setBounds(588, 433, 120, 30);
+		panel_2.add(jbuttonAddCategory);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(351, 156, 200, 100);
+		panel_2.add(scrollPane);
+
+		jtextAreaDescription = new JTextArea();
+		jtextAreaDescription.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		scrollPane.setViewportView(jtextAreaDescription);
 	}
 
-	public JFrameBookEdit(Map<String, Object> data) {
-		this();
+//	Dynamic Data
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public JPanelBookEdit(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
 		this.data = data;
 		initJFrame();
 	}
@@ -294,10 +305,10 @@ public class JFrameBookEdit extends JFrame {
 		fillDataToJComboBoxAuthor(authorModel.findAll());
 		fillDataToJComboBoxCategory(categoryModel.findAll());
 
-		int authorId = authorModel.findByName(book.getAuthor()).getId();
+		int authorId = authorModel.findOneByName(book.getAuthor()).getId();
 		book_Author = book_AuthorModel.find(book.getCallNumber(), authorId);
 
-		int categoryId = categoryModel.findByName(book.getCategory()).getId();
+		int categoryId = categoryModel.findOneByName(book.getCategory()).getId();
 		book_Category = book_CategoryModel.find(book.getCallNumber(), categoryId);
 
 	}
@@ -315,11 +326,11 @@ public class JFrameBookEdit extends JFrame {
 		}
 	}
 
-	public void jcomboBoxAuthor_actionPerformed(ActionEvent e) {
+	private void jcomboBoxAuthor_actionPerformed(ActionEvent e) {
 		author = (Author) jcomboBoxAuthor.getSelectedItem();
 	}
 
-	public void jcomboBoxCategory_actionPerformed(ActionEvent e) {
+	private void jcomboBoxCategory_actionPerformed(ActionEvent e) {
 		category = (Category) jcomboBoxCategory.getSelectedItem();
 	}
 
@@ -348,13 +359,25 @@ public class JFrameBookEdit extends JFrame {
 			if (bookModel.update(book) && book_AuthorModel.update(book_Author)
 					&& book_CategoryModel.update(book_Category)) {
 				JOptionPane.showMessageDialog(this, "Success");
-				this.setVisible(false);
+				jpanelRight.removeAll();
+				jpanelRight.revalidate();
+				JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight);
+				jpanelRight.add(jPanelBookList);
+				jPanelBookList.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(this, "Failed");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());
 		}
+	}
+
+	private void jbuttonCancel_actionPerformed(ActionEvent e) {
+		jpanelRight.removeAll();
+		jpanelRight.revalidate();
+		JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight);
+		jpanelRight.add(jPanelBookList);
+		jPanelBookList.setVisible(true);
 	}
 
 //	Components
@@ -367,7 +390,7 @@ public class JFrameBookEdit extends JFrame {
 		jcomboBoxAuthor.setModel(defaultComboBoxModel);
 		jcomboBoxAuthor.setRenderer(new AuthorCellRender());
 
-		Author author = authorModel.findByName(book.getAuthor());
+		Author author = authorModel.findOneByName(book.getAuthor());
 		jcomboBoxAuthor.setSelectedIndex(author.getId() - 1);
 	}
 
@@ -380,7 +403,7 @@ public class JFrameBookEdit extends JFrame {
 		jcomboBoxCategory.setModel(defaultComboBoxModel);
 		jcomboBoxCategory.setRenderer(new CategoryCellRender());
 
-		Category category = categoryModel.findByName(book.getCategory());
+		Category category = categoryModel.findOneByName(book.getCategory());
 		jcomboBoxCategory.setSelectedIndex(category.getId() - 1);
 
 	}

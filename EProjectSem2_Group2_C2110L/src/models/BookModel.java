@@ -8,6 +8,7 @@ import java.util.List;
 import entities.Book;
 
 public class BookModel {
+//	One
 	public boolean create(Book book) {
 		boolean result = true;
 		try {
@@ -118,6 +119,7 @@ public class BookModel {
 		return book;
 	}
 
+//	List
 	public List<Book> findAll() {
 		List<Book> bookList = new ArrayList<Book>();
 		try {

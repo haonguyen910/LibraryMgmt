@@ -3,10 +3,12 @@ package demo;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
@@ -14,6 +16,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +29,13 @@ import entities.Author;
 import entities.Book;
 import entities.Book_Author;
 import entities.Book_Category;
+import entities.Borrow;
 import entities.Category;
 import models.AuthorModel;
 import models.BookModel;
 import models.Book_AuthorModel;
 import models.Book_CategoryModel;
+import models.BorrowModel;
 import models.CategoryModel;
 
 import javax.swing.JButton;
@@ -38,39 +43,45 @@ import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Dimension;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
-public class JPanelBookList extends JPanel {
+public class JPanelBorrowList extends JPanel {
 	private JPanel jpanelRight;
 
 	private JTextField jtextFieldKeyword;
 	private JButton jbuttonSearch;
-	private JTable jtableBook;
+	private JTable jtableBorrow;
 	private JComboBox jcomboBoxSearchType;
 	private JButton jbuttonCancelSearch;
 	private JButton jbuttonAdd;
 	private JButton jbuttonDelete;
 	private JButton jbuttonEdit;
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	BookModel bookModel = new BookModel();
-	AuthorModel authorModel = new AuthorModel();
-	CategoryModel categoryModel = new CategoryModel();
-	Book_AuthorModel book_AuthorModel = new Book_AuthorModel();
-	Book_CategoryModel book_CategoryModel = new Book_CategoryModel();
 	private JPanel panel_4;
+	private JDateChooser jdateChooserCreated;
 	private JLabel lblNewLabel_2;
+//	Global Variable
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	BorrowModel borrowModel = new BorrowModel();
+	private JButton jbuttonCancelByCreated;
+	private JButton jbuttonSearchByCreated;
 	private JPanel panel_5;
 	private JLabel lblNewLabel_3;
+	private JPanel panel_6;
+	private JLabel lblNewLabel_4;
 
 	/**
 	 * Create the panel.
 	 */
-	public JPanelBookList(JPanel JpanelRight) {
+	public JPanelBorrowList(JPanel JpanelRight) {
 		jpanelRight = JpanelRight;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -81,7 +92,7 @@ public class JPanelBookList extends JPanel {
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Book List");
+		JLabel lblNewLabel = new JLabel("Borrow List");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		panel.add(lblNewLabel);
@@ -92,23 +103,24 @@ public class JPanelBookList extends JPanel {
 		add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("Keyword:");
+		lblNewLabel_1.setMaximumSize(new Dimension(60, 30));
 		lblNewLabel_1.setPreferredSize(new Dimension(60, 30));
 		lblNewLabel_1.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_1.setMaximumSize(new Dimension(60, 30));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(lblNewLabel_1);
 
 		jtextFieldKeyword = new JTextField();
-		jtextFieldKeyword.setMinimumSize(new Dimension(200, 30));
+		jtextFieldKeyword.setPreferredSize(new Dimension(500, 30));
+		jtextFieldKeyword.setMinimumSize(new Dimension(500, 30));
 		jtextFieldKeyword.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldKeyword.setPreferredSize(new Dimension(200, 30));
 		panel_1.add(jtextFieldKeyword);
 		jtextFieldKeyword.setColumns(20);
 
 		jbuttonSearch = new JButton("Search");
-		jbuttonSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonSearch.setPreferredSize(new Dimension(80, 30));
+		jbuttonSearch.setMinimumSize(new Dimension(80, 30));
+		jbuttonSearch.setPreferredSize(new Dimension(100, 30));
 		jbuttonSearch.setMaximumSize(new Dimension(80, 30));
+		jbuttonSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonSearch_actionPerformed(e);
@@ -116,15 +128,16 @@ public class JPanelBookList extends JPanel {
 		});
 
 		jcomboBoxSearchType = new JComboBox();
-		jcomboBoxSearchType.setPreferredSize(new Dimension(150, 30));
+		jcomboBoxSearchType.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jcomboBoxSearchType.setMinimumSize(new Dimension(150, 30));
+		jcomboBoxSearchType.setPreferredSize(new Dimension(150, 30));
 		panel_1.add(jcomboBoxSearchType);
 		panel_1.add(jbuttonSearch);
 
 		jbuttonCancelSearch = new JButton("Cancel");
-		jbuttonCancelSearch.setPreferredSize(new Dimension(80, 30));
-		jbuttonCancelSearch.setMinimumSize(new Dimension(80, 30));
-		jbuttonCancelSearch.setMaximumSize(new Dimension(80, 30));
+		jbuttonCancelSearch.setPreferredSize(new Dimension(100, 30));
+		jbuttonCancelSearch.setMinimumSize(new Dimension(100, 30));
+		jbuttonCancelSearch.setMaximumSize(new Dimension(100, 30));
 		jbuttonCancelSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonCancelSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,18 +145,58 @@ public class JPanelBookList extends JPanel {
 			}
 		});
 		panel_1.add(jbuttonCancelSearch);
-		
+
 		panel_4 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_4.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		add(panel_4);
-		
-		lblNewLabel_2 = new JLabel("");
+
+		lblNewLabel_2 = new JLabel("Created:");
 		lblNewLabel_2.setPreferredSize(new Dimension(60, 30));
 		lblNewLabel_2.setMinimumSize(new Dimension(60, 30));
 		lblNewLabel_2.setMaximumSize(new Dimension(60, 30));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_4.add(lblNewLabel_2);
+
+		jdateChooserCreated = new JDateChooser();
+		jdateChooserCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jdateChooserCreated.setPreferredSize(new Dimension(200, 30));
+		jdateChooserCreated.setMinimumSize(new Dimension(200, 30));
+		panel_4.add(jdateChooserCreated);
+
+		jbuttonSearchByCreated = new JButton("Search");
+		jbuttonSearchByCreated.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonSearchByCreated_actionPerformed(e);
+			}
+		});
+		jbuttonSearchByCreated.setPreferredSize(new Dimension(100, 30));
+		jbuttonSearchByCreated.setMinimumSize(new Dimension(80, 30));
+		jbuttonSearchByCreated.setMaximumSize(new Dimension(80, 30));
+		jbuttonSearchByCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_4.add(jbuttonSearchByCreated);
+
+		jbuttonCancelByCreated = new JButton("Cancel");
+		jbuttonCancelByCreated.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonCancelByCreated_actionPerformed(e);
+			}
+		});
+		jbuttonCancelByCreated.setPreferredSize(new Dimension(100, 30));
+		jbuttonCancelByCreated.setMinimumSize(new Dimension(80, 30));
+		jbuttonCancelByCreated.setMaximumSize(new Dimension(80, 30));
+		jbuttonCancelByCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_4.add(jbuttonCancelByCreated);
+
+		panel_5 = new JPanel();
+		add(panel_5);
+
+		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setPreferredSize(new Dimension(60, 30));
+		lblNewLabel_3.setMinimumSize(new Dimension(60, 30));
+		lblNewLabel_3.setMaximumSize(new Dimension(60, 30));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_5.add(lblNewLabel_3);
 
 		JPanel panel_2 = new JPanel();
 		add(panel_2);
@@ -152,26 +205,26 @@ public class JPanelBookList extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 
-		jtableBook = new JTable();
-		jtableBook.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtableBook.addMouseListener(new MouseAdapter() {
+		jtableBorrow = new JTable();
+		jtableBorrow.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtableBorrow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				jtableBook_mouseClicked(e);
 			}
 		});
-		jtableBook.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(jtableBook);
-		
-		panel_5 = new JPanel();
-		add(panel_5);
-		
-		lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setPreferredSize(new Dimension(60, 30));
-		lblNewLabel_3.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_3.setMaximumSize(new Dimension(60, 30));
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_5.add(lblNewLabel_3);
+		jtableBorrow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(jtableBorrow);
+
+		panel_6 = new JPanel();
+		add(panel_6);
+
+		lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.setPreferredSize(new Dimension(60, 30));
+		lblNewLabel_4.setMinimumSize(new Dimension(60, 30));
+		lblNewLabel_4.setMaximumSize(new Dimension(60, 30));
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_6.add(lblNewLabel_4);
 
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
@@ -179,10 +232,10 @@ public class JPanelBookList extends JPanel {
 		add(panel_3);
 
 		jbuttonAdd = new JButton("Add");
-		jbuttonAdd.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonAdd.setMinimumSize(new Dimension(100, 30));
-		jbuttonAdd.setMaximumSize(new Dimension(100, 30));
 		jbuttonAdd.setPreferredSize(new Dimension(100, 30));
+		jbuttonAdd.setMaximumSize(new Dimension(100, 30));
+		jbuttonAdd.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonAdd_actionPerformed(e);
@@ -191,10 +244,10 @@ public class JPanelBookList extends JPanel {
 		panel_3.add(jbuttonAdd);
 
 		jbuttonDelete = new JButton("Delete");
+		jbuttonDelete.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonDelete.setPreferredSize(new Dimension(100, 30));
 		jbuttonDelete.setMinimumSize(new Dimension(100, 30));
 		jbuttonDelete.setMaximumSize(new Dimension(100, 30));
-		jbuttonDelete.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonDelete_actionPerformed(e);
@@ -203,10 +256,10 @@ public class JPanelBookList extends JPanel {
 		panel_3.add(jbuttonDelete);
 
 		jbuttonEdit = new JButton("Edit");
-		jbuttonEdit.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jbuttonEdit.setPreferredSize(new Dimension(100, 30));
 		jbuttonEdit.setMinimumSize(new Dimension(100, 30));
 		jbuttonEdit.setMaximumSize(new Dimension(100, 30));
-		jbuttonEdit.setPreferredSize(new Dimension(100, 30));
+		jbuttonEdit.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonEdit_actionPerformed(e);
@@ -220,9 +273,10 @@ public class JPanelBookList extends JPanel {
 
 	// Functions
 	private void initJFrame() {
-		fillDataToJTable(bookModel.findAll());
+		fillDataToJTable(borrowModel.findAll());
 		fillDataToJComboBox();
 		jbuttonCancelSearch.setVisible(false);
+		jbuttonCancelByCreated.setVisible(false);
 		jbuttonDelete.setEnabled(false);
 		jbuttonEdit.setEnabled(false);
 	}
@@ -230,31 +284,41 @@ public class JPanelBookList extends JPanel {
 	private void jbuttonSearch_actionPerformed(ActionEvent e) {
 		String keyword = jtextFieldKeyword.getText().trim();
 		String searchType = jcomboBoxSearchType.getSelectedItem().toString();
-		if (searchType.equalsIgnoreCase("ISBN")) {
-			fillDataToJTable(bookModel.findByISBN(keyword));
-		} else if (searchType.equalsIgnoreCase("Title")) {
-			fillDataToJTable(bookModel.findByTitle(keyword));
-		} else if (searchType.equalsIgnoreCase("Author")) {
-			fillDataToJTable(bookModel.findByAuthor(keyword));
-		} else {
-			fillDataToJTable(bookModel.findByCallNumber(keyword));
+		if (searchType.equalsIgnoreCase("ID")) {
+			int id = Integer.parseInt(keyword);
+			fillDataToJTable(borrowModel.findById(id));
+		} else if (searchType.equalsIgnoreCase("Employee Name")) {
+			fillDataToJTable(borrowModel.findByEmployeeName(keyword));
+		} else if (searchType.equalsIgnoreCase("Customer Name")) {
+			fillDataToJTable(borrowModel.findByCustomerName(keyword));
 		}
 		jbuttonCancelSearch.setVisible(true);
 
 	}
 
+	public void jbuttonSearchByCreated_actionPerformed(ActionEvent e) {
+		fillDataToJTable(borrowModel.findByCreated(jdateChooserCreated.getDate()));
+		jbuttonCancelByCreated.setVisible(true);
+	}
+
 	public void jbuttonCancelSearch_actionPerformed(ActionEvent e) {
-		fillDataToJTable(bookModel.findAll());
+		fillDataToJTable(borrowModel.findAll());
 		jtextFieldKeyword.setText("");
 		jbuttonCancelSearch.setVisible(false);
+	}
+
+	public void jbuttonCancelByCreated_actionPerformed(ActionEvent e) {
+		fillDataToJTable(borrowModel.findAll());
+		jdateChooserCreated.setDate(null);
+		jbuttonCancelByCreated.setVisible(false);
 	}
 
 	public void jbuttonAdd_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBookAdd jPanelBookAdd = new JPanelBookAdd(jpanelRight);
-		jpanelRight.add(jPanelBookAdd);
-		jPanelBookAdd.setVisible(true);
+		JPanelBorrowAdd jPanelBorrowAdd = new JPanelBorrowAdd(jpanelRight);
+		jpanelRight.add(jPanelBorrowAdd);
+		jPanelBorrowAdd.setVisible(true);
 	}
 
 	public void jtableBook_mouseClicked(MouseEvent e) {
@@ -270,19 +334,12 @@ public class JPanelBookList extends JPanel {
 	public void deleteBook() {
 		int result = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
 		if (result == JOptionPane.YES_OPTION) {
-			int selectedRow = jtableBook.getSelectedRow();
-			String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
+			int selectedRow = jtableBorrow.getSelectedRow();
+			int id = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
 
-			Book book = bookModel.find(callNumber);
-			Author author = authorModel.findOneByName(book.getAuthor());
-			Category category = categoryModel.findOneByName(book.getCategory());
-			Book_Author book_Author = book_AuthorModel.find(callNumber, author.getId());
-			Book_Category book_Category = book_CategoryModel.find(callNumber, category.getId());
-
-			if (book_AuthorModel.delete(book_Author.getId()) && book_CategoryModel.delete(book_Category.getId())
-					&& bookModel.delete(callNumber)) {
+			if (borrowModel.delete(id)) {
 				JOptionPane.showMessageDialog(this, "Success");
-				fillDataToJTable(bookModel.findAll());
+				fillDataToJTable(borrowModel.findAll());
 			} else {
 				JOptionPane.showMessageDialog(this, "Failed");
 			}
@@ -291,21 +348,21 @@ public class JPanelBookList extends JPanel {
 	}
 
 	public void jbuttonEdit_actionPerformed(ActionEvent e) {
-		int selectedRow = jtableBook.getSelectedRow();
-		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
+		int selectedRow = jtableBorrow.getSelectedRow();
+		String callNumber = jtableBorrow.getValueAt(selectedRow, 0).toString();
 
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("callNumber", callNumber);
 
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBookEdit jPanelBookEdit = new JPanelBookEdit(jpanelRight, data);
-		jpanelRight.add(jPanelBookEdit);
-		jPanelBookEdit.setVisible(true);
+//		JPanelBookEdit jPanelBookEdit = new JPanelBookEdit(jpanelRight, data);
+//		jpanelRight.add(jPanelBookEdit);
+//		jPanelBookEdit.setVisible(true);
 	}
 
 	// Components
-	private void fillDataToJTable(List<Book> bookList) {
+	private void fillDataToJTable(List<Borrow> borrowList) {
 		DefaultTableModel defaultTableModel = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -313,37 +370,32 @@ public class JPanelBookList extends JPanel {
 			}
 		};
 
-		defaultTableModel.addColumn("Call Number");
-		defaultTableModel.addColumn("ISBN");
-		defaultTableModel.addColumn("Photo");
-		defaultTableModel.addColumn("Title");
-		defaultTableModel.addColumn("Author");
-		defaultTableModel.addColumn("Description");
-		defaultTableModel.addColumn("Category");
-		defaultTableModel.addColumn("Quantity");
-		defaultTableModel.addColumn("Price");
-		defaultTableModel.addColumn("Issue Status");
+		defaultTableModel.addColumn("ID");
+		defaultTableModel.addColumn("Customer Name");
+		defaultTableModel.addColumn("Employee Name");
 		defaultTableModel.addColumn("Created");
+		defaultTableModel.addColumn("Due Date");
+		defaultTableModel.addColumn("Deposit");
 
-		for (Book book : bookList) {
-			defaultTableModel.addRow(new Object[] { book.getCallNumber(), book.getISBN(), book.getPhoto(),
-					book.getTitle(), book.getAuthor(), book.getDescription(), book.getCategory().toUpperCase(),
-					book.getQuantity(), book.getPrice(), book.isStatus() ? "In Library" : "Out of Stock",
-					simpleDateFormat.format(book.getCreated()) });
+		for (Borrow borrow : borrowList) {
+			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCustomerName(), borrow.getEmployeeName(),
+					simpleDateFormat.format(borrow.getCreated()), simpleDateFormat.format(borrow.getDue_date()),
+					borrow.getDeposit() });
 		}
 
-		jtableBook.setModel(defaultTableModel);
-		jtableBook.getTableHeader().setReorderingAllowed(false);
-		jtableBook.setRowHeight(50);
-		jtableBook.getColumnModel().getColumn(2).setCellRenderer(new ImageCellRender());
+		jtableBorrow.setModel(defaultTableModel);
+		jtableBorrow.getTableHeader().setReorderingAllowed(false);
+		jtableBorrow.setRowHeight(50);
+//		jtableBorrow.getColumnModel().getColumn(2).setCellRenderer(new ImageCellRender());
 	}
 
 	private void fillDataToJComboBox() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
-		defaultComboBoxModel.addElement("Call Number");
-		defaultComboBoxModel.addElement("ISBN");
-		defaultComboBoxModel.addElement("Title");
-		defaultComboBoxModel.addElement("Author");
+		defaultComboBoxModel.addElement("ID Borrow");
+		defaultComboBoxModel.addElement("Employee Name");
+		defaultComboBoxModel.addElement("Customer Name");
+//		defaultComboBoxModel.addElement("Employee ID");
+//		defaultComboBoxModel.addElement("Customer ID");
 		jcomboBoxSearchType.setModel(defaultComboBoxModel);
 	}
 
