@@ -1,6 +1,9 @@
 package models;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import entities.BorrowDetail;
 
@@ -31,7 +34,7 @@ public class BorrowDetailModel {
 		boolean result = true;
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
-					.prepareStatement("UPDATE borrowDetail SET quantity = ? WHERE id = ?");
+					.prepareStatement("UPDATE borrow_detail SET quantity = ? WHERE id = ?");
 
 			preparedStatement.setInt(1, borrowDetail.getQuantity());
 			preparedStatement.setInt(2, borrowDetail.getId());
@@ -44,5 +47,35 @@ public class BorrowDetailModel {
 			ConnectDB.disconnect();
 		}
 		return result;
+	}
+
+//	List
+	public List<BorrowDetail> findByBorrowId(int id) {
+		List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM borrow_detail WHERE id_borrow = ?");
+
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				BorrowDetail borrowDetail = new BorrowDetail();
+				borrowDetail.setId(resultSet.getInt("id"));
+				borrowDetail.setId_book(resultSet.getString("id_book"));
+				borrowDetail.setId_borrow(resultSet.getInt("id_borrow"));
+				borrowDetail.setQuantity(resultSet.getInt("quantity"));
+				borrowDetail.setPrice(resultSet.getDouble("price"));
+
+				borrowDetailList.add(borrowDetail);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrowDetailList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowDetailList;
 	}
 }

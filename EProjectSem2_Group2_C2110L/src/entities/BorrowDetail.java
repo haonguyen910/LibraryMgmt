@@ -8,29 +8,32 @@ public class BorrowDetail {
 	private String id_book;
 	public int quantity;
 	private double price;
+	private double total;
 
 //	ToString
 	@Override
 	public String toString() {
 		return "BorrowDetail [id=" + id + ", id_borrow=" + id_borrow + ", id_book=" + id_book + ", quantity=" + quantity
-				+ ", price=" + price + "]";
+				+ ", price=" + price + ", total=" + total + "]";
 	}
 
 //	Constructor
-	public BorrowDetail(int id, int id_borrow, String id_book, int quantity, double price) {
+
+	public BorrowDetail() {
+		super();
+	}
+
+	public BorrowDetail(int id, int id_borrow, String id_book, int quantity, double price, double total) {
 		super();
 		this.id = id;
 		this.id_borrow = id_borrow;
 		this.id_book = id_book;
 		this.quantity = quantity;
 		this.price = price;
+		this.total = total;
 	}
 
-	public BorrowDetail() {
-		super();
-	}
-
-//	Get-Set
+//Get-Set
 	public int getId() {
 		return id;
 	}
@@ -69,6 +72,14 @@ public class BorrowDetail {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import entities.Author;
 import entities.Borrow;
 
 public class BorrowModel {
@@ -28,6 +29,36 @@ public class BorrowModel {
 			ConnectDB.disconnect();
 		}
 		return result;
+	}
+
+	public Borrow findOneByCustomerID(int id_customer) {
+		System.out.println(id_customer);
+
+		Borrow borrow = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM borrow WHERE borrow.id_customer = ? ORDER BY borrow.created DESC");
+
+			preparedStatement.setInt(1, id_customer);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				borrow = new Borrow();
+				borrow.setId(resultSet.getInt("id"));
+				borrow.setCreated(resultSet.getDate("created"));
+				borrow.setDue_date(resultSet.getDate("due_date"));
+				borrow.setId_customer(resultSet.getInt("id_customer"));
+				borrow.setId_employee(resultSet.getInt("id_employee"));
+				borrow.setDeposit(resultSet.getDouble("deposit"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrow = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrow;
 	}
 
 	public boolean update(Borrow borrow) {

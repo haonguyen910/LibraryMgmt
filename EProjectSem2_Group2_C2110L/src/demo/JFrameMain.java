@@ -179,9 +179,9 @@ public class JFrameMain extends JFrame {
 //	Functions
 	private void initJFrame() {
 		clearScreen();
-		JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight);
-		jpanelRight.add(jPanelBookList);
-		jPanelBookList.setVisible(true);
+		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
+		jpanelRight.add(jPanelBorrowList);
+		jPanelBorrowList.setVisible(true);
 	}
 
 	private void jmenuItemAddReader_actionPerformed(ActionEvent e) {
@@ -225,6 +225,7 @@ public class JFrameMain extends JFrame {
 	public void jbuttonBorrowList_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
+		JPanelBorrowAdd jPanelBorrowAdd = new JPanelBorrowAdd(jpanelRight);
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
 	}

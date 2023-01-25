@@ -64,6 +64,44 @@ public class BookModel {
 		return result;
 	}
 
+	public boolean updateQuantity(Book book, int quantityBorrwed) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("UPDATE book set quantity = ? WHERE callNumber = ?");
+
+			preparedStatement.setInt(1, quantityBorrwed);
+			preparedStatement.setString(2, book.getCallNumber());
+
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
+	public boolean updateStatus(Book book, boolean status) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("UPDATE book set status = ? WHERE callNumber = ?");
+
+			preparedStatement.setBoolean(1, status);
+			preparedStatement.setString(2, book.getCallNumber());
+
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
 	public boolean delete(String callNumber) {
 		boolean result = true;
 		try {

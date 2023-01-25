@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -103,15 +104,16 @@ public class JPanelBorrowAdd extends JPanel {
 	private JButton jbuttonAddBookList;
 	private JButton jbuttonRemoveBookList;
 	private JButton jbuttonAddCustomer;
+	private JButton jbuttonSave;
 //	Global Variable
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	BorrowDetailModel borrowDetailModel = new BorrowDetailModel();
 	EmployeeModel employeeModel = new EmployeeModel();
 	CustomerModel customerModel = new CustomerModel();
-	BorrowDetailModel borrowDetailModel = new BorrowDetailModel();
+	BorrowModel borrowModel = new BorrowModel();
 	BookModel bookModel = new BookModel();
 	private Employee employee;
 	private Customer customer;
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	BorrowModel borrowModel = new BorrowModel();
 	private Borrow borrow;
 	private Calendar calendarToday;
 	private Calendar calendarDueDate;
@@ -119,9 +121,7 @@ public class JPanelBorrowAdd extends JPanel {
 	private Date dueDate;
 	private List<BorrowDetail> borrowDetailListTemp;
 	private List<Book> bookBorrowList;
-	private Book jbuttonAddBookList_actionPerformed;
-	private BorrowDetail borrowDetailChangeQuantity;
-	private int quantityBookBorrow;
+	private JButton jbuttonCancel;
 
 	/**
 	 * Create the panel.
@@ -234,24 +234,46 @@ public class JPanelBorrowAdd extends JPanel {
 			}
 		});
 		jtableBorrowBook.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jtableBorrowBook.setRowSelectionAllowed(false);
 		scrollPane.setViewportView(jtableBorrowBook);
 
-		JButton jbuttonSave = new JButton("Save");
+		jbuttonSave = new JButton("Save");
+		jbuttonSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonSave_actionPerformed(e);
+			}
+		});
 		jbuttonSave.setPreferredSize(new Dimension(100, 30));
 		jbuttonSave.setMinimumSize(new Dimension(100, 30));
 		jbuttonSave.setMaximumSize(new Dimension(100, 30));
 		jbuttonSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonSave.setBounds(10, 632, 100, 30);
+		jbuttonSave.setBounds(10, 669, 100, 30);
 		jpanelBorrowTicket.add(jbuttonSave);
 
-		JButton jbuttonCancel = new JButton("Cancel");
+		jbuttonCancel = new JButton("Cancel");
+		jbuttonCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonCancel_actionPerformed(e);
+			}
+		});
 		jbuttonCancel.setPreferredSize(new Dimension(100, 30));
 		jbuttonCancel.setMinimumSize(new Dimension(100, 30));
 		jbuttonCancel.setMaximumSize(new Dimension(100, 30));
 		jbuttonCancel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonCancel.setBounds(118, 632, 100, 30);
+		jbuttonCancel.setBounds(118, 669, 100, 30);
 		jpanelBorrowTicket.add(jbuttonCancel);
+
+		jbuttonRemoveBookList = new JButton("Remove Book List");
+		jbuttonRemoveBookList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonRemoveBookList_actionPerformed(e);
+			}
+		});
+		jbuttonRemoveBookList.setBounds(240, 624, 150, 30);
+		jpanelBorrowTicket.add(jbuttonRemoveBookList);
+		jbuttonRemoveBookList.setPreferredSize(new Dimension(150, 30));
+		jbuttonRemoveBookList.setMinimumSize(new Dimension(150, 30));
+		jbuttonRemoveBookList.setMaximumSize(new Dimension(150, 30));
+		jbuttonRemoveBookList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JPanel jpanelSearch = new JPanel();
 		panel_1.add(jpanelSearch, BorderLayout.CENTER);
@@ -492,13 +514,6 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonAddBookList.setMaximumSize(new Dimension(120, 30));
 		jbuttonAddBookList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-		jbuttonRemoveBookList = new JButton("Remove Book List");
-		jbuttonRemoveBookList.setPreferredSize(new Dimension(150, 30));
-		jbuttonRemoveBookList.setMinimumSize(new Dimension(150, 30));
-		jbuttonRemoveBookList.setMaximumSize(new Dimension(150, 30));
-		jbuttonRemoveBookList.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_11.add(jbuttonRemoveBookList);
-
 		JPanel panel_12 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_12.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
@@ -515,28 +530,33 @@ public class JPanelBorrowAdd extends JPanel {
 	}
 
 // Logic Functions
-	private void createBorrowDetail(int id_borrow, String id_book, int quantity, double price) {
-		BorrowDetail borrowDetail = fillDataBorrowDetail(id_borrow, id_book, quantity, price);
-		borrowDetailModel.create(borrowDetail);
+	private boolean createBorrowDetail(int id_borrow, String id_book, int quantity, double price) {
+		BorrowDetail borrowDetail = setValueBorrowDetail(id_borrow, id_book, quantity, price);
+		return borrowDetailModel.create(borrowDetail);
 	}
 
-	private BorrowDetail fillDataBorrowDetail(int id_borrow, String id_book, int quantity, double price) {
+	private boolean createBorrow(int id_customer, int id_employee, double deposit) {
+		borrow = setValueBorrow(id_customer, id_employee, deposit);
+		return borrowModel.create(borrow);
+	}
+
+	private Borrow setValueBorrow(int id_customer, int id_employee, double deposit) {
 		try {
-			BorrowDetail borrowDetail = new BorrowDetail();
-			borrowDetail.setId_book(id_book);
-			borrowDetail.setId_borrow(id_borrow);
-			borrowDetail.setQuantity(quantity);
-			borrowDetail.setQuantity(quantity);
-			return borrowDetail;
+			borrow = new Borrow();
+			borrow.setId_customer(id_customer);
+			borrow.setId_employee(id_employee);
+			borrow.setDeposit(deposit);
+			return borrow;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	private BorrowDetail fillDataBorrowDetailTemp(String id_book, int quantity, double price) {
+	private BorrowDetail setValueBorrowDetail(int id_borrow, String id_book, int quantity, double price) {
 		try {
 			BorrowDetail borrowDetail = new BorrowDetail();
+			borrowDetail.setId_borrow(id_borrow);
 			borrowDetail.setId_book(id_book);
 			borrowDetail.setQuantity(quantity);
 			borrowDetail.setPrice(price);
@@ -545,6 +565,28 @@ public class JPanelBorrowAdd extends JPanel {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	private BorrowDetail setValueBorrowDetailTemp(String id_book, int quantity, double price, double total) {
+		try {
+			BorrowDetail borrowDetail = new BorrowDetail();
+			borrowDetail.setId_book(id_book);
+			borrowDetail.setQuantity(quantity);
+			borrowDetail.setPrice(price);
+			borrowDetail.setTotal(total);
+			return borrowDetail;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private double setValueDeposit(List<BorrowDetail> borrowDetailList) {
+		double total = 0;
+		for (BorrowDetail borrowDetail : borrowDetailList) {
+			total += borrowDetail.getTotal();
+		}
+		return total;
 	}
 
 //	Event Functions
@@ -569,6 +611,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonClearEmployee.setVisible(false);
 		jbuttonClearCustomer.setVisible(false);
 		jbuttonClearBook.setVisible(false);
+		jbuttonRemoveBookList.setEnabled(false);
 
 		borrowDetailListTemp = new ArrayList<BorrowDetail>();
 		bookBorrowList = new ArrayList<Book>();
@@ -579,37 +622,121 @@ public class JPanelBorrowAdd extends JPanel {
 
 		int selectedRow = jtableBook.getSelectedRow();
 		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
-		Book book = bookModel.find(callNumber);
+		Book bookSelected = bookModel.find(callNumber);
 
-		BorrowDetail borrowDetail = fillDataBorrowDetailTemp(book.getCallNumber(), 1, book.getPrice());
-		borrowDetailListTemp.add(borrowDetail);
-//		book.setQuantity(borrowDetail.getQuantity());
-		bookBorrowList.add(book);
+		if (bookSelected.getQuantity() > 0 && bookSelected.isStatus() == true) {
+			BorrowDetail borrowDetail = setValueBorrowDetailTemp(bookSelected.getCallNumber(), 1,
+					bookSelected.getPrice(), bookSelected.getPrice() * 1);
+			borrowDetailListTemp.add(borrowDetail);
 
-		System.out.println("557 Add:" + bookBorrowList.toString());
-		System.out.println("558 Add:" + borrowDetailListTemp.toString());
-		fillDataToJTableBorrowBook(bookBorrowList);
+			Book bookBorrow = new Book();
+			bookBorrow.setCallNumber(borrowDetail.getId_book());
+			bookBorrow.setAuthor(bookSelected.getAuthor());
+			bookBorrow.setTitle(bookSelected.getTitle());
+			bookBorrow.setQuantity(borrowDetail.getQuantity());
+			bookBorrow.setPrice(bookSelected.getPrice());
+			bookBorrowList.add(bookBorrow);
+
+//			System.out.println("557 Add:" + bookBorrowList.toString());
+//			System.out.println("558 Add:" + borrowDetailListTemp.toString());
+			fillDataToJTableBorrowBook(bookBorrowList);
+		} else {
+			JFrame f = new JFrame();
+			JOptionPane.showMessageDialog(f, "Book Invalid");
+//			fillDataToJTableBorrowBook(bookBorrowList);
+		}
+
+	}
+
+	public void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
+		int selectedRow = jtableBorrowBook.getSelectedRow();
+		String callNumber = jtableBorrowBook.getValueAt(selectedRow, 0).toString();
+
+//		System.out.println(callNumber);
+//		System.out.println(bookBorrowList.get(selectedRow));
+
+		for (int i = 0; i < bookBorrowList.size(); i++) {
+			if (bookBorrowList.get(i).getCallNumber() == callNumber) {
+
+				if (bookBorrowList.remove(bookBorrowList.get(i))) {
+
+					fillDataToJTableBorrowBook(bookBorrowList);
+				}
+			}
+		}
+		for (int i = 0; i < borrowDetailListTemp.size(); i++) {
+			if (borrowDetailListTemp.get(i).getId_book() == callNumber) {
+
+				if (borrowDetailListTemp.remove(borrowDetailListTemp.get(i))) {
+
+					jtextFieldBorrowDeposit.setText(String.valueOf(setValueDeposit(borrowDetailListTemp)));
+				}
+			}
+		}
+
+		jbuttonRemoveBookList.setEnabled(false);
+	}
+
+	public void jbuttonSave_actionPerformed(ActionEvent e) {
+//		System.out.println(customer.toString());
+
+		try {
+			if (createBorrow(customer.getId(), employee.getId(), setValueDeposit(borrowDetailListTemp))) {
+				JOptionPane.showMessageDialog(this, "Success Borrow");
+
+				List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
+				int borrowCreatedId = borrowModel.findOneByCustomerID(customer.getId()).getId();
+//				System.out.println(borrowCreatedId);
+
+				for (BorrowDetail bdT : borrowDetailListTemp) {
+
+					BorrowDetail borrowDetail = setValueBorrowDetail(borrowCreatedId, bdT.getId_book(),
+							bdT.getQuantity(), bdT.getPrice());
+					borrowDetailList.add(borrowDetail);
+				}
+
+				for (BorrowDetail bd : borrowDetailList) {
+					Book bookInLibrary = bookModel.find(bd.getId_book());
+					if (borrowDetailModel.create(bd) == false) {
+						JOptionPane.showMessageDialog(this, "Failed Borrow Detail");
+					}
+					if (bookModel.updateQuantity(bookInLibrary,
+							bookInLibrary.getQuantity() - bd.getQuantity()) == false) {
+						JOptionPane.showMessageDialog(this, "Failed Update Quantity");
+					}
+					if (bookInLibrary.getQuantity() == bd.getQuantity()) {
+						if (bookModel.updateStatus(bookInLibrary, false) == false) {
+							JOptionPane.showMessageDialog(this, "Failed Update Status");
+						}
+					}
+
+				}
+				JOptionPane.showMessageDialog(this, "Success Borrow Detail");
+				jpanelRight.removeAll();
+				jpanelRight.revalidate();
+				JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
+				jpanelRight.add(jPanelBorrowList);
+				jPanelBorrowList.setVisible(true);
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed");
+			}
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(this, e2.getMessage());
+		}
+	}
+
+	public void jbuttonCancel_actionPerformed(ActionEvent e) {
+		jpanelRight.removeAll();
+		jpanelRight.revalidate();
+		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
+		jpanelRight.add(jPanelBorrowList);
+		jPanelBorrowList.setVisible(true);
 	}
 
 	public void jtableBorrowBook_mouseClicked(MouseEvent e) {
-
+		jbuttonRemoveBookList.setEnabled(true);
 	}
-
-//	private void setDataBookList() {
-//		borrowDetailListTemp = new ArrayList<BorrowDetail>();
-//		bookBorrowList = new ArrayList<Book>();
-//
-//		Book book = jbuttonAddBookList_actionPerformed(ActionEvent);
-//
-//		for (int i = 0; i < 5; i++) {
-//
-//			BorrowDetail borrowDetail = fillDataBorrowDetailTemp(book.getCallNumber(), 1, book.getPrice());
-//			borrowDetailListTemp.add(i, borrowDetail);
-//			bookBorrowList.add(i, book);
-//		}
-//		System.out.println(borrowDetailListTemp.toString());
-//		fillDataToJTableBorrowBook(bookBorrowList);
-//	}
 
 	private void jtableEmployee_mouseClicked(MouseEvent e) {
 		int selectedRow = jtableEmployee.getSelectedRow();
@@ -696,60 +823,71 @@ public class JPanelBorrowAdd extends JPanel {
 			@Override
 			public void setValueAt(Object aValue, int row, int column) {
 				super.setValueAt(aValue, row, column);
-				Book book = bookList.get(row);
+				Book bookSelected = bookList.get(row);
+//				System.out.println("Book Selected: " + bookSelected.getQuantity());
 
 				if (2 == column) {
 					String quantityString = aValue.toString();
 					int quantityInt = Integer.parseInt(quantityString);
-					book.setQuantity(quantityInt);
-					for (Book bookBorrow : bookBorrowList) {
-						if (bookBorrow.getCallNumber() == book.getCallNumber()) {
-							bookBorrow.setQuantity(quantityInt);
-							book.setQuantity(quantityInt);
+					bookSelected.setQuantity(quantityInt);
+					Book bookInLibrary = bookModel.find(bookSelected.getCallNumber());
 
-							System.out.println("708 Change: " + bookBorrowList.toString());
+					for (Book bookBorrow : bookBorrowList) {
+//						System.out.println("Book in Library: " + bookInLibrary.getQuantity());
+						if (bookBorrow.getCallNumber() == bookSelected.getCallNumber()) {
+							if (bookInLibrary.getQuantity() >= quantityInt) {
+								bookBorrow.setQuantity(quantityInt);
+								bookSelected.setQuantity(quantityInt);
+								fillDataToJTableBorrowBook(bookBorrowList);
+//							System.out.println("708 Change: " + bookBorrowList.toString());
+
+							} else {
+								JFrame f = new JFrame();
+								JOptionPane.showMessageDialog(f,
+										"The quantity of books selected is MORE THAN the quantity of books available in library");
+								bookBorrow.setQuantity(1);
+								bookSelected.setQuantity(1);
+								fillDataToJTableBorrowBook(bookBorrowList);
+							}
 						}
 					}
+
 					for (BorrowDetail borrowDetail : borrowDetailListTemp) {
-						if (borrowDetail.getId_book() == book.getCallNumber()) {
-							borrowDetail.setQuantity(quantityInt);
-							System.out.println("714 Change: " + borrowDetailListTemp.toString());
+						if (borrowDetail.getId_book() == bookSelected.getCallNumber()) {
+							if (bookInLibrary.getQuantity() >= quantityInt) {
+								borrowDetail.setQuantity(quantityInt);
+								borrowDetail.setTotal(borrowDetail.getQuantity() * borrowDetail.getPrice());
+//								System.out.println("714 Change: " + borrowDetailListTemp.toString());
+							} else {
+								borrowDetail.setQuantity(1);
+								borrowDetail.setTotal(borrowDetail.getQuantity() * borrowDetail.getPrice());
+							}
+
 						}
 					}
+
+					jtextFieldBorrowDeposit.setText(String.valueOf(setValueDeposit(borrowDetailListTemp)));
 				}
 			}
 		};
-//			public void setValueAt(int aValue, int rowIndex, int columnIndex) {
-//				Book book = bookList.get(rowIndex);
-//				if (2 == columnIndex) {
-//					book.setQuantity(aValue);
-//					for (Book bookBorrow : bookBorrowList) {
-//						if (bookBorrow.getCallNumber() == book.getCallNumber()) {
-//							bookBorrow.setQuantity(aValue);
-//							fillDataToJTableBorrowBook(bookBorrowList);
-//						}
-//					}
-//					for (BorrowDetail borrowDetail : borrowDetailListTemp) {
-//						if (borrowDetail.getId_book() == book.getCallNumber()) {
-//							borrowDetail.setQuantity(aValue);
-//							System.out.println(borrowDetailListTemp.toString());
-//						}
-//					}
-//				}
-//			}
 
+		defaultTableModel.addColumn("Call Number");
 		defaultTableModel.addColumn("Title");
-		defaultTableModel.addColumn("Author");
 		defaultTableModel.addColumn("Quantity");
 		defaultTableModel.addColumn("Price");
+		defaultTableModel.addColumn("Total");
 
-		for (Book book : bookList) {
-			defaultTableModel.addRow(new Object[] { book.getTitle(), book.getAuthor(), 1, book.getPrice() });
+		for (Book bookBorrow : bookList) {
+			defaultTableModel
+					.addRow(new Object[] { bookBorrow.getCallNumber(), bookBorrow.getTitle(), bookBorrow.getQuantity(),
+							bookBorrow.getPrice(), bookBorrow.getQuantity() * bookBorrow.getPrice() });
 		}
 
 		jtableBorrowBook.setModel(defaultTableModel);
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
 		jtableBorrowBook.setRowHeight(50);
+
+		jtextFieldBorrowDeposit.setText(String.valueOf(setValueDeposit(borrowDetailListTemp)));
 	}
 
 	private void fillDataToJTableBorrowBookInit() {
@@ -760,8 +898,8 @@ public class JPanelBorrowAdd extends JPanel {
 			}
 		};
 
+		defaultTableModel.addColumn("Call Number");
 		defaultTableModel.addColumn("Title");
-		defaultTableModel.addColumn("Author");
 		defaultTableModel.addColumn("Quantity");
 		defaultTableModel.addColumn("Price");
 
@@ -769,8 +907,6 @@ public class JPanelBorrowAdd extends JPanel {
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
 		jtableBorrowBook.setRowHeight(50);
 	}
-
-//	public class BorrowBookTableModel extends AbstractTableModel {
 
 	private void fillDataToJTableCustomer(List<Customer> customerList) {
 		DefaultTableModel defaultTableModel = new DefaultTableModel() {
