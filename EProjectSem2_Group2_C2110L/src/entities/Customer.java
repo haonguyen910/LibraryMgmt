@@ -15,7 +15,7 @@ public class Customer {
 		super();
 	}
 
-	public Customer(int id, String name, String address, String phone, byte[] photo, Date created) {
+	public Customer(int id, String name, String address, String phone, Date created) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -66,8 +66,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", photo="
-				+ ", created=" + created + "]";
+		return "Customer [id=" + id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", created="
+				+ created + "]";
 	}
 
 }

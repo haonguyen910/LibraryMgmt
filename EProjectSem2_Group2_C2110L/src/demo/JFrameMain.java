@@ -189,14 +189,14 @@ public class JFrameMain extends JFrame {
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
 	}
-	
+
 	public void jbuttonStatistic_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelStatistic jpanelStatistic = new JPanelStatistic();
 		jpanelRight.add(jpanelStatistic);
 		jpanelStatistic.setVisible(true);
 	}
-	
+
 	public void jbuttonCustmList_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelCustmList jpanelCustmList = new JPanelCustmList();

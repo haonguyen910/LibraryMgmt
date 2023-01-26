@@ -74,6 +74,7 @@ public class JPanelBorrowList extends JPanel {
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	BorrowModel borrowModel = new BorrowModel();
 	BorrowDetailModel borrowDetailModel = new BorrowDetailModel();
+	BookModel bookModel = new BookModel();
 	private JButton jbuttonCancelByCreated;
 	private JButton jbuttonSearchByCreated;
 	private JPanel panel_5;
@@ -86,6 +87,8 @@ public class JPanelBorrowList extends JPanel {
 	private JPanel jpanelBorrow;
 	private JScrollPane scrollPane_1;
 	private JTable jtableBorrow;
+	private JButton jbuttonSetBorrowed;
+	private JComboBox jcomboBoxSort;
 
 	/**
 	 * Create the panel.
@@ -198,14 +201,27 @@ public class JPanelBorrowList extends JPanel {
 		panel_4.add(jbuttonCancelByCreated);
 
 		panel_5 = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panel_5.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.RIGHT);
 		add(panel_5);
 
-		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3 = new JLabel("Sort By:");
 		lblNewLabel_3.setPreferredSize(new Dimension(60, 30));
 		lblNewLabel_3.setMinimumSize(new Dimension(60, 30));
 		lblNewLabel_3.setMaximumSize(new Dimension(60, 30));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_5.add(lblNewLabel_3);
+
+		jcomboBoxSort = new JComboBox();
+		jcomboBoxSort.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jcomboBoxSort_actionPerformed(e);
+			}
+		});
+		jcomboBoxSort.setPreferredSize(new Dimension(150, 30));
+		jcomboBoxSort.setMinimumSize(new Dimension(150, 30));
+		jcomboBoxSort.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_5.add(jcomboBoxSort);
 
 		JPanel panel_2 = new JPanel();
 		add(panel_2);
@@ -292,6 +308,20 @@ public class JPanelBorrowList extends JPanel {
 		});
 		panel_3.add(jbuttonEdit);
 
+		jbuttonSetBorrowed = new JButton("Set Borrowed");
+		jbuttonSetBorrowed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonSetBorrowed_actionPerformed(e);
+			}
+		});
+		jbuttonSetBorrowed.setIcon(new ImageIcon(JPanelBorrowList.class.getResource("/resources/borrowed.png")));
+		jbuttonSetBorrowed.setPreferredSize(new Dimension(150, 30));
+		jbuttonSetBorrowed.setMinimumSize(new Dimension(150, 30));
+		jbuttonSetBorrowed.setMaximumSize(new Dimension(150, 30));
+		jbuttonSetBorrowed.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jbuttonSetBorrowed.setEnabled(false);
+		panel_3.add(jbuttonSetBorrowed);
+
 		initJFrame();
 
 	}
@@ -300,10 +330,12 @@ public class JPanelBorrowList extends JPanel {
 	private void initJFrame() {
 		fillDataToJTableBorrow(borrowModel.findAll());
 		fillDataToJComboBox();
+		fillDataToJComboBoxSort();
 		jbuttonCancelSearch.setVisible(false);
 		jbuttonCancelByCreated.setVisible(false);
 		jbuttonDelete.setEnabled(false);
 		jbuttonEdit.setEnabled(false);
+		jbuttonSetBorrowed.setEnabled(false);
 		fillDataToJTableDetailsInit();
 
 	}
@@ -313,6 +345,9 @@ public class JPanelBorrowList extends JPanel {
 		int id = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
 
 		fillDataToJTableDetails(borrowDetailModel.findByBorrowId(id));
+		jbuttonDelete.setEnabled(true);
+		jbuttonEdit.setEnabled(true);
+		jbuttonSetBorrowed.setEnabled(true);
 	}
 
 	private void jbuttonSearch_actionPerformed(ActionEvent e) {
@@ -351,6 +386,30 @@ public class JPanelBorrowList extends JPanel {
 		fillDataToJTableDetailsInit();
 	}
 
+	public void jcomboBoxSort_actionPerformed(ActionEvent e) {
+
+		String status = jcomboBoxSort.getSelectedItem().toString();
+//		if (status.equalsIgnoreCase("borrowing")) {
+//			fillDataToJTableBorrow(borrowModel.findByStatus(status.equalsIgnoreCase("borrowing")));
+//
+//		} else if (status.equalsIgnoreCase("completed")) {
+//			fillDataToJTableBorrow(borrowModel.findByStatus(status.equalsIgnoreCase("completed")));
+//
+//		} else {
+//			fillDataToJTableBorrow(borrowModel.findAll());
+//		}
+//		fillDataToJTableDetailsInit();
+
+		if (status.equalsIgnoreCase("all")) {
+			fillDataToJTableBorrow(borrowModel.findAll());
+		} else if (status.equalsIgnoreCase("borrowing")) {
+			fillDataToJTableBorrow(borrowModel.findByStatus(false));
+		} else if (status.equalsIgnoreCase("completed")) {
+			fillDataToJTableBorrow(borrowModel.findByStatus((true)));
+		}
+		fillDataToJTableDetailsInit();
+	}
+
 	public void jbuttonAdd_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
@@ -360,38 +419,66 @@ public class JPanelBorrowList extends JPanel {
 	}
 
 	public void jbuttonDelete_actionPerformed(ActionEvent e) {
-		deleteBook();
+		deleteBorrow();
 		jbuttonEdit.setEnabled(false);
+		jbuttonSetBorrowed.setEnabled(false);
 	}
 
-	public void deleteBook() {
+	public void deleteBorrow() {
 		int result = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
 		if (result == JOptionPane.YES_OPTION) {
 			int selectedRow = jtableBorrow.getSelectedRow();
 			int id = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
 
-			if (borrowModel.delete(id)) {
-				JOptionPane.showMessageDialog(this, "Success");
-				fillDataToJTableBorrow(borrowModel.findAll());
-			} else {
+			List<BorrowDetail> borrowDetailList = borrowDetailModel.findByBorrowId(id);
+			for (BorrowDetail bd : borrowDetailList) {
+				Book bookInLibrary = bookModel.find(bd.getId_book());
+
+				if (bookModel.updateQuantity(bookInLibrary, bookInLibrary.getQuantity() + bd.getQuantity()) == false) {
+					JOptionPane.showMessageDialog(this, "Failed Update Quantity");
+				}
+				if (bookInLibrary.getQuantity() == 0) {
+					if (bookModel.updateStatus(bookInLibrary, true) == false) {
+						JOptionPane.showMessageDialog(this, "Failed Update Status");
+					}
+				}
+			}
+			if ((borrowDetailModel.deleteByBorrowId(id) && borrowModel.delete(id)) == false) {
 				JOptionPane.showMessageDialog(this, "Failed");
 			}
+			JOptionPane.showMessageDialog(this, "Success");
+			fillDataToJTableBorrow(borrowModel.findAll());
+			fillDataToJTableDetailsInit();
 		}
 		jbuttonDelete.setEnabled(false);
 	}
 
 	public void jbuttonEdit_actionPerformed(ActionEvent e) {
 		int selectedRow = jtableBorrow.getSelectedRow();
-		String callNumber = jtableBorrow.getValueAt(selectedRow, 0).toString();
+		int idBorrow = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
 
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("callNumber", callNumber);
+		data.put("idBorrow", idBorrow);
 
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-//		JPanelBookEdit jPanelBookEdit = new JPanelBookEdit(jpanelRight, data);
-//		jpanelRight.add(jPanelBookEdit);
-//		jPanelBookEdit.setVisible(true);
+		JPanelBorrowEdit jPanelBorrowEdit = new JPanelBorrowEdit(jpanelRight, data);
+		jpanelRight.add(jPanelBorrowEdit);
+		jPanelBorrowEdit.setVisible(true);
+	}
+
+	public void jbuttonSetBorrowed_actionPerformed(ActionEvent e) {
+		int selectedRow = jtableBorrow.getSelectedRow();
+		int idBorrow = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("idBorrow", idBorrow);
+
+//		jpanelRight.removeAll();
+//		jpanelRight.revalidate();
+//		JPanelBorrowEdit jPanelBorrowEdit = new JPanelBorrowEdit(jpanelRight, data);
+//		jpanelRight.add(jPanelBorrowEdit);
+//		jPanelBorrowEdit.setVisible(true);
 	}
 
 	// Components
@@ -409,11 +496,12 @@ public class JPanelBorrowList extends JPanel {
 		defaultTableModel.addColumn("Created");
 		defaultTableModel.addColumn("Due Date");
 		defaultTableModel.addColumn("Deposit");
+		defaultTableModel.addColumn("Status");
 
 		for (Borrow borrow : borrowList) {
 			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCustomerName(), borrow.getEmployeeName(),
 					simpleDateFormat.format(borrow.getCreated()), simpleDateFormat.format(borrow.getDue_date()),
-					borrow.getDeposit() });
+					borrow.getDeposit(), borrow.isStatus() ? "Completed" : "Borrowing" });
 		}
 		jtableBorrow.setModel(defaultTableModel);
 		jtableBorrow.getTableHeader().setReorderingAllowed(false);
@@ -438,7 +526,8 @@ public class JPanelBorrowList extends JPanel {
 
 		for (BorrowDetail borrowDetail : borrowDetailList) {
 			defaultTableModel.addRow(new Object[] { borrowDetail.getId_borrow(), borrowDetail.getId(),
-					borrowDetail.getId_book(), borrowDetail.getQuantity(), borrowDetail.getPrice() });
+					bookModel.find(borrowDetail.getId_book()).getTitle(), borrowDetail.getQuantity(),
+					borrowDetail.getPrice() });
 		}
 
 		jtableDetails.setModel(defaultTableModel);
@@ -474,6 +563,14 @@ public class JPanelBorrowList extends JPanel {
 //		defaultComboBoxModel.addElement("Employee ID");
 //		defaultComboBoxModel.addElement("Customer ID");
 		jcomboBoxSearchType.setModel(defaultComboBoxModel);
+	}
+
+	private void fillDataToJComboBoxSort() {
+		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
+		defaultComboBoxModel.addElement("Borrowing");
+		defaultComboBoxModel.addElement("Completed");
+		defaultComboBoxModel.addElement("All");
+		jcomboBoxSort.setModel(defaultComboBoxModel);
 	}
 
 	private class ImageCellRender extends DefaultTableCellRenderer {

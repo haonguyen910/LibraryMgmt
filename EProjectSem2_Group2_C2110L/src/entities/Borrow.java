@@ -11,6 +11,7 @@ public class Borrow {
 	private int id_employee;
 	private int id_customer;
 	private double deposit;
+	private boolean status;
 	private List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
 	private String employeeName;
 	private String customerName;
@@ -19,8 +20,8 @@ public class Borrow {
 	@Override
 	public String toString() {
 		return "Borrow [id=" + id + ", created=" + created + ", due_date=" + due_date + ", id_employee=" + id_employee
-				+ ", id_customer=" + id_customer + ", deposit=" + deposit + ", borrowDetailList=" + borrowDetailList
-				+ ", employeeName=" + employeeName + ", customerName=" + customerName + "]";
+				+ ", id_customer=" + id_customer + ", deposit=" + deposit + ", status=" + status + ", borrowDetailList="
+				+ borrowDetailList + ", employeeName=" + employeeName + ", customerName=" + customerName + "]";
 	}
 
 //	Constructor
@@ -28,7 +29,7 @@ public class Borrow {
 		super();
 	}
 
-	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit,
+	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit, boolean status,
 			List<BorrowDetail> borrowDetailList, String employeeName, String customerName) {
 		super();
 		this.id = id;
@@ -37,6 +38,7 @@ public class Borrow {
 		this.id_employee = id_employee;
 		this.id_customer = id_customer;
 		this.deposit = deposit;
+		this.status = status;
 		this.borrowDetailList = borrowDetailList;
 		this.employeeName = employeeName;
 		this.customerName = customerName;
@@ -89,6 +91,14 @@ public class Borrow {
 
 	public void setDeposit(double deposit) {
 		this.deposit = deposit;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public List<BorrowDetail> getBorrowDetailList() {

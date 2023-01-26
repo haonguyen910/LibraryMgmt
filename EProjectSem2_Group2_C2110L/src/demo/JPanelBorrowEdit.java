@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.awt.ComponentOrientation;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -77,7 +78,7 @@ import java.awt.event.InputMethodEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-public class JPanelBorrowAdd extends JPanel {
+public class JPanelBorrowEdit extends JPanel {
 	private JPanel jpanelRight;
 
 	private JTextField jtextFieldBorrowEmployee;
@@ -115,18 +116,16 @@ public class JPanelBorrowAdd extends JPanel {
 	private Employee employee;
 	private Customer customer;
 	private Borrow borrow;
-	private Calendar calendarToday;
-	private Calendar calendarDueDate;
-	private Date today;
-	private Date dueDate;
 	private List<BorrowDetail> borrowDetailListTemp;
 	private List<Book> bookBorrowList;
+	private List<Book> bookBorrowListOld;
 	private JButton jbuttonCancel;
+	private Map<String, Object> data;
 
 	/**
 	 * Create the panel.
 	 */
-	public JPanelBorrowAdd(JPanel JpanelRight) {
+	public JPanelBorrowEdit(JPanel JpanelRight) {
 		jpanelRight = JpanelRight;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -138,7 +137,7 @@ public class JPanelBorrowAdd extends JPanel {
 		fl_panel.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Add Borrow");
+		JLabel lblNewLabel = new JLabel("Edit Borrow");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		panel.add(lblNewLabel);
@@ -525,7 +524,11 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonAddCustomer.setMaximumSize(new Dimension(120, 30));
 		jbuttonAddCustomer.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_12.add(jbuttonAddCustomer);
-//		Function
+	}
+
+	public JPanelBorrowEdit(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
 		initJFrame();
 	}
 
@@ -535,14 +538,13 @@ public class JPanelBorrowAdd extends JPanel {
 		return borrowDetailModel.create(borrowDetail);
 	}
 
-	private boolean createBorrow(int id_customer, int id_employee, double deposit) {
+	private boolean updateBorrow(int id_customer, int id_employee, double deposit) {
 		borrow = setValueBorrow(id_customer, id_employee, deposit);
-		return borrowModel.create(borrow);
+		return borrowModel.update(borrow);
 	}
 
 	private Borrow setValueBorrow(int id_customer, int id_employee, double deposit) {
 		try {
-			borrow = new Borrow();
 			borrow.setId_customer(id_customer);
 			borrow.setId_employee(id_employee);
 			borrow.setDeposit(deposit);
@@ -581,6 +583,7 @@ public class JPanelBorrowAdd extends JPanel {
 		}
 	}
 
+//
 	private double setValueDeposit(List<BorrowDetail> borrowDetailList) {
 		double total = 0;
 		for (BorrowDetail borrowDetail : borrowDetailList) {
@@ -589,37 +592,90 @@ public class JPanelBorrowAdd extends JPanel {
 		return total;
 	}
 
+	public boolean deleteBookBorrowOld() {
+
+		try {
+			for (Book bookOld : bookBorrowListOld) {
+				Book bookInLibrary = bookModel.find(bookOld.getCallNumber());
+
+				if (bookModel.updateQuantity(bookInLibrary,
+						bookInLibrary.getQuantity() + bookOld.getQuantity()) == false) {
+					JOptionPane.showMessageDialog(this, "Failed Update Quantity");
+				}
+				if (bookInLibrary.getQuantity() == 0) {
+					if (bookModel.updateStatus(bookInLibrary, true) == false) {
+						JOptionPane.showMessageDialog(this, "Failed Update Status");
+					}
+				}
+			}
+			JOptionPane.showMessageDialog(this, "Success Delete Book List OLD");
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 //	Event Functions
 	private void initJFrame() {
+		borrowDetailListTemp = new ArrayList<BorrowDetail>();
+		bookBorrowList = new ArrayList<Book>();
+		bookBorrowListOld = new ArrayList<Book>();
+		int idBorrow = Integer.parseInt(this.data.get("idBorrow").toString());
+		borrow = borrowModel.find(idBorrow);
+		for (BorrowDetail bd : borrowDetailModel.findByBorrowId(idBorrow)) {
+			bd.setTotal(bd.getQuantity() * bd.getPrice());
+			Book book = bookModel.find(bd.getId_book());
 
-		calendarToday = Calendar.getInstance();
-		calendarDueDate = Calendar.getInstance();
-		calendarDueDate.add(Calendar.DAY_OF_MONTH, 5);
-		today = calendarToday.getTime();
-		dueDate = calendarDueDate.getTime();
+			Book bookBorrow = new Book();
+			bookBorrow.setCallNumber(bd.getId_book());
+			bookBorrow.setAuthor(book.getAuthor());
+			bookBorrow.setTitle(book.getTitle());
+			bookBorrow.setQuantity(bd.getQuantity());
+			bookBorrow.setPrice(bd.getPrice());
+			bookBorrowListOld.add(bookBorrow);
+		}
+		borrowDetailListTemp = borrowDetailModel.findByBorrowId(idBorrow);
+//		System.out.println("init: " + borrow);
+//		System.out.println("init: " + borrowDetailListTemp.toString());
 
-		jtextFieldBorrowCreated.setText(String.valueOf(simpleDateFormat.format(today)));
-		jtextFieldBorrowDueDate.setText(String.valueOf(simpleDateFormat.format(dueDate)));
+		for (BorrowDetail bd : borrowDetailListTemp) {
+			bd.setTotal(bd.getQuantity() * bd.getPrice());
+			Book book = bookModel.find(bd.getId_book());
+
+			Book bookBorrow = new Book();
+			bookBorrow.setCallNumber(bd.getId_book());
+			bookBorrow.setAuthor(book.getAuthor());
+			bookBorrow.setTitle(book.getTitle());
+			bookBorrow.setQuantity(bd.getQuantity());
+			bookBorrow.setPrice(bd.getPrice());
+			bookBorrowList.add(bookBorrow);
+		}
+		customer = customerModel.find(borrow.getId_customer());
+		employee = employeeModel.find(borrow.getId_employee());
+		jtextFieldBorrowDeposit.setText(String.valueOf(borrow.getDeposit()));
+
+		fillDataToJTableBorrowBook(bookBorrowList);
+		jtextFieldBorrowCreated.setText(simpleDateFormat.format(borrow.getCreated()));
+		jtextFieldBorrowDueDate.setText(simpleDateFormat.format(borrow.getDue_date()));
+		jtextFieldBorrowCustomer.setText(customer.getName());
+		jtextFieldBorrowEmployee.setText(employee.getName());
+//		=========================
 		fillDataToJTableCustomer(customerModel.findAll());
 		fillDataToJTableEmployee(employeeModel.findAll());
 		fillDataToJTableBook(bookModel.findAll());
 		fillDataToJComboBoxCustomer();
 		fillDataToJComboBoxEmployee();
 		fillDataToJComboBoxBook();
-		fillDataToJTableBorrowBookInit();
 
 		jbuttonClearEmployee.setVisible(false);
 		jbuttonClearCustomer.setVisible(false);
 		jbuttonClearBook.setVisible(false);
 		jbuttonRemoveBookList.setEnabled(false);
 
-		borrowDetailListTemp = new ArrayList<BorrowDetail>();
-		bookBorrowList = new ArrayList<Book>();
-
 	}
 
 	private void jbuttonAddBookList_actionPerformed(ActionEvent e) {
-
 		int selectedRow = jtableBook.getSelectedRow();
 		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
 		Book bookSelected = bookModel.find(callNumber);
@@ -628,6 +684,7 @@ public class JPanelBorrowAdd extends JPanel {
 			BorrowDetail borrowDetail = setValueBorrowDetailTemp(bookSelected.getCallNumber(), 1,
 					bookSelected.getPrice(), bookSelected.getPrice() * 1);
 			borrowDetailListTemp.add(borrowDetail);
+//			System.out.println("add btn borrowDetailListTemp: " + borrowDetailListTemp);
 
 			Book bookBorrow = new Book();
 			bookBorrow.setCallNumber(borrowDetail.getId_book());
@@ -637,15 +694,14 @@ public class JPanelBorrowAdd extends JPanel {
 			bookBorrow.setPrice(bookSelected.getPrice());
 			bookBorrowList.add(bookBorrow);
 
-//			System.out.println("557 Add:" + bookBorrowList.toString());
-//			System.out.println("558 Add:" + borrowDetailListTemp.toString());
+//			System.out.println("add btn bookBorrowList: " + bookBorrowList.toString());
+//			System.out.println("add btn bookBorrowListOLD: " + bookBorrowListOld.toString());
 			fillDataToJTableBorrowBook(bookBorrowList);
+			jtextFieldBorrowDeposit.setText(String.valueOf(setValueDeposit(borrowDetailListTemp)));
 		} else {
 			JFrame f = new JFrame();
 			JOptionPane.showMessageDialog(f, "Book Invalid");
-//			fillDataToJTableBorrowBook(bookBorrowList);
 		}
-
 	}
 
 	public void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
@@ -681,17 +737,18 @@ public class JPanelBorrowAdd extends JPanel {
 //		System.out.println(customer.toString());
 
 		try {
-			if (createBorrow(customer.getId(), employee.getId(), setValueDeposit(borrowDetailListTemp))) {
+			if (updateBorrow(customer.getId(), employee.getId(), setValueDeposit(borrowDetailListTemp))
+					&& borrowDetailModel.deleteByBorrowId(borrow.getId()) && deleteBookBorrowOld()) {
+
 				JOptionPane.showMessageDialog(this, "Success Borrow");
 
 				List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
-				int borrowCreatedId = borrowModel.findOneByCustomerID(customer.getId()).getId();
-//				System.out.println(borrowCreatedId);
+				int borrowId = borrowModel.find(borrow.getId()).getId();
 
 				for (BorrowDetail bdT : borrowDetailListTemp) {
 
-					BorrowDetail borrowDetail = setValueBorrowDetail(borrowCreatedId, bdT.getId_book(),
-							bdT.getQuantity(), bdT.getPrice());
+					BorrowDetail borrowDetail = setValueBorrowDetail(borrowId, bdT.getId_book(), bdT.getQuantity(),
+							bdT.getPrice());
 					borrowDetailList.add(borrowDetail);
 				}
 
@@ -719,7 +776,7 @@ public class JPanelBorrowAdd extends JPanel {
 				jPanelBorrowList.setVisible(true);
 
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed Save");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());
@@ -902,7 +959,6 @@ public class JPanelBorrowAdd extends JPanel {
 		defaultTableModel.addColumn("Title");
 		defaultTableModel.addColumn("Quantity");
 		defaultTableModel.addColumn("Price");
-		defaultTableModel.addColumn("Total");
 
 		jtableBorrowBook.setModel(defaultTableModel);
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
@@ -930,7 +986,6 @@ public class JPanelBorrowAdd extends JPanel {
 		jtableCustomer.setModel(defaultTableModel);
 		jtableCustomer.getTableHeader().setReorderingAllowed(false);
 		jtableCustomer.setRowHeight(50);
-
 	}
 
 	private void fillDataToJTableEmployee(List<Employee> employeeList) {

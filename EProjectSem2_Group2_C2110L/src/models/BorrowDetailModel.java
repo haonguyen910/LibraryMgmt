@@ -49,6 +49,24 @@ public class BorrowDetailModel {
 		return result;
 	}
 
+	public boolean deleteByBorrowId(int id_borrow) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("DELETE FROM borrow_detail WHERE id_borrow = ?");
+
+			preparedStatement.setInt(1, id_borrow);
+
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
 //	List
 	public List<BorrowDetail> findByBorrowId(int id) {
 		List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
