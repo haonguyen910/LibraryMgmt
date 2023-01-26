@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Author;
 import entities.Customer;
 
 public class CustomerModel {
@@ -14,13 +13,12 @@ public class CustomerModel {
 		boolean result = true;
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement(
-					"insert into customer(id, name, address, phone, photo, created) values(?,?,?,?,?,?)");
+					"insert into customer(id, name, address, phone, created) values(?,?,?,?,?)");
 			ps.setInt(1, customer.getId());
 			ps.setString(2, customer.getName());
 			ps.setString(3, customer.getAddress());
 			ps.setString(4, customer.getPhone());
-			ps.setBytes(5, customer.getPhoto());
-			ps.setDate(6, new java.sql.Date(customer.getCreated().getTime()));
+			ps.setDate(5, new java.sql.Date(customer.getCreated().getTime()));
 			result = ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,12 +33,11 @@ public class CustomerModel {
 		boolean result = true;
 		try {
 			PreparedStatement ps = ConnectDB.connection()
-					.prepareStatement("update customer set name = ?, address = ?, phone = ?, photo = ? where id = ?");
+					.prepareStatement("update customer set name = ?, address = ?, phone = ? where id = ?");
 			ps.setString(1, customer.getName());
 			ps.setString(2, customer.getAddress());
 			ps.setString(3, customer.getPhone());
-			ps.setBytes(4, customer.getPhoto());
-			ps.setInt(5, customer.getId());
+			ps.setInt(4, customer.getId());
 			result = ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,7 +64,6 @@ public class CustomerModel {
 				customer.setName(resultSet.getString("name"));
 				customer.setPhone(resultSet.getString("phone"));
 				customer.setCreated(resultSet.getDate("created"));
-				customer.setPhoto(resultSet.getBytes("photo"));
 			}
 
 		} catch (Exception e) {
@@ -92,7 +88,6 @@ public class CustomerModel {
 				customer.setName(resultSet.getString("name"));
 				customer.setPhone(resultSet.getString("phone"));
 				customer.setCreated(resultSet.getDate("created"));
-				customer.setPhoto(resultSet.getBytes("photo"));
 				customers.add(customer);
 			}
 		} catch (Exception e) {
@@ -117,7 +112,6 @@ public class CustomerModel {
 				customer.setName(resultSet.getString("name"));
 				customer.setPhone(resultSet.getString("phone"));
 				customer.setCreated(resultSet.getDate("created"));
-				customer.setPhoto(resultSet.getBytes("photo"));
 				customers.add(customer);
 			}
 		} catch (Exception e) {
@@ -142,7 +136,6 @@ public class CustomerModel {
 				customer.setName(resultSet.getString("name"));
 				customer.setPhone(resultSet.getString("phone"));
 				customer.setCreated(resultSet.getDate("created"));
-				customer.setPhoto(resultSet.getBytes("photo"));
 				customers.add(customer);
 			}
 		} catch (Exception e) {

@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Author;
 import entities.Employee;
 
 public class EmployeeModel {
@@ -46,8 +45,25 @@ public class EmployeeModel {
 			ps.setString(4, employee.getDepartment());
 			ps.setString(5, employee.getUsername());
 			ps.setString(6, employee.getPassword());
-			ps.setBytes(7, employee.getPhoto());
-			ps.setInt(8, employee.getId());
+			ps.setBoolean(7, employee.isIs_admin());
+			ps.setBytes(8, employee.getPhoto());
+			ps.setInt(9, employee.getId());
+			result = ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+	
+	public boolean delete(int id) {
+		boolean result = true;
+		try {
+			PreparedStatement ps = ConnectDB.connection().prepareStatement(
+					"delete from employee where id = ?");
+			ps.setInt(1, id);
 			result = ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,6 +74,7 @@ public class EmployeeModel {
 		return result;
 	}
 
+
 	public Employee find(int id) {
 		Employee employee = null;
 		try {
@@ -66,7 +83,6 @@ public class EmployeeModel {
 
 			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
-
 			while (resultSet.next()) {
 				employee = new Employee();
 				employee.setId(resultSet.getInt("id"));
@@ -80,7 +96,6 @@ public class EmployeeModel {
 				employee.setIs_admin(resultSet.getBoolean("is_admin"));
 				employee.setPhoto(resultSet.getBytes("photo"));
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			employee = null;
