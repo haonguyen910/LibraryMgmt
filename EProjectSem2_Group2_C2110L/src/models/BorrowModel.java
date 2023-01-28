@@ -2,6 +2,7 @@ package models;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -397,6 +398,7 @@ public class BorrowModel {
 		return borrowList;
 	}
 
+<<<<<<< Updated upstream
 	public List<Borrow> findByCreatedASC() {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
@@ -433,6 +435,9 @@ public class BorrowModel {
 	}
 
 	// HAO
+=======
+//HAO
+>>>>>>> Stashed changes
 	public List<Borrow> findAllForHistory() {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
@@ -449,6 +454,7 @@ public class BorrowModel {
 				borrow.setDue_date(rs.getDate("due_date"));
 //				borrow.setCallNumber(rs.getString("callNumber"));
 				borrow.setCustomerName(rs.getString("customerName"));
+				borrow.setStatus(rs.getBoolean("status"));
 
 				borrowList.add(borrow);
 			}
@@ -461,7 +467,7 @@ public class BorrowModel {
 		return borrowList;
 	}
 
-	public List<Borrow> findByDates(Date issueDate, Date dueDate) {
+	public List<Borrow> findByDates(Date startDate, Date endDate) {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
@@ -469,9 +475,9 @@ public class BorrowModel {
 							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
 							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber"
-							+ "WHERE borrow.created >= ? and borrow.created <= ?");
-			preparedStatement.setDate(1, new java.sql.Date(issueDate.getTime()));
-			preparedStatement.setDate(2, new java.sql.Date(dueDate.getTime()));
+							+ "WHERE borrow.created >= ? and <= ?");
+			preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
+			preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Borrow borrow = new Borrow();
@@ -480,10 +486,10 @@ public class BorrowModel {
 				borrow.setDue_date(rs.getDate("due_date"));
 //				borrow.setCallNumber(rs.getString("callNumber"));
 				borrow.setCustomerName(rs.getString("customerName"));
+				borrow.setStatus(rs.getBoolean("status"));
 
 				borrowList.add(borrow);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			borrowList = null;
@@ -492,4 +498,68 @@ public class BorrowModel {
 		}
 		return borrowList;
 	}
+
+	public List<Borrow> findByStatusForHistory(boolean status) {
+		List<Borrow> borrowList = new ArrayList<Borrow>();
+		try {
+			PreparedStatement ps = ConnectDB.connection().prepareStatement(
+					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
+							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
+							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
+							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber" + "WHERE borrow.status = ?");
+			ps.setBoolean(1, status);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Borrow borrow = new Borrow();
+				borrow.setId(rs.getInt("id"));
+				borrow.setCreated(rs.getDate("created"));
+				borrow.setDue_date(rs.getDate("due_date"));
+				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setCustomerName(rs.getString("customerName"));
+				borrow.setStatus(rs.getBoolean("status"));
+
+				borrowList.add(borrow);
+			}
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrowList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowList;
+	}
+
+	public List<Borrow> findByCustomerIdForHistory(int id) {
+		List<Borrow> borrowList = new ArrayList<Borrow>();
+		try {
+			PreparedStatement ps = ConnectDB.connection().prepareStatement(
+					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
+							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
+							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
+							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber" + "WHERE borrow.id_customer = ?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Borrow borrow = new Borrow();
+				borrow.setId(rs.getInt("id"));
+				borrow.setCreated(rs.getDate("created"));
+				borrow.setDue_date(rs.getDate("due_date"));
+				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setCustomerName(rs.getString("customerName"));
+				borrow.setStatus(rs.getBoolean("status"));
+			}
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			borrowList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowList;
+	}
+
 }

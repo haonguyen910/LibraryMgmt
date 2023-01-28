@@ -29,8 +29,13 @@ public class Borrow {
 		super();
 	}
 
+<<<<<<< Updated upstream
 	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit, boolean status,
 			List<BorrowDetail> borrowDetailList, String employeeName, String customerName) {
+=======
+	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit,
+			List<BorrowDetail> borrowDetailList, String employeeName, String customerName, String callNumber, boolean status) {
+>>>>>>> Stashed changes
 		super();
 		this.id = id;
 		this.created = created;

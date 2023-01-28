@@ -201,14 +201,22 @@ public class JFrameMain extends JFrame {
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
 	}
+<<<<<<< Updated upstream
 
+=======
+	
+>>>>>>> Stashed changes
 	public void jbuttonVRecord_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelVRecord jpanelVRecord = new JPanelVRecord();
 		jpanelRight.add(jpanelVRecord);
 		jpanelVRecord.setVisible(true);
 	}
+<<<<<<< Updated upstream
 
+=======
+	
+>>>>>>> Stashed changes
 	public void jbuttonStatistic_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelStatistic jpanelStatistic = new JPanelStatistic();
