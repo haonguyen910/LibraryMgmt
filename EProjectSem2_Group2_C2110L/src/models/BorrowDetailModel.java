@@ -96,4 +96,5 @@ public class BorrowDetailModel {
 		}
 		return borrowDetailList;
 	}
+
 }

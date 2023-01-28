@@ -69,13 +69,17 @@ public class JPanelCustmList extends JPanel {
 		panel_head_1.add(lblNewLabel);
 		
 		JPanel panel_head_2 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_head_2.getLayout();
+		flowLayout_1.setHgap(15);
 		add(panel_head_2);
 		
 		jtextFieldSearch = new JTextField();
+		jtextFieldSearch.setPreferredSize(new Dimension(250, 30));
 		jtextFieldSearch.setColumns(20);
 		panel_head_2.add(jtextFieldSearch);
 		
 		jbuttonSearch = new JButton("Find by Name");
+		jbuttonSearch.setPreferredSize(new Dimension(120, 30));
 		jbuttonSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonSearch_actionPerformed(e);

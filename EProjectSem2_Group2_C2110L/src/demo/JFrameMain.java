@@ -28,6 +28,7 @@ public class JFrameMain extends JFrame {
 	private JButton jbuttonCategory;
 	private JButton jbuttonBorrowList;
 	private JButton jbuttonCustmList;
+	private JButton jbuttonVRecord;
 
 	/**
 	 * Launch the application.
@@ -144,9 +145,14 @@ public class JFrameMain extends JFrame {
 		jbuttonBorrowedList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrowed.png")));
 		jpanelLeft.add(jbuttonBorrowedList);
 
-		JButton btnNewButton_3 = new JButton("Issue Register");
-		btnNewButton_3.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/issue.png")));
-		jpanelLeft.add(btnNewButton_3);
+		jbuttonVRecord = new JButton("View Record");
+		jbuttonVRecord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonVRecord_actionPerformed(e);
+			}
+		});
+		jbuttonVRecord.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/issue.png")));
+		jpanelLeft.add(jbuttonVRecord);
 
 		JButton jbuttonStatistic = new JButton("Statistic Report");
 		jbuttonStatistic.addActionListener(new ActionListener() {
@@ -189,7 +195,18 @@ public class JFrameMain extends JFrame {
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
 	}
+<<<<<<< Updated upstream
 
+=======
+	
+	public void jbuttonVRecord_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelVRecord jpanelVRecord = new JPanelVRecord();
+		jpanelRight.add(jpanelVRecord);
+		jpanelVRecord.setVisible(true);
+	}
+	
+>>>>>>> Stashed changes
 	public void jbuttonStatistic_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelStatistic jpanelStatistic = new JPanelStatistic();

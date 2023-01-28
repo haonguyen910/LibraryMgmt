@@ -6,12 +6,19 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 import entities.Book;
 import entities.Customer;
@@ -19,7 +26,6 @@ import models.BookModel;
 import models.ConnectDB;
 import models.CustomerModel;
 
-import javax.swing.border.EtchedBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.MatteBorder;
@@ -31,6 +37,9 @@ public class JPanelStatistic extends JPanel {
 	private List<Book> books;
 	private JLabel jlabelNBook;
 	private JLabel jlabelNCust;
+	private JLabel jlabelNIssueBook;
+	private JLabel jlabelNDefaulter;
+	private JPanel panelPieChart;
 
 	/**
 	 * Create the panel.
@@ -74,27 +83,27 @@ public class JPanelStatistic extends JPanel {
 		panel.add(jlabelNCust);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 206, 395, 250);
+		scrollPane.setBounds(20, 206, 442, 127);
 		panel.add(scrollPane);
 
 		jtableBookDetail = new JTable();
 		scrollPane.setViewportView(jtableBookDetail);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(430, 206, 395, 250);
+		scrollPane_1.setBounds(20, 373, 442, 127);
 		panel.add(scrollPane_1);
 
 		jtableCustDetail = new JTable();
 		scrollPane_1.setViewportView(jtableCustDetail);
 
 		JLabel lblNewLabel_2 = new JLabel("Customer Details");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(430, 181, 106, 14);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2.setBounds(20, 348, 132, 14);
 		panel.add(lblNewLabel_2);
 
 		JLabel lblNewLabel_2_1 = new JLabel("Book Details");
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2_1.setBounds(10, 181, 106, 14);
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2_1.setBounds(20, 181, 106, 14);
 		panel.add(lblNewLabel_2_1);
 
 		JLabel lblNewLabel_1 = new JLabel("No. of Books");
@@ -117,20 +126,28 @@ public class JPanelStatistic extends JPanel {
 		lblNewLabel_1_3.setBounds(652, 29, 120, 14);
 		panel.add(lblNewLabel_1_3);
 
-		JLabel jlabelNBook_1 = new JLabel("");
-		jlabelNBook_1.setOpaque(true);
-		jlabelNBook_1.setForeground(Color.WHITE);
-		jlabelNBook_1.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 128, 0)));
-		jlabelNBook_1.setBackground(Color.WHITE);
-		jlabelNBook_1.setBounds(482, 54, 120, 100);
-		panel.add(jlabelNBook_1);
+		jlabelNIssueBook = new JLabel("");
+		jlabelNIssueBook.setHorizontalAlignment(SwingConstants.CENTER);
+		jlabelNIssueBook.setFont(new Font("Tahoma", Font.BOLD, 30));
+		jlabelNIssueBook.setOpaque(true);
+		jlabelNIssueBook.setForeground(new Color(0, 0, 0));
+		jlabelNIssueBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 128, 0)));
+		jlabelNIssueBook.setBackground(Color.WHITE);
+		jlabelNIssueBook.setBounds(482, 54, 120, 100);
+		panel.add(jlabelNIssueBook);
 
-		JLabel jlabelNCust_1 = new JLabel("");
-		jlabelNCust_1.setOpaque(true);
-		jlabelNCust_1.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(51, 204, 255)));
-		jlabelNCust_1.setBackground(Color.WHITE);
-		jlabelNCust_1.setBounds(652, 54, 120, 100);
-		panel.add(jlabelNCust_1);
+		jlabelNDefaulter = new JLabel("");
+		jlabelNDefaulter.setFont(new Font("Tahoma", Font.BOLD, 30));
+		jlabelNDefaulter.setHorizontalAlignment(SwingConstants.CENTER);
+		jlabelNDefaulter.setOpaque(true);
+		jlabelNDefaulter.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(51, 204, 255)));
+		jlabelNDefaulter.setBackground(Color.WHITE);
+		jlabelNDefaulter.setBounds(652, 54, 120, 100);
+		panel.add(jlabelNDefaulter);
+
+		panelPieChart = new JPanel();
+		panelPieChart.setBounds(495, 206, 395, 294);
+		panel.add(panelPieChart);
 
 		JPanel panel_bottom = new JPanel();
 		add(panel_bottom);
@@ -148,6 +165,8 @@ public class JPanelStatistic extends JPanel {
 		fillDataToCustomerDetail(customerModel.findAll());
 
 		fillDataToCards();
+		
+		showPieChart();
 
 	}
 
@@ -188,18 +207,71 @@ public class JPanelStatistic extends JPanel {
 			if (rs1.next()) {
 				String sum1 = rs1.getString("sum_quantity");
 				jlabelNBook.setText(sum1);
-				
-			PreparedStatement ps2 = ConnectDB.connection().prepareStatement("select count(id) as count_id from customer");
+			}
+
+			PreparedStatement ps2 = ConnectDB.connection()
+					.prepareStatement("select count(id) as count_id from customer");
 			ResultSet rs2 = ps2.executeQuery();
-			if(rs2.next()) {
+			if (rs2.next()) {
 				String sum2 = rs2.getString("count_id");
 				jlabelNCust.setText(sum2);
 			}
-			
+
+			PreparedStatement ps3 = ConnectDB.connection()
+					.prepareStatement("select sum(quantity) as sum_quantity from borrow_detail");
+			ResultSet rs3 = ps3.executeQuery();
+			if (rs3.next()) {
+				String sum3 = rs3.getString("sum_quantity");
+				jlabelNIssueBook.setText(sum3);
+			}
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			String today = sdf.format(cal.getTime());
+			PreparedStatement ps4 = ConnectDB.connection()
+					.prepareStatement("select count(due_date) as count_due_date from borrow where due_date > ?");
+			ps4.setString(1, today);
+			ResultSet rs4 = ps4.executeQuery();
+			if (rs4.next()) {
+				String sum4 = rs4.getString("count_due_date");
+				jlabelNDefaulter.setText(sum4);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void showPieChart() {
+		DefaultPieDataset pieDataset = new DefaultPieDataset();
+		try {
+			PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT book_category.id_category, COUNT(borrow_detail.id) as NumberOfCheckOut FROM borrow_detail LEFT JOIN book_category ON borrow_detail.id_book = book_category.id_book GROUP BY id_category");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				pieDataset.setValue(rs.getString("id_category"), new Double(rs.getDouble("NumberOfCheckOut")));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		JFreeChart pieChart = ChartFactory.createPieChart("Category Detail", pieDataset, true, true, false);
+		PiePlot piePlot = (PiePlot) pieChart.getPlot();
+		
+		piePlot.setSectionPaint("novel", new Color(255, 255, 102));
+		piePlot.setSectionPaint("poem", new Color(102, 255, 102));
+		piePlot.setSectionPaint("short story", new Color(255, 102, 153));
+		piePlot.setSectionPaint("prose", new Color(0, 204, 204));
+		piePlot.setSectionPaint("long story", new Color(255, 255, 102));
+		piePlot.setSectionPaint("autobiography", new Color(102, 255, 102));
+		piePlot.setBackgroundPaint(Color.white);
+		
+		ChartPanel chartPanel = new ChartPanel(pieChart);
+		chartPanel.setBounds(0, 0, 385, 294);
+		panelPieChart.removeAll();
+		panelPieChart.setLayout(null);
+		panelPieChart.add(chartPanel);
+		chartPanel.setLayout(null);
+		panelPieChart.validate();
 	}
 }

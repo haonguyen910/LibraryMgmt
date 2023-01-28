@@ -923,14 +923,23 @@ public class JPanelBorrowAdd extends JPanel {
 		defaultTableModel.addColumn("Address");
 
 		for (Customer customer : customerList) {
+<<<<<<< Updated upstream
 			defaultTableModel.addRow(
 					new Object[] { customer.getId(), customer.getName(), customer.getPhone(), customer.getAddress() });
+=======
+			defaultTableModel.addRow(new Object[] { customer.getId(), customer.getName(),
+					customer.getPhone(), customer.getAddress() });
+>>>>>>> Stashed changes
 		}
 
 		jtableCustomer.setModel(defaultTableModel);
 		jtableCustomer.getTableHeader().setReorderingAllowed(false);
 		jtableCustomer.setRowHeight(50);
+<<<<<<< Updated upstream
 
+=======
+		
+>>>>>>> Stashed changes
 	}
 
 	private void fillDataToJTableEmployee(List<Employee> employeeList) {

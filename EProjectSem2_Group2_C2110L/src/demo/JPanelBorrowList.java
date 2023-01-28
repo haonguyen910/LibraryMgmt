@@ -416,6 +416,7 @@ public class JPanelBorrowList extends JPanel {
 		JPanelBorrowAdd jPanelBorrowAdd = new JPanelBorrowAdd(jpanelRight);
 		jpanelRight.add(jPanelBorrowAdd);
 		jPanelBorrowAdd.setVisible(true);
+		
 	}
 
 	public void jbuttonDelete_actionPerformed(ActionEvent e) {
