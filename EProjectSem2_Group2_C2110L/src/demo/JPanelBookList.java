@@ -425,13 +425,13 @@ public class JPanelBookList extends JPanel {
 
 	}
 
-	public void jbuttonCancelSearch_actionPerformed(ActionEvent e) {
+	private void jbuttonCancelSearch_actionPerformed(ActionEvent e) {
 		fillDataToJTable(bookModel.findAll());
 		jtextFieldKeyword.setText("");
 		jbuttonCancelSearch.setVisible(false);
 	}
 
-	public void jbuttonAdd_actionPerformed(ActionEvent e) {
+	private void jbuttonAdd_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
 		JPanelBookAdd jPanelBookAdd = new JPanelBookAdd(jpanelRight);
@@ -439,7 +439,7 @@ public class JPanelBookList extends JPanel {
 		jPanelBookAdd.setVisible(true);
 	}
 
-	public void jtableBook_mouseClicked(MouseEvent e) {
+	private void jtableBook_mouseClicked(MouseEvent e) {
 		jbuttonEdit.setEnabled(true);
 		jbuttonDelete.setEnabled(true);
 
@@ -467,12 +467,12 @@ public class JPanelBookList extends JPanel {
 
 	}
 
-	public void jbuttonDelete_actionPerformed(ActionEvent e) {
+	private void jbuttonDelete_actionPerformed(ActionEvent e) {
 		deleteBook();
 		jbuttonEdit.setEnabled(false);
 	}
 
-	public void deleteBook() {
+	private void deleteBook() {
 		int result = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
 		if (result == JOptionPane.YES_OPTION) {
 			int selectedRow = jtableBook.getSelectedRow();
@@ -495,7 +495,7 @@ public class JPanelBookList extends JPanel {
 		jbuttonDelete.setEnabled(false);
 	}
 
-	public void jbuttonEdit_actionPerformed(ActionEvent e) {
+	private void jbuttonEdit_actionPerformed(ActionEvent e) {
 		int selectedRow = jtableBook.getSelectedRow();
 		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
 

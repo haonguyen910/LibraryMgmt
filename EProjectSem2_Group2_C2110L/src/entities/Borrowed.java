@@ -7,38 +7,43 @@ public class Borrowed {
 	private int id_borrow;
 	private Date created_borrow;
 	private Date due_date_borrow;
-	private int overdue_date;
+	private int overdue_day;
 	private double deposit_borrow;
 	private double fines;
 	private double total;
-	private Date created_borrowed;
+	private Date created;
+	private int employeeId;
+	private int customerId;
 
 //ToString
 	@Override
 	public String toString() {
 		return "Borrowed [id=" + id + ", id_borrow=" + id_borrow + ", created_borrow=" + created_borrow
-				+ ", due_date_borrow=" + due_date_borrow + ", overdue_date=" + overdue_date + ", deposit_borrow="
-				+ deposit_borrow + ", fines=" + fines + ", total=" + total + ", created_borrowed=" + created_borrowed
-				+ "]";
+				+ ", due_date_borrow=" + due_date_borrow + ", overdue_day=" + overdue_day + ", deposit_borrow="
+				+ deposit_borrow + ", fines=" + fines + ", total=" + total + ", created=" + created + ", employeeId="
+				+ employeeId + ", customerId=" + customerId + "]";
 	}
 
 //Constructor
-	public Borrowed(int id, int id_borrow, Date created_borrow, Date due_date_borrow, int overdue_date,
-			double deposit_borrow, double fines, double total, Date created_borrowed) {
+
+	public Borrowed() {
+		super();
+	}
+
+	public Borrowed(int id, int id_borrow, Date created_borrow, Date due_date_borrow, int overdue_day,
+			double deposit_borrow, double fines, double total, Date created, int employeeId, int customerId) {
 		super();
 		this.id = id;
 		this.id_borrow = id_borrow;
 		this.created_borrow = created_borrow;
 		this.due_date_borrow = due_date_borrow;
-		this.overdue_date = overdue_date;
+		this.overdue_day = overdue_day;
 		this.deposit_borrow = deposit_borrow;
 		this.fines = fines;
 		this.total = total;
-		this.created_borrowed = created_borrowed;
-	}
-
-	public Borrowed() {
-		super();
+		this.created = created;
+		this.employeeId = employeeId;
+		this.customerId = customerId;
 	}
 
 //Get-Set
@@ -74,12 +79,12 @@ public class Borrowed {
 		this.due_date_borrow = due_date_borrow;
 	}
 
-	public int getOverdue_date() {
-		return overdue_date;
+	public int getOverdue_day() {
+		return overdue_day;
 	}
 
-	public void setOverdue_date(int overdue_date) {
-		this.overdue_date = overdue_date;
+	public void setOverdue_day(int overdue_day) {
+		this.overdue_day = overdue_day;
 	}
 
 	public double getDeposit_borrow() {
@@ -106,12 +111,28 @@ public class Borrowed {
 		this.total = total;
 	}
 
-	public Date getCreated_borrowed() {
-		return created_borrowed;
+	public Date getCreated() {
+		return created;
 	}
 
-	public void setCreated_borrowed(Date created_borrowed) {
-		this.created_borrowed = created_borrowed;
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 }

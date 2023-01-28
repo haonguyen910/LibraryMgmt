@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import entities.Author;
-import entities.Book;
 import entities.Borrow;
-import entities.BorrowDetail;
 
 public class BorrowModel {
 //	One
@@ -22,6 +20,64 @@ public class BorrowModel {
 			preparedStatement.setInt(1, borrow.getId_customer());
 			preparedStatement.setInt(2, borrow.getId_employee());
 			preparedStatement.setDouble(3, borrow.getDeposit());
+
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
+	public boolean update(Borrow borrow) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("UPDATE borrow SET id_customer = ?, id_employee = ?, deposit = ? WHERE id = ?");
+
+			preparedStatement.setInt(1, borrow.getId_customer());
+			preparedStatement.setInt(2, borrow.getId_employee());
+			preparedStatement.setDouble(3, borrow.getDeposit());
+			preparedStatement.setInt(4, borrow.getId());
+
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
+	public boolean updateStatus(Borrow borrow, boolean status) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("UPDATE borrow SET status = ? WHERE id = ?");
+
+			preparedStatement.setBoolean(1, status);
+			preparedStatement.setInt(2, borrow.getId());
+
+			result = preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
+
+	public boolean delete(int id) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("DELETE FROM borrow WHERE id = ?");
+
+			preparedStatement.setInt(1, id);
 
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
@@ -52,6 +108,7 @@ public class BorrowModel {
 				borrow.setId_customer(resultSet.getInt("id_customer"));
 				borrow.setId_employee(resultSet.getInt("id_employee"));
 				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
 			}
 
 		} catch (Exception e) {
@@ -92,45 +149,6 @@ public class BorrowModel {
 		return borrow;
 	}
 
-	public boolean update(Borrow borrow) {
-		boolean result = true;
-		try {
-			PreparedStatement preparedStatement = ConnectDB.connection()
-					.prepareStatement("UPDATE borrow SET id_customer = ?, id_employee = ?, deposit = ? WHERE id = ?");
-
-			preparedStatement.setInt(1, borrow.getId_customer());
-			preparedStatement.setInt(2, borrow.getId_employee());
-			preparedStatement.setDouble(3, borrow.getDeposit());
-			preparedStatement.setInt(4, borrow.getId());
-
-			result = preparedStatement.executeUpdate() > 0;
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = false;
-		} finally {
-			ConnectDB.disconnect();
-		}
-		return result;
-	}
-
-	public boolean delete(int id) {
-		boolean result = true;
-		try {
-			PreparedStatement preparedStatement = ConnectDB.connection()
-					.prepareStatement("DELETE FROM borrow WHERE id = ?");
-
-			preparedStatement.setInt(1, id);
-
-			result = preparedStatement.executeUpdate() > 0;
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = false;
-		} finally {
-			ConnectDB.disconnect();
-		}
-		return result;
-	}
-
 	// List
 	public List<Borrow> findAll() {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
@@ -150,6 +168,7 @@ public class BorrowModel {
 				borrow.setId_customer(resultSet.getInt("id_customer"));
 				borrow.setId_employee(resultSet.getInt("id_employee"));
 				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
 				borrow.setEmployeeName(resultSet.getString("employeeName"));
 				borrow.setCustomerName(resultSet.getString("customerName"));
 
@@ -184,6 +203,7 @@ public class BorrowModel {
 				borrow.setId_customer(resultSet.getInt("id_customer"));
 				borrow.setId_employee(resultSet.getInt("id_employee"));
 				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
 				borrow.setEmployeeName(resultSet.getString("employeeName"));
 				borrow.setCustomerName(resultSet.getString("customerName"));
 
@@ -219,6 +239,7 @@ public class BorrowModel {
 				borrow.setId_customer(resultSet.getInt("id_customer"));
 				borrow.setId_employee(resultSet.getInt("id_employee"));
 				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
 				borrow.setEmployeeName(resultSet.getString("employeeName"));
 				borrow.setCustomerName(resultSet.getString("customerName"));
 
@@ -254,6 +275,7 @@ public class BorrowModel {
 				borrow.setId_customer(resultSet.getInt("id_customer"));
 				borrow.setId_employee(resultSet.getInt("id_employee"));
 				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
 				borrow.setEmployeeName(resultSet.getString("employeeName"));
 				borrow.setCustomerName(resultSet.getString("customerName"));
 
@@ -289,6 +311,7 @@ public class BorrowModel {
 				borrow.setId_customer(resultSet.getInt("id_customer"));
 				borrow.setId_employee(resultSet.getInt("id_employee"));
 				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
 				borrow.setEmployeeName(resultSet.getString("employeeName"));
 				borrow.setCustomerName(resultSet.getString("customerName"));
 
@@ -304,7 +327,6 @@ public class BorrowModel {
 		return borrowList;
 	}
 
-<<<<<<< Updated upstream
 	public List<Borrow> findByStatus(boolean status) {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
@@ -324,14 +346,93 @@ public class BorrowModel {
 				borrow.setId_customer(resultSet.getInt("id_customer"));
 				borrow.setId_employee(resultSet.getInt("id_employee"));
 				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
 				borrow.setEmployeeName(resultSet.getString("employeeName"));
 				borrow.setCustomerName(resultSet.getString("customerName"));
 
 				borrowList.add(borrow);
 			}
 
-=======
-//HAO
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrowList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowList;
+	}
+
+	public List<Borrow> findByCreatedDESC() {
+		List<Borrow> borrowList = new ArrayList<Borrow>();
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
+					"SELECT borrow.*, customer.name AS customerName, employee.name AS employeeName\r\n"
+							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
+							+ "LEFT JOIN employee ON borrow.id_employee = employee.id\r\n"
+							+ "ORDER BY borrow.created DESC");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Borrow borrow = new Borrow();
+				borrow.setId(resultSet.getInt("id"));
+				borrow.setCreated(resultSet.getDate("created"));
+				borrow.setDue_date(resultSet.getDate("due_date"));
+				borrow.setId_customer(resultSet.getInt("id_customer"));
+				borrow.setId_employee(resultSet.getInt("id_employee"));
+				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
+				borrow.setEmployeeName(resultSet.getString("employeeName"));
+				borrow.setCustomerName(resultSet.getString("customerName"));
+
+				borrowList.add(borrow);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrowList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowList;
+	}
+
+	public List<Borrow> findByCreatedASC() {
+		List<Borrow> borrowList = new ArrayList<Borrow>();
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
+					"SELECT borrow.*, customer.name AS customerName, employee.name AS employeeName\r\n"
+							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
+							+ "LEFT JOIN employee ON borrow.id_employee = employee.id\r\n"
+							+ "ORDER BY borrow.created ASC");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Borrow borrow = new Borrow();
+				borrow.setId(resultSet.getInt("id"));
+				borrow.setCreated(resultSet.getDate("created"));
+				borrow.setDue_date(resultSet.getDate("due_date"));
+				borrow.setId_customer(resultSet.getInt("id_customer"));
+				borrow.setId_employee(resultSet.getInt("id_employee"));
+				borrow.setDeposit(resultSet.getDouble("deposit"));
+				borrow.setStatus(resultSet.getBoolean("status"));
+				borrow.setEmployeeName(resultSet.getString("employeeName"));
+				borrow.setCustomerName(resultSet.getString("customerName"));
+
+				borrowList.add(borrow);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrowList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowList;
+	}
+
+	// HAO
 	public List<Borrow> findAllForHistory() {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
@@ -346,7 +447,7 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-				borrow.setCallNumber(rs.getString("callNumber"));
+//				borrow.setCallNumber(rs.getString("callNumber"));
 				borrow.setCustomerName(rs.getString("customerName"));
 
 				borrowList.add(borrow);
@@ -377,12 +478,12 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-				borrow.setCallNumber(rs.getString("callNumber"));
+//				borrow.setCallNumber(rs.getString("callNumber"));
 				borrow.setCustomerName(rs.getString("customerName"));
 
 				borrowList.add(borrow);
 			}
->>>>>>> Stashed changes
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			borrowList = null;

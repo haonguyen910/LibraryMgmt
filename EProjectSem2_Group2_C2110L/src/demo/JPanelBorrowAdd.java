@@ -637,23 +637,17 @@ public class JPanelBorrowAdd extends JPanel {
 			bookBorrow.setPrice(bookSelected.getPrice());
 			bookBorrowList.add(bookBorrow);
 
-//			System.out.println("557 Add:" + bookBorrowList.toString());
-//			System.out.println("558 Add:" + borrowDetailListTemp.toString());
 			fillDataToJTableBorrowBook(bookBorrowList);
 		} else {
 			JFrame f = new JFrame();
 			JOptionPane.showMessageDialog(f, "Book Invalid");
-//			fillDataToJTableBorrowBook(bookBorrowList);
 		}
 
 	}
 
-	public void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
+	private void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
 		int selectedRow = jtableBorrowBook.getSelectedRow();
 		String callNumber = jtableBorrowBook.getValueAt(selectedRow, 0).toString();
-
-//		System.out.println(callNumber);
-//		System.out.println(bookBorrowList.get(selectedRow));
 
 		for (int i = 0; i < bookBorrowList.size(); i++) {
 			if (bookBorrowList.get(i).getCallNumber() == callNumber) {
@@ -677,8 +671,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonRemoveBookList.setEnabled(false);
 	}
 
-	public void jbuttonSave_actionPerformed(ActionEvent e) {
-//		System.out.println(customer.toString());
+	private void jbuttonSave_actionPerformed(ActionEvent e) {
 
 		try {
 			if (createBorrow(customer.getId(), employee.getId(), setValueDeposit(borrowDetailListTemp))) {
@@ -686,7 +679,6 @@ public class JPanelBorrowAdd extends JPanel {
 
 				List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
 				int borrowCreatedId = borrowModel.findOneByCustomerID(customer.getId()).getId();
-//				System.out.println(borrowCreatedId);
 
 				for (BorrowDetail bdT : borrowDetailListTemp) {
 
@@ -726,7 +718,7 @@ public class JPanelBorrowAdd extends JPanel {
 		}
 	}
 
-	public void jbuttonCancel_actionPerformed(ActionEvent e) {
+	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
 		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
@@ -734,7 +726,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jPanelBorrowList.setVisible(true);
 	}
 
-	public void jtableBorrowBook_mouseClicked(MouseEvent e) {
+	private void jtableBorrowBook_mouseClicked(MouseEvent e) {
 		jbuttonRemoveBookList.setEnabled(true);
 	}
 
@@ -824,7 +816,6 @@ public class JPanelBorrowAdd extends JPanel {
 			public void setValueAt(Object aValue, int row, int column) {
 				super.setValueAt(aValue, row, column);
 				Book bookSelected = bookList.get(row);
-//				System.out.println("Book Selected: " + bookSelected.getQuantity());
 
 				if (2 == column) {
 					String quantityString = aValue.toString();
@@ -833,13 +824,12 @@ public class JPanelBorrowAdd extends JPanel {
 					Book bookInLibrary = bookModel.find(bookSelected.getCallNumber());
 
 					for (Book bookBorrow : bookBorrowList) {
-//						System.out.println("Book in Library: " + bookInLibrary.getQuantity());
 						if (bookBorrow.getCallNumber() == bookSelected.getCallNumber()) {
 							if (bookInLibrary.getQuantity() >= quantityInt) {
 								bookBorrow.setQuantity(quantityInt);
 								bookSelected.setQuantity(quantityInt);
 								fillDataToJTableBorrowBook(bookBorrowList);
-//							System.out.println("708 Change: " + bookBorrowList.toString());
+								jbuttonRemoveBookList.setEnabled(false);
 
 							} else {
 								JFrame f = new JFrame();
@@ -857,7 +847,6 @@ public class JPanelBorrowAdd extends JPanel {
 							if (bookInLibrary.getQuantity() >= quantityInt) {
 								borrowDetail.setQuantity(quantityInt);
 								borrowDetail.setTotal(borrowDetail.getQuantity() * borrowDetail.getPrice());
-//								System.out.println("714 Change: " + borrowDetailListTemp.toString());
 							} else {
 								borrowDetail.setQuantity(1);
 								borrowDetail.setTotal(borrowDetail.getQuantity() * borrowDetail.getPrice());
@@ -923,23 +912,14 @@ public class JPanelBorrowAdd extends JPanel {
 		defaultTableModel.addColumn("Address");
 
 		for (Customer customer : customerList) {
-<<<<<<< Updated upstream
+
 			defaultTableModel.addRow(
 					new Object[] { customer.getId(), customer.getName(), customer.getPhone(), customer.getAddress() });
-=======
-			defaultTableModel.addRow(new Object[] { customer.getId(), customer.getName(),
-					customer.getPhone(), customer.getAddress() });
->>>>>>> Stashed changes
 		}
 
 		jtableCustomer.setModel(defaultTableModel);
 		jtableCustomer.getTableHeader().setReorderingAllowed(false);
 		jtableCustomer.setRowHeight(50);
-<<<<<<< Updated upstream
-
-=======
-		
->>>>>>> Stashed changes
 	}
 
 	private void fillDataToJTableEmployee(List<Employee> employeeList) {

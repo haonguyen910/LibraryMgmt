@@ -126,12 +126,11 @@ public class JPanelVRecord extends JPanel {
 		defaultTableModel.addColumn("Issue Date");
 		defaultTableModel.addColumn("Due Date");
 //		defaultTableModel.addColumn("Status");
-		for (Borrow borrow : borrowList) {
-			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCallNumber(), borrow.getCustomerName(),
-					borrow.getCreated(), borrow.getDue_date() });
+//		for (Borrow borrow : borrowList) {
+//			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCallNumber(), borrow.getCustomerName(),
+//					borrow.getCreated(), borrow.getDue_date() });
 
-			jtableVRecord.setModel(defaultTableModel);
-			jtableVRecord.getTableHeader().setReorderingAllowed(false);
-		}
+		jtableVRecord.setModel(defaultTableModel);
+		jtableVRecord.getTableHeader().setReorderingAllowed(false);
 	}
 }

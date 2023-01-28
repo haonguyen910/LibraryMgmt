@@ -31,6 +31,7 @@ import entities.Book_Author;
 import entities.Book_Category;
 import entities.Borrow;
 import entities.BorrowDetail;
+import entities.Borrowed;
 import entities.Category;
 import models.AuthorModel;
 import models.BookModel;
@@ -38,7 +39,10 @@ import models.Book_AuthorModel;
 import models.Book_CategoryModel;
 import models.BorrowDetailModel;
 import models.BorrowModel;
+import models.BorrowedModel;
 import models.CategoryModel;
+import models.CustomerModel;
+import models.EmployeeModel;
 
 import javax.swing.JButton;
 import java.awt.BorderLayout;
@@ -57,28 +61,18 @@ import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
 import javax.swing.border.TitledBorder;
 
-public class JPanelBorrowList extends JPanel {
+public class JPanelBorrowedList extends JPanel {
 	private JPanel jpanelRight;
 
 	private JTextField jtextFieldKeyword;
 	private JButton jbuttonSearch;
 	private JComboBox jcomboBoxSearchType;
 	private JButton jbuttonCancelSearch;
-	private JButton jbuttonAdd;
 	private JButton jbuttonDelete;
 	private JButton jbuttonEdit;
 	private JPanel panel_4;
 	private JDateChooser jdateChooserCreated;
 	private JLabel lblNewLabel_2;
-//	Global Variable
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	BorrowModel borrowModel = new BorrowModel();
-	BorrowDetailModel borrowDetailModel = new BorrowDetailModel();
-	BookModel bookModel = new BookModel();
-	private JButton jbuttonCancelByCreated;
-	private JButton jbuttonSearchByCreated;
-	private JPanel panel_5;
-	private JLabel lblNewLabel_3;
 	private JPanel panel_6;
 	private JLabel lblNewLabel_4;
 	private JPanel jpanelDetail;
@@ -86,14 +80,25 @@ public class JPanelBorrowList extends JPanel {
 	private JTable jtableDetails;
 	private JPanel jpanelBorrow;
 	private JScrollPane scrollPane_1;
-	private JTable jtableBorrow;
-	private JButton jbuttonSetBorrowed;
+	private JTable jtableBorrowed;
+//	Global Variable
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	BorrowModel borrowModel = new BorrowModel();
+	BorrowDetailModel borrowDetailModel = new BorrowDetailModel();
+	BookModel bookModel = new BookModel();
+	BorrowedModel borrowedModel = new BorrowedModel();
+	EmployeeModel employeeModel = new EmployeeModel();
+	CustomerModel customerModel = new CustomerModel();
+	private JButton jbuttonCancelByCreated;
+	private JButton jbuttonSearchByCreated;
+	private JPanel panel_5;
 	private JComboBox jcomboBoxSort;
+	private JLabel lblNewLabel_3;
 
 	/**
 	 * Create the panel.
 	 */
-	public JPanelBorrowList(JPanel JpanelRight) {
+	public JPanelBorrowedList(JPanel JpanelRight) {
 		jpanelRight = JpanelRight;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -104,7 +109,7 @@ public class JPanelBorrowList extends JPanel {
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Borrow List");
+		JLabel lblNewLabel = new JLabel("Borrowed List");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		panel.add(lblNewLabel);
@@ -205,7 +210,7 @@ public class JPanelBorrowList extends JPanel {
 		flowLayout_4.setAlignment(FlowLayout.RIGHT);
 		add(panel_5);
 
-		lblNewLabel_3 = new JLabel("Sort By:");
+		lblNewLabel_3 = new JLabel("Sort by:");
 		lblNewLabel_3.setPreferredSize(new Dimension(60, 30));
 		lblNewLabel_3.setMinimumSize(new Dimension(60, 30));
 		lblNewLabel_3.setMaximumSize(new Dimension(60, 30));
@@ -248,14 +253,14 @@ public class JPanelBorrowList extends JPanel {
 		scrollPane_1 = new JScrollPane();
 		jpanelBorrow.add(scrollPane_1, BorderLayout.CENTER);
 
-		jtableBorrow = new JTable();
-		jtableBorrow.addMouseListener(new MouseAdapter() {
+		jtableBorrowed = new JTable();
+		jtableBorrowed.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				jtableBorrow_mouseClicked(e);
 			}
 		});
-		scrollPane_1.setViewportView(jtableBorrow);
+		scrollPane_1.setViewportView(jtableBorrowed);
 
 		panel_6 = new JPanel();
 		add(panel_6);
@@ -271,18 +276,6 @@ public class JPanelBorrowList extends JPanel {
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		add(panel_3);
-
-		jbuttonAdd = new JButton("Add");
-		jbuttonAdd.setMinimumSize(new Dimension(100, 30));
-		jbuttonAdd.setPreferredSize(new Dimension(100, 30));
-		jbuttonAdd.setMaximumSize(new Dimension(100, 30));
-		jbuttonAdd.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonAdd_actionPerformed(e);
-			}
-		});
-		panel_3.add(jbuttonAdd);
 
 		jbuttonDelete = new JButton("Delete");
 		jbuttonDelete.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -308,198 +301,96 @@ public class JPanelBorrowList extends JPanel {
 		});
 		panel_3.add(jbuttonEdit);
 
-		jbuttonSetBorrowed = new JButton("Set Borrowed");
-		jbuttonSetBorrowed.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonSetBorrowed_actionPerformed(e);
-			}
-		});
-		jbuttonSetBorrowed.setIcon(new ImageIcon(JPanelBorrowList.class.getResource("/resources/borrowed.png")));
-		jbuttonSetBorrowed.setPreferredSize(new Dimension(150, 30));
-		jbuttonSetBorrowed.setMinimumSize(new Dimension(150, 30));
-		jbuttonSetBorrowed.setMaximumSize(new Dimension(150, 30));
-		jbuttonSetBorrowed.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonSetBorrowed.setEnabled(false);
-		panel_3.add(jbuttonSetBorrowed);
-
 		initJFrame();
 
 	}
 
 	// Functions
 	private void initJFrame() {
-		fillDataToJTableBorrow(borrowModel.findAll());
+		fillDataToJTableBorrowed(borrowedModel.findAll());
 		fillDataToJComboBox();
-		fillDataToJComboBoxSort();
 		jbuttonCancelSearch.setVisible(false);
 		jbuttonCancelByCreated.setVisible(false);
 		jbuttonDelete.setEnabled(false);
 		jbuttonEdit.setEnabled(false);
-		jbuttonSetBorrowed.setEnabled(false);
 		fillDataToJTableDetailsInit();
+		fillDataToJComboBoxSort();
 
 	}
 
 	private void jtableBorrow_mouseClicked(MouseEvent e) {
-		int selectedRow = jtableBorrow.getSelectedRow();
-		int id = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
-
+		int selectedRow = jtableBorrowed.getSelectedRow();
+		int id = Integer.parseInt(jtableBorrowed.getValueAt(selectedRow, 1).toString());
 		fillDataToJTableDetails(borrowDetailModel.findByBorrowId(id));
+//		jbuttonDelete.setEnabled(true);
+//		jbuttonEdit.setEnabled(true);
+	}
 
-		if (borrowModel.find(id).isStatus() == true) {
-			jbuttonSetBorrowed.setEnabled(false);
-			jbuttonDelete.setEnabled(false);
-			jbuttonEdit.setEnabled(false);
-		} else {
-			jbuttonSetBorrowed.setEnabled(true);
-			jbuttonDelete.setEnabled(true);
-			jbuttonEdit.setEnabled(true);
+	private void jcomboBoxSort_actionPerformed(ActionEvent e) {
+		String status = jcomboBoxSort.getSelectedItem().toString();
+
+		if (status.equalsIgnoreCase("created ascending")) {
+			fillDataToJTableBorrowed(borrowedModel.findByCreatedASC());
+		} else if (status.equalsIgnoreCase("created descending")) {
+			fillDataToJTableBorrowed(borrowedModel.findByCreatedDESC());
 		}
+		fillDataToJTableDetailsInit();
 	}
 
 	private void jbuttonSearch_actionPerformed(ActionEvent e) {
 		String keyword = jtextFieldKeyword.getText().trim();
 		String searchType = jcomboBoxSearchType.getSelectedItem().toString();
-
-		if (searchType.equalsIgnoreCase("id borrow")) {
+		if (searchType.equalsIgnoreCase("id")) {
 			int id = Integer.parseInt(keyword);
-			fillDataToJTableBorrow(borrowModel.findById(id));
+			fillDataToJTableBorrowed(borrowedModel.findById(id));
+		} else if (searchType.equalsIgnoreCase("id borrow")) {
+			int idBorrow = Integer.parseInt(keyword);
+			fillDataToJTableBorrowed(borrowedModel.findByBorrowId(idBorrow));
 		} else if (searchType.equalsIgnoreCase("employee name")) {
-			fillDataToJTableBorrow(borrowModel.findByEmployeeName(keyword));
+			fillDataToJTableBorrowed(borrowedModel.findByEmployeeName(keyword));
 		} else if (searchType.equalsIgnoreCase("customer name")) {
-			fillDataToJTableBorrow(borrowModel.findByCustomerName(keyword));
+			fillDataToJTableBorrowed(borrowedModel.findByCustomerName(keyword));
 		}
 		jbuttonCancelSearch.setVisible(true);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
-		jbuttonSetBorrowed.setEnabled(false);
 		fillDataToJTableDetailsInit();
 
 	}
 
 	private void jbuttonSearchByCreated_actionPerformed(ActionEvent e) {
-		fillDataToJTableBorrow(borrowModel.findByCreated(jdateChooserCreated.getDate()));
+		fillDataToJTableBorrowed(borrowedModel.findByCreated(jdateChooserCreated.getDate()));
 		jbuttonCancelByCreated.setVisible(true);
-		jtextFieldKeyword.setText("");
-		jbuttonCancelSearch.setVisible(false);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
-		jbuttonSetBorrowed.setEnabled(false);
 		fillDataToJTableDetailsInit();
 	}
 
 	private void jbuttonCancelSearch_actionPerformed(ActionEvent e) {
-		fillDataToJTableBorrow(borrowModel.findAll());
+		fillDataToJTableBorrowed(borrowedModel.findAll());
 		jtextFieldKeyword.setText("");
 		jbuttonCancelSearch.setVisible(false);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
-		jbuttonSetBorrowed.setEnabled(false);
 		fillDataToJTableDetailsInit();
 	}
 
 	private void jbuttonCancelByCreated_actionPerformed(ActionEvent e) {
-		fillDataToJTableBorrow(borrowModel.findAll());
+		fillDataToJTableBorrowed(borrowedModel.findAll());
 		jdateChooserCreated.setDate(null);
 		jbuttonCancelByCreated.setVisible(false);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
-		jbuttonSetBorrowed.setEnabled(false);
 		fillDataToJTableDetailsInit();
-	}
-
-	private void jcomboBoxSort_actionPerformed(ActionEvent e) {
-
-		String status = jcomboBoxSort.getSelectedItem().toString();
-
-		if (status.equalsIgnoreCase("all")) {
-			fillDataToJTableBorrow(borrowModel.findAll());
-		} else if (status.equalsIgnoreCase("borrowing")) {
-			fillDataToJTableBorrow(borrowModel.findByStatus(false));
-		} else if (status.equalsIgnoreCase("completed")) {
-			fillDataToJTableBorrow(borrowModel.findByStatus((true)));
-		} else if (status.equalsIgnoreCase("created ascending")) {
-			fillDataToJTableBorrow(borrowModel.findByCreatedASC());
-		} else if (status.equalsIgnoreCase("created descending")) {
-			fillDataToJTableBorrow(borrowModel.findByCreatedDESC());
-		}
-		fillDataToJTableDetailsInit();
-	}
-
-	private void jbuttonAdd_actionPerformed(ActionEvent e) {
-		jpanelRight.removeAll();
-		jpanelRight.revalidate();
-		JPanelBorrowAdd jPanelBorrowAdd = new JPanelBorrowAdd(jpanelRight);
-		jpanelRight.add(jPanelBorrowAdd);
-		jPanelBorrowAdd.setVisible(true);
-
 	}
 
 	private void jbuttonDelete_actionPerformed(ActionEvent e) {
 		deleteBorrow();
 		jbuttonEdit.setEnabled(false);
-		jbuttonSetBorrowed.setEnabled(false);
 	}
 
 	private void deleteBorrow() {
-		int result = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
-		if (result == JOptionPane.YES_OPTION) {
-			int selectedRow = jtableBorrow.getSelectedRow();
-			int id = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
-
-			List<BorrowDetail> borrowDetailList = borrowDetailModel.findByBorrowId(id);
-			for (BorrowDetail bd : borrowDetailList) {
-				Book bookInLibrary = bookModel.find(bd.getId_book());
-
-				if (bookModel.updateQuantity(bookInLibrary, bookInLibrary.getQuantity() + bd.getQuantity()) == false) {
-					JOptionPane.showMessageDialog(this, "Failed Update Quantity");
-				}
-				if (bookInLibrary.getQuantity() == 0) {
-					if (bookModel.updateStatus(bookInLibrary, true) == false) {
-						JOptionPane.showMessageDialog(this, "Failed Update Status");
-					}
-				}
-			}
-			if ((borrowDetailModel.deleteByBorrowId(id) && borrowModel.delete(id)) == false) {
-				JOptionPane.showMessageDialog(this, "Failed");
-			}
-			JOptionPane.showMessageDialog(this, "Success");
-			fillDataToJTableBorrow(borrowModel.findAll());
-			fillDataToJTableDetailsInit();
-		}
 		jbuttonDelete.setEnabled(false);
 	}
 
 	private void jbuttonEdit_actionPerformed(ActionEvent e) {
-		int selectedRow = jtableBorrow.getSelectedRow();
-		int idBorrow = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
 
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("idBorrow", idBorrow);
-
-		jpanelRight.removeAll();
-		jpanelRight.revalidate();
-		JPanelBorrowEdit jPanelBorrowEdit = new JPanelBorrowEdit(jpanelRight, data);
-		jpanelRight.add(jPanelBorrowEdit);
-		jPanelBorrowEdit.setVisible(true);
-	}
-
-	private void jbuttonSetBorrowed_actionPerformed(ActionEvent e) {
-		int selectedRow = jtableBorrow.getSelectedRow();
-		int idBorrow = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
-
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("idBorrow", idBorrow);
-
-		jpanelRight.removeAll();
-		jpanelRight.revalidate();
-		JPanelBorrowedAdd jPanelBorrowedAdd = new JPanelBorrowedAdd(jpanelRight, data);
-		jpanelRight.add(jPanelBorrowedAdd);
-		jPanelBorrowedAdd.setVisible(true);
 	}
 
 	// Components
-	private void fillDataToJTableBorrow(List<Borrow> borrowList) {
+	private void fillDataToJTableBorrowed(List<Borrowed> borrowedList) {
 		DefaultTableModel defaultTableModel = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -508,21 +399,29 @@ public class JPanelBorrowList extends JPanel {
 		};
 
 		defaultTableModel.addColumn("ID");
-		defaultTableModel.addColumn("Customer Name");
-		defaultTableModel.addColumn("Employee Name");
+		defaultTableModel.addColumn("ID Borrow");
+		defaultTableModel.addColumn("Employee");
+		defaultTableModel.addColumn("Customer");
+		defaultTableModel.addColumn("Borrow Created");
+		defaultTableModel.addColumn("Borrow Due Date");
 		defaultTableModel.addColumn("Created");
-		defaultTableModel.addColumn("Due Date");
+		defaultTableModel.addColumn("Overdue Date");
 		defaultTableModel.addColumn("Deposit");
-		defaultTableModel.addColumn("Status");
+		defaultTableModel.addColumn("Fines");
+		defaultTableModel.addColumn("Total");
 
-		for (Borrow borrow : borrowList) {
-			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCustomerName(), borrow.getEmployeeName(),
-					simpleDateFormat.format(borrow.getCreated()), simpleDateFormat.format(borrow.getDue_date()),
-					borrow.getDeposit(), borrow.isStatus() ? "Completed" : "Borrowing" });
+		for (Borrowed borrowed : borrowedList) {
+			defaultTableModel.addRow(new Object[] { borrowed.getId(), borrowed.getId_borrow(),
+					employeeModel.find(borrowed.getEmployeeId()).getName(),
+					customerModel.find(borrowed.getCustomerId()).getName(),
+					simpleDateFormat.format(borrowed.getCreated_borrow()),
+					simpleDateFormat.format(borrowed.getDue_date_borrow()),
+					simpleDateFormat.format(borrowed.getCreated()), borrowed.getOverdue_day(),
+					borrowed.getDeposit_borrow(), borrowed.getFines(), borrowed.getTotal() });
 		}
-		jtableBorrow.setModel(defaultTableModel);
-		jtableBorrow.getTableHeader().setReorderingAllowed(false);
-		jtableBorrow.setRowHeight(50);
+		jtableBorrowed.setModel(defaultTableModel);
+		jtableBorrowed.getTableHeader().setReorderingAllowed(false);
+		jtableBorrowed.setRowHeight(50);
 	}
 
 	private void fillDataToJTableDetails(List<BorrowDetail> borrowDetailList) {
@@ -571,6 +470,7 @@ public class JPanelBorrowList extends JPanel {
 
 	private void fillDataToJComboBox() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
+		defaultComboBoxModel.addElement("ID");
 		defaultComboBoxModel.addElement("ID Borrow");
 		defaultComboBoxModel.addElement("Employee Name");
 		defaultComboBoxModel.addElement("Customer Name");
@@ -579,9 +479,6 @@ public class JPanelBorrowList extends JPanel {
 
 	private void fillDataToJComboBoxSort() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
-		defaultComboBoxModel.addElement("Borrowing");
-		defaultComboBoxModel.addElement("Completed");
-		defaultComboBoxModel.addElement("All");
 		defaultComboBoxModel.addElement("Created Ascending");
 		defaultComboBoxModel.addElement("Created Descending");
 		jcomboBoxSort.setModel(defaultComboBoxModel);

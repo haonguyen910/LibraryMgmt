@@ -168,7 +168,7 @@ public class JPanelCategoryEdit extends JPanel {
 		}
 	}
 
-	public void jbuttonCancel_actionPerformed(ActionEvent e) {
+	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		backJPanelList();
 	}
 

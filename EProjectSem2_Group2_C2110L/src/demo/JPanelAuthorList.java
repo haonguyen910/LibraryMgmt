@@ -108,10 +108,10 @@ public class JPanelAuthorList extends JPanel {
 			}
 		});
 		panel_1.add(jbuttonCancelSearch);
-		
+
 		panel_4 = new JPanel();
 		add(panel_4);
-		
+
 		lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setPreferredSize(new Dimension(60, 30));
 		lblNewLabel_2.setMinimumSize(new Dimension(60, 30));
@@ -136,10 +136,10 @@ public class JPanelAuthorList extends JPanel {
 		});
 		jtableAuthor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(jtableAuthor);
-		
+
 		panel_5 = new JPanel();
 		add(panel_5);
-		
+
 		lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setPreferredSize(new Dimension(60, 30));
 		lblNewLabel_3.setMinimumSize(new Dimension(60, 30));
@@ -199,31 +199,31 @@ public class JPanelAuthorList extends JPanel {
 		jbuttonEdit.setEnabled(false);
 	}
 
-	public void jbuttonSearch_actionPerformed(ActionEvent e) {
+	private void jbuttonSearch_actionPerformed(ActionEvent e) {
 		String keyword = jtextFieldSearch.getText();
 		fillDataToJTable(authorModel.findByKeyword(keyword));
 		jbuttonCancelSearch.setVisible(true);
 	}
 
-	public void jbuttonCancelSearch_actionPerformed(ActionEvent e) {
+	private void jbuttonCancelSearch_actionPerformed(ActionEvent e) {
 		fillDataToJTable(authorModel.findAll());
 		jtextFieldSearch.setText("");
 		jbuttonCancelSearch.setVisible(false);
 	}
 
-	public void jbuttonAdd_actionPerformed(ActionEvent e) {
+	private void jbuttonAdd_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight);
 		jpanelRight.add(jPanelAuthorAdd);
 		jPanelAuthorAdd.setVisible(true);
 	}
 
-	public void jtableAuthor_mouseClicked(MouseEvent e) {
+	private void jtableAuthor_mouseClicked(MouseEvent e) {
 		jbuttonEdit.setEnabled(true);
 		jbuttonDelete.setEnabled(true);
 	}
 
-	public void jbuttonEdit_actionPerformed(ActionEvent e) {
+	private void jbuttonEdit_actionPerformed(ActionEvent e) {
 		int selectedRow = jtableAuthor.getSelectedRow();
 		int id = Integer.parseInt(jtableAuthor.getValueAt(selectedRow, 0).toString());
 
@@ -236,12 +236,12 @@ public class JPanelAuthorList extends JPanel {
 		jPanelAuthorEdit.setVisible(true);
 	}
 
-	public void jbuttonDelete_actionPerformed(ActionEvent e) {
+	private void jbuttonDelete_actionPerformed(ActionEvent e) {
 		deleteBook();
 		jbuttonEdit.setEnabled(false);
 	}
 
-	public void deleteBook() {
+	private void deleteBook() {
 		int result = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
 		if (result == JOptionPane.YES_OPTION) {
 			int selectedRow = jtableAuthor.getSelectedRow();

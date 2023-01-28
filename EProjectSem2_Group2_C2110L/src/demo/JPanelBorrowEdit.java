@@ -583,7 +583,6 @@ public class JPanelBorrowEdit extends JPanel {
 		}
 	}
 
-//
 	private double setValueDeposit(List<BorrowDetail> borrowDetailList) {
 		double total = 0;
 		for (BorrowDetail borrowDetail : borrowDetailList) {
@@ -592,7 +591,7 @@ public class JPanelBorrowEdit extends JPanel {
 		return total;
 	}
 
-	public boolean deleteBookBorrowOld() {
+	private boolean deleteBookBorrowOld() {
 
 		try {
 			for (Book bookOld : bookBorrowListOld) {
@@ -636,8 +635,6 @@ public class JPanelBorrowEdit extends JPanel {
 			bookBorrowListOld.add(bookBorrow);
 		}
 		borrowDetailListTemp = borrowDetailModel.findByBorrowId(idBorrow);
-//		System.out.println("init: " + borrow);
-//		System.out.println("init: " + borrowDetailListTemp.toString());
 
 		for (BorrowDetail bd : borrowDetailListTemp) {
 			bd.setTotal(bd.getQuantity() * bd.getPrice());
@@ -684,7 +681,6 @@ public class JPanelBorrowEdit extends JPanel {
 			BorrowDetail borrowDetail = setValueBorrowDetailTemp(bookSelected.getCallNumber(), 1,
 					bookSelected.getPrice(), bookSelected.getPrice() * 1);
 			borrowDetailListTemp.add(borrowDetail);
-//			System.out.println("add btn borrowDetailListTemp: " + borrowDetailListTemp);
 
 			Book bookBorrow = new Book();
 			bookBorrow.setCallNumber(borrowDetail.getId_book());
@@ -694,8 +690,6 @@ public class JPanelBorrowEdit extends JPanel {
 			bookBorrow.setPrice(bookSelected.getPrice());
 			bookBorrowList.add(bookBorrow);
 
-//			System.out.println("add btn bookBorrowList: " + bookBorrowList.toString());
-//			System.out.println("add btn bookBorrowListOLD: " + bookBorrowListOld.toString());
 			fillDataToJTableBorrowBook(bookBorrowList);
 			jtextFieldBorrowDeposit.setText(String.valueOf(setValueDeposit(borrowDetailListTemp)));
 		} else {
@@ -704,12 +698,9 @@ public class JPanelBorrowEdit extends JPanel {
 		}
 	}
 
-	public void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
+	private void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
 		int selectedRow = jtableBorrowBook.getSelectedRow();
 		String callNumber = jtableBorrowBook.getValueAt(selectedRow, 0).toString();
-
-//		System.out.println(callNumber);
-//		System.out.println(bookBorrowList.get(selectedRow));
 
 		for (int i = 0; i < bookBorrowList.size(); i++) {
 			if (bookBorrowList.get(i).getCallNumber() == callNumber) {
@@ -733,8 +724,7 @@ public class JPanelBorrowEdit extends JPanel {
 		jbuttonRemoveBookList.setEnabled(false);
 	}
 
-	public void jbuttonSave_actionPerformed(ActionEvent e) {
-//		System.out.println(customer.toString());
+	private void jbuttonSave_actionPerformed(ActionEvent e) {
 
 		try {
 			if (updateBorrow(customer.getId(), employee.getId(), setValueDeposit(borrowDetailListTemp))
@@ -783,7 +773,7 @@ public class JPanelBorrowEdit extends JPanel {
 		}
 	}
 
-	public void jbuttonCancel_actionPerformed(ActionEvent e) {
+	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
 		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
@@ -791,7 +781,7 @@ public class JPanelBorrowEdit extends JPanel {
 		jPanelBorrowList.setVisible(true);
 	}
 
-	public void jtableBorrowBook_mouseClicked(MouseEvent e) {
+	private void jtableBorrowBook_mouseClicked(MouseEvent e) {
 		jbuttonRemoveBookList.setEnabled(true);
 	}
 
@@ -881,7 +871,6 @@ public class JPanelBorrowEdit extends JPanel {
 			public void setValueAt(Object aValue, int row, int column) {
 				super.setValueAt(aValue, row, column);
 				Book bookSelected = bookList.get(row);
-//				System.out.println("Book Selected: " + bookSelected.getQuantity());
 
 				if (2 == column) {
 					String quantityString = aValue.toString();
@@ -890,13 +879,11 @@ public class JPanelBorrowEdit extends JPanel {
 					Book bookInLibrary = bookModel.find(bookSelected.getCallNumber());
 
 					for (Book bookBorrow : bookBorrowList) {
-//						System.out.println("Book in Library: " + bookInLibrary.getQuantity());
 						if (bookBorrow.getCallNumber() == bookSelected.getCallNumber()) {
 							if (bookInLibrary.getQuantity() >= quantityInt) {
 								bookBorrow.setQuantity(quantityInt);
 								bookSelected.setQuantity(quantityInt);
 								fillDataToJTableBorrowBook(bookBorrowList);
-//							System.out.println("708 Change: " + bookBorrowList.toString());
 
 							} else {
 								JFrame f = new JFrame();
@@ -914,7 +901,6 @@ public class JPanelBorrowEdit extends JPanel {
 							if (bookInLibrary.getQuantity() >= quantityInt) {
 								borrowDetail.setQuantity(quantityInt);
 								borrowDetail.setTotal(borrowDetail.getQuantity() * borrowDetail.getPrice());
-//								System.out.println("714 Change: " + borrowDetailListTemp.toString());
 							} else {
 								borrowDetail.setQuantity(1);
 								borrowDetail.setTotal(borrowDetail.getQuantity() * borrowDetail.getPrice());

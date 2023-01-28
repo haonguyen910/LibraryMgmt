@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Borrow {
-
 	private int id;
 	private Date created;
 	private Date due_date;
@@ -16,7 +15,6 @@ public class Borrow {
 	private List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
 	private String employeeName;
 	private String customerName;
-	private String callNumber;
 
 //	ToString
 	@Override
@@ -31,13 +29,8 @@ public class Borrow {
 		super();
 	}
 
-<<<<<<< Updated upstream
 	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit, boolean status,
 			List<BorrowDetail> borrowDetailList, String employeeName, String customerName) {
-=======
-	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit,
-			List<BorrowDetail> borrowDetailList, String employeeName, String customerName, String callNumber) {
->>>>>>> Stashed changes
 		super();
 		this.id = id;
 		this.created = created;
@@ -49,7 +42,6 @@ public class Borrow {
 		this.borrowDetailList = borrowDetailList;
 		this.employeeName = employeeName;
 		this.customerName = customerName;
-		this.callNumber = callNumber;
 	}
 
 //Get-Set
@@ -133,11 +125,4 @@ public class Borrow {
 		this.customerName = customerName;
 	}
 
-	public String getCallNumber() {
-		return callNumber;
-	}
-
-	public void setCallNumber(String callNumber) {
-		this.callNumber = callNumber;
-	}
 }

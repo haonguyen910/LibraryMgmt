@@ -29,6 +29,7 @@ public class JFrameMain extends JFrame {
 	private JButton jbuttonBorrowList;
 	private JButton jbuttonCustmList;
 	private JButton jbuttonVRecord;
+	private JButton jbuttonBorrowedList;
 
 	/**
 	 * Launch the application.
@@ -141,7 +142,12 @@ public class JFrameMain extends JFrame {
 		jbuttonBorrowList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrow.png")));
 		jpanelLeft.add(jbuttonBorrowList);
 
-		JButton jbuttonBorrowedList = new JButton("Borrowed List");
+		jbuttonBorrowedList = new JButton("Borrowed List");
+		jbuttonBorrowedList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonBorrowedList_actionPerformed(e);
+			}
+		});
 		jbuttonBorrowedList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrowed.png")));
 		jpanelLeft.add(jbuttonBorrowedList);
 
@@ -195,18 +201,14 @@ public class JFrameMain extends JFrame {
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
 	}
-<<<<<<< Updated upstream
 
-=======
-	
 	public void jbuttonVRecord_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelVRecord jpanelVRecord = new JPanelVRecord();
 		jpanelRight.add(jpanelVRecord);
 		jpanelVRecord.setVisible(true);
 	}
-	
->>>>>>> Stashed changes
+
 	public void jbuttonStatistic_actionPerformed(ActionEvent e) {
 		clearScreen();
 		JPanelStatistic jpanelStatistic = new JPanelStatistic();
@@ -259,6 +261,14 @@ public class JFrameMain extends JFrame {
 		JPanelBorrowAdd jPanelBorrowAdd = new JPanelBorrowAdd(jpanelRight);
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
+	}
+
+	public void jbuttonBorrowedList_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelBorrowedList jPanelBorrowedList = new JPanelBorrowedList(jpanelRight);
+		JPanelBorrowedAdd jPanelBorrowedAdd = new JPanelBorrowedAdd(jpanelRight);
+		jpanelRight.add(jPanelBorrowedList);
+		jPanelBorrowedList.setVisible(true);
 	}
 
 //	Components

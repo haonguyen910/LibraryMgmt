@@ -131,7 +131,7 @@ public class JPanelAuthorAdd extends JPanel {
 		}
 	}
 
-	public void jbuttonCancel_actionPerformed(ActionEvent e) {
+	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
 		JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight);
