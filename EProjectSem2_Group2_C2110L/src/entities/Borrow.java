@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Borrow {
+
 	private int id;
 	private Date created;
 	private Date due_date;
@@ -15,13 +16,15 @@ public class Borrow {
 	private List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
 	private String employeeName;
 	private String customerName;
+	private String callNumber;
 
 //	ToString
 	@Override
 	public String toString() {
 		return "Borrow [id=" + id + ", created=" + created + ", due_date=" + due_date + ", id_employee=" + id_employee
 				+ ", id_customer=" + id_customer + ", deposit=" + deposit + ", status=" + status + ", borrowDetailList="
-				+ borrowDetailList + ", employeeName=" + employeeName + ", customerName=" + customerName + "]";
+				+ borrowDetailList + ", employeeName=" + employeeName + ", customerName=" + customerName
+				+ ", callNumber=" + callNumber + "]";
 	}
 
 //	Constructor
@@ -29,13 +32,8 @@ public class Borrow {
 		super();
 	}
 
-<<<<<<< Updated upstream
 	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit, boolean status,
-			List<BorrowDetail> borrowDetailList, String employeeName, String customerName) {
-=======
-	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit,
-			List<BorrowDetail> borrowDetailList, String employeeName, String customerName, String callNumber, boolean status) {
->>>>>>> Stashed changes
+			List<BorrowDetail> borrowDetailList, String employeeName, String customerName, String callNumber) {
 		super();
 		this.id = id;
 		this.created = created;
@@ -47,6 +45,7 @@ public class Borrow {
 		this.borrowDetailList = borrowDetailList;
 		this.employeeName = employeeName;
 		this.customerName = customerName;
+		this.callNumber = callNumber;
 	}
 
 //Get-Set
@@ -128,6 +127,14 @@ public class Borrow {
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+
+	public String getCallNumber() {
+		return callNumber;
+	}
+
+	public void setCallNumber(String callNumber) {
+		this.callNumber = callNumber;
 	}
 
 }

@@ -85,10 +85,10 @@ public class JPanelVRecord extends JPanel {
 		jbuttonSearch.setMargin(new Insets(5, 20, 5, 20));
 		jbuttonSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_2.add(jbuttonSearch);
-		
+
 		JLabel lblNewLabel_4_1 = new JLabel("        ");
 		panel_2.add(lblNewLabel_4_1);
-		
+
 		jcomboBoxStatus = new JComboBox();
 		jcomboBoxStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,16 +115,16 @@ public class JPanelVRecord extends JPanel {
 	private void initJPanel() {
 		BorrowModel borrowModel = new BorrowModel();
 		fillDataToJTableVRecord(borrowModel.findAllForHistory());
-		
+
 		fillDataToJCombobox();
 
 	}
-	
+
 	public void jcomboBoxStatus_actionPerformed(ActionEvent e) {
 		String status = jcomboBoxStatus.getSelectedItem().toString();
 		BorrowModel borrowModel = new BorrowModel();
-		if(status.equalsIgnoreCase("all")) {
-			fillDataToJTableVRecord(borrowModel.findAllForHistory()); 
+		if (status.equalsIgnoreCase("all")) {
+			fillDataToJTableVRecord(borrowModel.findAllForHistory());
 		} else {
 			fillDataToJTableVRecord(borrowModel.findByStatusForHistory(status.equalsIgnoreCase("pending")));
 		}
@@ -149,22 +149,16 @@ public class JPanelVRecord extends JPanel {
 		defaultTableModel.addColumn("Customer's Name");
 		defaultTableModel.addColumn("Issue Date");
 		defaultTableModel.addColumn("Due Date");
-<<<<<<< Updated upstream
-//		defaultTableModel.addColumn("Status");
-//		for (Borrow borrow : borrowList) {
-//			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCallNumber(), borrow.getCustomerName(),
-//					borrow.getCreated(), borrow.getDue_date() });
-=======
 		defaultTableModel.addColumn("Status");
 		for (Borrow borrow : borrowList) {
 			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCallNumber(), borrow.getCustomerName(),
 					borrow.getCreated(), borrow.getDue_date(), borrow.isStatus() ? "Pending" : "Returned" });
->>>>>>> Stashed changes
 
-		jtableVRecord.setModel(defaultTableModel);
-		jtableVRecord.getTableHeader().setReorderingAllowed(false);
+			jtableVRecord.setModel(defaultTableModel);
+			jtableVRecord.getTableHeader().setReorderingAllowed(false);
+		}
 	}
-	
+
 	private void fillDataToJCombobox() {
 		DefaultComboBoxModel<String> dfcm = new DefaultComboBoxModel<>();
 		dfcm.addElement("All");

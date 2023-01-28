@@ -398,7 +398,6 @@ public class BorrowModel {
 		return borrowList;
 	}
 
-<<<<<<< Updated upstream
 	public List<Borrow> findByCreatedASC() {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
@@ -435,9 +434,7 @@ public class BorrowModel {
 	}
 
 	// HAO
-=======
 //HAO
->>>>>>> Stashed changes
 	public List<Borrow> findAllForHistory() {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
@@ -520,10 +517,6 @@ public class BorrowModel {
 
 				borrowList.add(borrow);
 			}
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 		} catch (Exception e) {
 			e.printStackTrace();
 			borrowList = null;
