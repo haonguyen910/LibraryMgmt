@@ -60,7 +60,7 @@ public class JPanelCustmList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head_1 = new JPanel();
-		panel_head_1.setBackground(new Color(255, 128, 0));
+		panel_head_1.setBackground(new Color(128, 128, 192));
 		FlowLayout fl_panel_head_1 = (FlowLayout) panel_head_1.getLayout();
 		fl_panel_head_1.setAlignment(FlowLayout.LEFT);
 		add(panel_head_1);

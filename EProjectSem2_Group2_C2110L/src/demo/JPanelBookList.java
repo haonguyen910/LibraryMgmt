@@ -255,7 +255,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_5.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_5.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_5.setBounds(10, 217, 100, 30);
+		lblNewLabel_1_1_5.setBounds(10, 288, 100, 30);
 		panel_7.add(lblNewLabel_1_1_5);
 
 		jtextFieldDetailQuantity = new JTextField();
@@ -264,7 +264,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailQuantity.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailQuantity.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailQuantity.setColumns(20);
-		jtextFieldDetailQuantity.setBounds(10, 247, 140, 30);
+		jtextFieldDetailQuantity.setBounds(10, 318, 140, 30);
 		panel_7.add(jtextFieldDetailQuantity);
 
 		JLabel lblNewLabel_1_1_6 = new JLabel("Price:");
@@ -272,7 +272,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_6.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_6.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_6.setBounds(10, 275, 100, 30);
+		lblNewLabel_1_1_6.setBounds(10, 351, 100, 30);
 		panel_7.add(lblNewLabel_1_1_6);
 
 		jtextFieldDetailPrice = new JTextField();
@@ -281,7 +281,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailPrice.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailPrice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailPrice.setColumns(20);
-		jtextFieldDetailPrice.setBounds(10, 306, 140, 30);
+		jtextFieldDetailPrice.setBounds(10, 380, 140, 30);
 		panel_7.add(jtextFieldDetailPrice);
 
 		JLabel lblNewLabel_1_1_7 = new JLabel("Created:");
@@ -289,7 +289,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_7.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_7.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_7.setBounds(172, 340, 100, 30);
+		lblNewLabel_1_1_7.setBounds(172, 351, 100, 30);
 		panel_7.add(lblNewLabel_1_1_7);
 
 		jtextFieldDetailCreated = new JTextField();
@@ -298,7 +298,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailCreated.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailCreated.setColumns(20);
-		jtextFieldDetailCreated.setBounds(172, 369, 206, 30);
+		jtextFieldDetailCreated.setBounds(172, 380, 206, 30);
 		panel_7.add(jtextFieldDetailCreated);
 
 		JLabel lblNewLabel_1_1_8 = new JLabel("Issue Status:");
@@ -306,7 +306,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_8.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_8.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_8.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_8.setBounds(10, 339, 100, 30);
+		lblNewLabel_1_1_8.setBounds(10, 410, 100, 30);
 		panel_7.add(lblNewLabel_1_1_8);
 
 		jtextFieldDetailStatus = new JTextField();
@@ -315,7 +315,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailStatus.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailStatus.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailStatus.setColumns(20);
-		jtextFieldDetailStatus.setBounds(10, 369, 140, 30);
+		jtextFieldDetailStatus.setBounds(10, 440, 140, 30);
 		panel_7.add(jtextFieldDetailStatus);
 
 		JLabel lblNewLabel_1_1_9 = new JLabel("Description:");
@@ -336,7 +336,7 @@ public class JPanelBookList extends JPanel {
 
 		jlabelPhoto = new JLabel("");
 		jlabelPhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		jlabelPhoto.setBounds(10, 55, 140, 140);
+		jlabelPhoto.setBounds(10, 55, 140, 200);
 		panel_7.add(jlabelPhoto);
 
 		panel_8 = new JPanel();
@@ -422,6 +422,9 @@ public class JPanelBookList extends JPanel {
 			fillDataToJTable(bookModel.findByCallNumber(keyword));
 		}
 		jbuttonCancelSearch.setVisible(true);
+		jbuttonDelete.setEnabled(false);
+		jbuttonEdit.setEnabled(false);
+		clearDetail();
 
 	}
 
@@ -429,6 +432,7 @@ public class JPanelBookList extends JPanel {
 		fillDataToJTable(bookModel.findAll());
 		jtextFieldKeyword.setText("");
 		jbuttonCancelSearch.setVisible(false);
+		clearDetail();
 	}
 
 	private void jbuttonAdd_actionPerformed(ActionEvent e) {
@@ -462,8 +466,6 @@ public class JPanelBookList extends JPanel {
 		ImageIcon photo = new ImageIcon(new ImageIcon(imageData).getImage().getScaledInstance(jlabelPhoto.getWidth(),
 				jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
 		jlabelPhoto.setIcon(photo);
-
-//		System.out.println(imageData);
 
 	}
 
@@ -509,6 +511,23 @@ public class JPanelBookList extends JPanel {
 		jPanelBookEdit.setVisible(true);
 	}
 
+	private void clearDetail() {
+		jtextFieldDetailCallNumber.setText(null);
+		jtextFieldDetailISBN.setText(null);
+		jtextFieldDetailAuthor.setText(null);
+		jtextFieldDetailCategory.setText(null);
+		jtextFieldDetailQuantity.setText(null);
+		jtextFieldDetailPrice.setText(null);
+		jtextFieldDetailStatus.setText(null);
+		jtextFieldDetailTitle.setText(null);
+		jtextFieldDetailCreated.setText(null);
+		jtextAreaDetailDescription.setText(null);
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("D:\\photo\\no-image.png").getImage()
+				.getScaledInstance(jlabelPhoto.getWidth(), jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
+		jlabelPhoto.setIcon(imageIcon);
+
+	}
+
 	// Components
 	private void fillDataToJTable(List<Book> bookList) {
 		DefaultTableModel defaultTableModel = new DefaultTableModel() {
@@ -523,24 +542,16 @@ public class JPanelBookList extends JPanel {
 		defaultTableModel.addColumn("Photo");
 		defaultTableModel.addColumn("Title");
 		defaultTableModel.addColumn("Author");
-//		defaultTableModel.addColumn("Description");
 		defaultTableModel.addColumn("Category");
 		defaultTableModel.addColumn("Quantity");
 		defaultTableModel.addColumn("Price");
 		defaultTableModel.addColumn("Issue Status");
-//		defaultTableModel.addColumn("Created");
 
 		for (Book book : bookList) {
 			defaultTableModel.addRow(new Object[] { book.getCallNumber(), book.getISBN(), book.getPhoto(),
 					book.getTitle(), book.getAuthor(), book.getCategory().toUpperCase(), book.getQuantity(),
 					book.getPrice(), book.isStatus() ? "In Library" : "Out of Stock" });
 		}
-//		for (Book book : bookList) {
-//			defaultTableModel.addRow(new Object[] { book.getCallNumber(), book.getISBN(), book.getPhoto(),
-//					book.getTitle(), book.getAuthor(), book.getDescription(), book.getCategory().toUpperCase(),
-//					book.getQuantity(), book.getPrice(), book.isStatus() ? "In Library" : "Out of Stock",
-//					simpleDateFormat.format(book.getCreated()) });
-//		}
 
 		jtableBook.setModel(defaultTableModel);
 		jtableBook.getTableHeader().setReorderingAllowed(false);

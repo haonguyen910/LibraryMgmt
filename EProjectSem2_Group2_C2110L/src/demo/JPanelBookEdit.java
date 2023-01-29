@@ -84,6 +84,11 @@ public class JPanelBookEdit extends JPanel {
 	private Book_Category book_Category;
 	private Map<String, Object> data;
 	private File file;
+	private JScrollPane scrollPane_1;
+	private JTextArea txtrIsbnNnnnnnn;
+	private JLabel lblNewLabel_2;
+	private JTextField jtextFieldAuthor;
+	private JTextField jtextFieldCategory;
 
 	/**
 	 * Create the panel.
@@ -115,7 +120,7 @@ public class JPanelBookEdit extends JPanel {
 
 		jlabelPhoto = new JLabel("");
 		jlabelPhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		jlabelPhoto.setBounds(30, 30, 150, 150);
+		jlabelPhoto.setBounds(30, 30, 150, 200);
 		panel_2.add(jlabelPhoto);
 
 		jbuttonBrowser = new JButton("Browser");
@@ -125,7 +130,7 @@ public class JPanelBookEdit extends JPanel {
 			}
 		});
 		jbuttonBrowser.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonBrowser.setBounds(55, 190, 100, 30);
+		jbuttonBrowser.setBounds(60, 240, 100, 30);
 		panel_2.add(jbuttonBrowser);
 
 		JLabel lblNewLabel_1 = new JLabel("Call Number:");
@@ -206,7 +211,7 @@ public class JPanelBookEdit extends JPanel {
 				jcomboBoxCategory_actionPerformed(e);
 			}
 		});
-		jcomboBoxCategory.setBounds(351, 434, 200, 30);
+		jcomboBoxCategory.setBounds(577, 435, 200, 30);
 		panel_2.add(jcomboBoxCategory);
 
 		jcomboBoxAuthor = new JComboBox();
@@ -216,7 +221,7 @@ public class JPanelBookEdit extends JPanel {
 				jcomboBoxAuthor_actionPerformed(e);
 			}
 		});
-		jcomboBoxAuthor.setBounds(351, 394, 200, 30);
+		jcomboBoxAuthor.setBounds(577, 395, 200, 30);
 		panel_2.add(jcomboBoxAuthor);
 
 		jdateChooserCreated = new JDateChooser();
@@ -256,13 +261,23 @@ public class JPanelBookEdit extends JPanel {
 		panel_2.add(jtextFieldCallNumber);
 
 		jbuttonAddAuthor = new JButton("Add Author");
+		jbuttonAddAuthor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonAddAuthor_actionPerformed(e);
+			}
+		});
 		jbuttonAddAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonAddAuthor.setBounds(588, 393, 120, 30);
+		jbuttonAddAuthor.setBounds(814, 394, 120, 30);
 		panel_2.add(jbuttonAddAuthor);
 
 		jbuttonAddCategory = new JButton("Add Category");
+		jbuttonAddCategory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonAddCategory_actionPerformed(e);
+			}
+		});
 		jbuttonAddCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonAddCategory.setBounds(588, 433, 120, 30);
+		jbuttonAddCategory.setBounds(814, 434, 120, 30);
 		panel_2.add(jbuttonAddCategory);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -272,6 +287,32 @@ public class JPanelBookEdit extends JPanel {
 		jtextAreaDescription = new JTextArea();
 		jtextAreaDescription.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		scrollPane.setViewportView(jtextAreaDescription);
+
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(565, 30, 398, 111);
+		panel_2.add(scrollPane_1);
+
+		txtrIsbnNnnnnnn = new JTextArea();
+		txtrIsbnNnnnnnn.setText(
+				"*) ISBN: NNN-NNNN\r\n- 3 characters is ORDINAL NUMBER of the CATEGORY\r\n- 4 characters is ORDINAL NUMBER of the BOOK");
+		scrollPane_1.setViewportView(txtrIsbnNnnnnnn);
+
+		lblNewLabel_2 = new JLabel("NOTE:");
+		lblNewLabel_2.setForeground(new Color(255, 0, 0));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		scrollPane_1.setColumnHeaderView(lblNewLabel_2);
+
+		jtextFieldAuthor = new JTextField();
+		jtextFieldAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldAuthor.setColumns(10);
+		jtextFieldAuthor.setBounds(351, 394, 200, 30);
+		panel_2.add(jtextFieldAuthor);
+
+		jtextFieldCategory = new JTextField();
+		jtextFieldCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldCategory.setColumns(10);
+		jtextFieldCategory.setBounds(351, 435, 200, 30);
+		panel_2.add(jtextFieldCategory);
 	}
 
 //	Dynamic Data
@@ -300,7 +341,16 @@ public class JPanelBookEdit extends JPanel {
 
 		jdateChooserCreated.setDate(book.getCreated());
 		jcheckBoxStatus.setSelected(book.isStatus());
-//		book.setPhoto(Files.readAllBytes(book.getPhoto()));
+
+		byte[] imageData = book.getPhoto();
+		ImageIcon photo = new ImageIcon(new ImageIcon(imageData).getImage().getScaledInstance(jlabelPhoto.getWidth(),
+				jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
+		jlabelPhoto.setIcon(photo);
+
+		jtextFieldAuthor.setText(book.getAuthor());
+		author = authorModel.findOneByName(book.getAuthor());
+		jtextFieldCategory.setText(book.getCategory());
+		category = categoryModel.findOneByName(book.getCategory());
 
 		fillDataToJComboBoxAuthor(authorModel.findAll());
 		fillDataToJComboBoxCategory(categoryModel.findAll());
@@ -310,7 +360,6 @@ public class JPanelBookEdit extends JPanel {
 
 		int categoryId = categoryModel.findOneByName(book.getCategory()).getId();
 		book_Category = book_CategoryModel.find(book.getCallNumber(), categoryId);
-
 	}
 
 	private void jbuttonBrowser_actionPerformed(ActionEvent e) {
@@ -328,10 +377,12 @@ public class JPanelBookEdit extends JPanel {
 
 	private void jcomboBoxAuthor_actionPerformed(ActionEvent e) {
 		author = (Author) jcomboBoxAuthor.getSelectedItem();
+		jtextFieldAuthor.setText(author.getName());
 	}
 
 	private void jcomboBoxCategory_actionPerformed(ActionEvent e) {
 		category = (Category) jcomboBoxCategory.getSelectedItem();
+		jtextFieldCategory.setText(category.getName());
 	}
 
 	private void jbuttonSave_actionPerformed(ActionEvent e) {
@@ -345,14 +396,16 @@ public class JPanelBookEdit extends JPanel {
 
 			book.setCreated(jdateChooserCreated.getDate());
 			book.setStatus(jcheckBoxStatus.isSelected());
-//			book.setPhoto(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
-//			System.out.println(book.toString());
 
-			author = (Author) jcomboBoxAuthor.getSelectedItem();
+			if (file != null) {
+				book.setPhoto(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
+			} else {
+				book.setPhoto(book.getPhoto());
+			}
+
 			book_Author.setId_book(book.getCallNumber());
 			book_Author.setId_author(author.getId());
 
-			category = (Category) jcomboBoxCategory.getSelectedItem();
 			book_Category.setId_book(book.getCallNumber());
 			book_Category.setId_category(category.getId());
 
@@ -380,6 +433,22 @@ public class JPanelBookEdit extends JPanel {
 		jPanelBookList.setVisible(true);
 	}
 
+	public void jbuttonAddAuthor_actionPerformed(ActionEvent e) {
+		jpanelRight.removeAll();
+		jpanelRight.revalidate();
+		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight);
+		jpanelRight.add(jPanelAuthorAdd);
+		jPanelAuthorAdd.setVisible(true);
+	}
+
+	public void jbuttonAddCategory_actionPerformed(ActionEvent e) {
+		jpanelRight.removeAll();
+		jpanelRight.revalidate();
+		JPanelCategoryAdd jPanelCategoryAdd = new JPanelCategoryAdd(jpanelRight);
+		jpanelRight.add(jPanelCategoryAdd);
+		jPanelCategoryAdd.setVisible(true);
+	}
+
 //	Components
 	private void fillDataToJComboBoxAuthor(List<Author> authorList) {
 		DefaultComboBoxModel<Author> defaultComboBoxModel = new DefaultComboBoxModel<Author>();
@@ -389,9 +458,6 @@ public class JPanelBookEdit extends JPanel {
 		}
 		jcomboBoxAuthor.setModel(defaultComboBoxModel);
 		jcomboBoxAuthor.setRenderer(new AuthorCellRender());
-
-		Author author = authorModel.findOneByName(book.getAuthor());
-		jcomboBoxAuthor.setSelectedIndex(author.getId() - 1);
 	}
 
 	private void fillDataToJComboBoxCategory(List<Category> categoryList) {
@@ -402,10 +468,6 @@ public class JPanelBookEdit extends JPanel {
 		}
 		jcomboBoxCategory.setModel(defaultComboBoxModel);
 		jcomboBoxCategory.setRenderer(new CategoryCellRender());
-
-		Category category = categoryModel.findOneByName(book.getCategory());
-		jcomboBoxCategory.setSelectedIndex(category.getId() - 1);
-
 	}
 
 	private class AuthorCellRender extends DefaultListCellRenderer {
@@ -417,7 +479,6 @@ public class JPanelBookEdit extends JPanel {
 			String s = author.getId() + " - " + author.getName();
 			return super.getListCellRendererComponent(list, s, index, isSelected, cellHasFocus);
 		}
-
 	}
 
 	private class CategoryCellRender extends DefaultListCellRenderer {
@@ -429,7 +490,5 @@ public class JPanelBookEdit extends JPanel {
 			String s = category.getId() + " - " + category.getName();
 			return super.getListCellRendererComponent(list, s.toUpperCase(), index, isSelected, cellHasFocus);
 		}
-
 	}
-
 }

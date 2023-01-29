@@ -73,7 +73,7 @@ public class JPanelEmpList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head = new JPanel();
-		panel_head.setBackground(new Color(255, 128, 0));
+		panel_head.setBackground(new Color(128, 128, 192));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel_head);

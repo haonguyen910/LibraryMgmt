@@ -370,6 +370,8 @@ public class JPanelBorrowList extends JPanel {
 			fillDataToJTableBorrow(borrowModel.findByCustomerName(keyword));
 		}
 		jbuttonCancelSearch.setVisible(true);
+		jdateChooserCreated.setDate(null);
+		jbuttonCancelByCreated.setVisible(false);
 		jbuttonDelete.setEnabled(false);
 		jbuttonEdit.setEnabled(false);
 		jbuttonSetBorrowed.setEnabled(false);
@@ -571,9 +573,9 @@ public class JPanelBorrowList extends JPanel {
 
 	private void fillDataToJComboBox() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
+		defaultComboBoxModel.addElement("Customer Name");
 		defaultComboBoxModel.addElement("ID Borrow");
 		defaultComboBoxModel.addElement("Employee Name");
-		defaultComboBoxModel.addElement("Customer Name");
 		jcomboBoxSearchType.setModel(defaultComboBoxModel);
 	}
 

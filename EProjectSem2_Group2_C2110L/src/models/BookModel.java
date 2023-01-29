@@ -38,21 +38,18 @@ public class BookModel {
 	public boolean update(Book book) {
 		boolean result = true;
 		try {
-//			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-//					"UPDATE book set ISBN = ?, title = ?, quantity = ?, price = ?, photo = ?, description = ?, status = ?, created = ? WHERE callNumber = ?");
-
 			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"UPDATE book set ISBN = ?, title = ?, quantity = ?, price = ?, description = ?, status = ?, created = ? WHERE callNumber = ?");
+					"UPDATE book set ISBN = ?, title = ?, quantity = ?, price = ?, photo = ?, description = ?, status = ?, created = ? WHERE callNumber = ?");
 
 			preparedStatement.setString(1, book.getISBN());
 			preparedStatement.setString(2, book.getTitle());
 			preparedStatement.setInt(3, book.getQuantity());
 			preparedStatement.setDouble(4, book.getPrice());
-//			preparedStatement.setBytes(5, book.getPhoto());
-			preparedStatement.setString(5, book.getDescription());
-			preparedStatement.setBoolean(6, book.isStatus());
-			preparedStatement.setDate(7, new java.sql.Date(book.getCreated().getTime()));
-			preparedStatement.setString(8, book.getCallNumber());
+			preparedStatement.setBytes(5, book.getPhoto());
+			preparedStatement.setString(6, book.getDescription());
+			preparedStatement.setBoolean(7, book.isStatus());
+			preparedStatement.setDate(8, new java.sql.Date(book.getCreated().getTime()));
+			preparedStatement.setString(9, book.getCallNumber());
 
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {

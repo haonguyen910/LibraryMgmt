@@ -107,7 +107,7 @@ public class JPanelBookAdd extends JPanel {
 
 		jlabelPhoto = new JLabel("");
 		jlabelPhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		jlabelPhoto.setBounds(30, 30, 150, 150);
+		jlabelPhoto.setBounds(30, 30, 150, 200);
 		panel_2.add(jlabelPhoto);
 
 		jbuttonBrowser = new JButton("Browser");
@@ -117,7 +117,7 @@ public class JPanelBookAdd extends JPanel {
 			}
 		});
 		jbuttonBrowser.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonBrowser.setBounds(55, 190, 100, 30);
+		jbuttonBrowser.setBounds(55, 240, 100, 30);
 		panel_2.add(jbuttonBrowser);
 
 		JLabel lblNewLabel_1 = new JLabel("Call Number:");
@@ -247,11 +247,21 @@ public class JPanelBookAdd extends JPanel {
 		panel_2.add(jtextFieldCallNumber);
 
 		jbuttonAddAuthor = new JButton("Add Author");
+		jbuttonAddAuthor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonAddAuthor_actionPerformed(e);
+			}
+		});
 		jbuttonAddAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonAddAuthor.setBounds(588, 393, 120, 30);
 		panel_2.add(jbuttonAddAuthor);
 
 		jbuttonAddCategory = new JButton("Add Category");
+		jbuttonAddCategory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonAddCategory_actionPerformed(e);
+			}
+		});
 		jbuttonAddCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonAddCategory.setBounds(588, 433, 120, 30);
 		panel_2.add(jbuttonAddCategory);
@@ -263,6 +273,23 @@ public class JPanelBookAdd extends JPanel {
 		jtextAreaDescription = new JTextArea();
 		jtextAreaDescription.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		scrollPane.setViewportView(jtextAreaDescription);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(588, 32, 398, 221);
+		panel_2.add(scrollPane_1);
+
+		JTextArea txtrCallNumber = new JTextArea();
+		txtrCallNumber.setForeground(new Color(0, 0, 0));
+		txtrCallNumber.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		txtrCallNumber.setText(
+				"*) Call Number:\tXX-XX-NNN\r\n- First 2 letters of the name of the WORK\r\n- First 2 letters of the AUTHOR'S NAME \r\n- 3 characters is ORDINAL NUMBER\r\n\r\n*) ISBN: NNN-NNNN\r\n- 3 characters is ORDINAL NUMBER of the CATEGORY\r\n- 4 characters is ORDINAL NUMBER of the BOOK");
+		scrollPane_1.setViewportView(txtrCallNumber);
+
+		JLabel lblNewLabel_2 = new JLabel("NOTE:");
+		lblNewLabel_2.setBackground(new Color(255, 255, 255));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setForeground(new Color(255, 0, 0));
+		scrollPane_1.setColumnHeaderView(lblNewLabel_2);
 //		Function
 		initJFrame();
 	}
@@ -271,6 +298,11 @@ public class JPanelBookAdd extends JPanel {
 	private void initJFrame() {
 		fillDataToJComboBoxAuthor(authorModel.findAll());
 		fillDataToJComboBoxCategory(categoryModel.findAll());
+
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon("D:\\photo\\no-image.png").getImage()
+				.getScaledInstance(jlabelPhoto.getWidth(), jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
+		jlabelPhoto.setIcon(imageIcon);
+		file = new File("D:\\photo\\no-image.png");
 	}
 
 	private void jbuttonBrowser_actionPerformed(ActionEvent e) {
@@ -284,6 +316,7 @@ public class JPanelBookAdd extends JPanel {
 					.getScaledInstance(jlabelPhoto.getWidth(), jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
 			jlabelPhoto.setIcon(imageIcon);
 		}
+
 	}
 
 	private void jcomboBoxAuthor_actionPerformed(ActionEvent e) {
@@ -345,6 +378,22 @@ public class JPanelBookAdd extends JPanel {
 		jPanelBookList.setVisible(true);
 	}
 
+	public void jbuttonAddAuthor_actionPerformed(ActionEvent e) {
+		jpanelRight.removeAll();
+		jpanelRight.revalidate();
+		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight);
+		jpanelRight.add(jPanelAuthorAdd);
+		jPanelAuthorAdd.setVisible(true);
+	}
+
+	public void jbuttonAddCategory_actionPerformed(ActionEvent e) {
+		jpanelRight.removeAll();
+		jpanelRight.revalidate();
+		JPanelCategoryAdd jPanelCategoryAdd = new JPanelCategoryAdd(jpanelRight);
+		jpanelRight.add(jPanelCategoryAdd);
+		jPanelCategoryAdd.setVisible(true);
+	}
+
 //	Components
 	private void fillDataToJComboBoxAuthor(List<Author> authorList) {
 		DefaultComboBoxModel<Author> defaultComboBoxModel = new DefaultComboBoxModel<Author>();
@@ -387,5 +436,4 @@ public class JPanelBookAdd extends JPanel {
 			return super.getListCellRendererComponent(list, s.toUpperCase(), index, isSelected, cellHasFocus);
 		}
 	}
-
 }

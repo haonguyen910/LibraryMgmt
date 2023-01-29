@@ -68,8 +68,6 @@ public class JPanelBorrowedList extends JPanel {
 	private JButton jbuttonSearch;
 	private JComboBox jcomboBoxSearchType;
 	private JButton jbuttonCancelSearch;
-	private JButton jbuttonDelete;
-	private JButton jbuttonEdit;
 	private JPanel panel_4;
 	private JDateChooser jdateChooserCreated;
 	private JLabel lblNewLabel_2;
@@ -272,35 +270,6 @@ public class JPanelBorrowedList extends JPanel {
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_6.add(lblNewLabel_4);
 
-		JPanel panel_3 = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		add(panel_3);
-
-		jbuttonDelete = new JButton("Delete");
-		jbuttonDelete.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonDelete.setPreferredSize(new Dimension(100, 30));
-		jbuttonDelete.setMinimumSize(new Dimension(100, 30));
-		jbuttonDelete.setMaximumSize(new Dimension(100, 30));
-		jbuttonDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonDelete_actionPerformed(e);
-			}
-		});
-		panel_3.add(jbuttonDelete);
-
-		jbuttonEdit = new JButton("Edit");
-		jbuttonEdit.setPreferredSize(new Dimension(100, 30));
-		jbuttonEdit.setMinimumSize(new Dimension(100, 30));
-		jbuttonEdit.setMaximumSize(new Dimension(100, 30));
-		jbuttonEdit.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonEdit_actionPerformed(e);
-			}
-		});
-		panel_3.add(jbuttonEdit);
-
 		initJFrame();
 
 	}
@@ -311,8 +280,6 @@ public class JPanelBorrowedList extends JPanel {
 		fillDataToJComboBox();
 		jbuttonCancelSearch.setVisible(false);
 		jbuttonCancelByCreated.setVisible(false);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
 		fillDataToJTableDetailsInit();
 		fillDataToJComboBoxSort();
 
@@ -374,19 +341,6 @@ public class JPanelBorrowedList extends JPanel {
 		jdateChooserCreated.setDate(null);
 		jbuttonCancelByCreated.setVisible(false);
 		fillDataToJTableDetailsInit();
-	}
-
-	private void jbuttonDelete_actionPerformed(ActionEvent e) {
-		deleteBorrow();
-		jbuttonEdit.setEnabled(false);
-	}
-
-	private void deleteBorrow() {
-		jbuttonDelete.setEnabled(false);
-	}
-
-	private void jbuttonEdit_actionPerformed(ActionEvent e) {
-
 	}
 
 	// Components
@@ -470,10 +424,10 @@ public class JPanelBorrowedList extends JPanel {
 
 	private void fillDataToJComboBox() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
-		defaultComboBoxModel.addElement("ID");
-		defaultComboBoxModel.addElement("ID Borrow");
-		defaultComboBoxModel.addElement("Employee Name");
 		defaultComboBoxModel.addElement("Customer Name");
+		defaultComboBoxModel.addElement("ID Borrow");
+		defaultComboBoxModel.addElement("ID");
+		defaultComboBoxModel.addElement("Employee Name");
 		jcomboBoxSearchType.setModel(defaultComboBoxModel);
 	}
 

@@ -48,7 +48,7 @@ public class JPanelStatistic extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head = new JPanel();
-		panel_head.setBackground(new Color(255, 128, 0));
+		panel_head.setBackground(new Color(128, 128, 192));
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("Statistic Report");
