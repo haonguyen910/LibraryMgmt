@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import java.awt.Color;
 
 public class JPanelVRecord extends JPanel {
 	private JDateChooser jdateChooserStart;
@@ -39,10 +40,12 @@ public class JPanelVRecord extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(128, 128, 192));
 		add(panel_1);
 
 		JLabel lblNewLabel = new JLabel("Issue Register ");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_1.add(lblNewLabel);
 
 		JPanel panel_2 = new JPanel();
@@ -123,10 +126,13 @@ public class JPanelVRecord extends JPanel {
 	public void jcomboBoxStatus_actionPerformed(ActionEvent e) {
 		String status = jcomboBoxStatus.getSelectedItem().toString();
 		BorrowModel borrowModel = new BorrowModel();
+
 		if (status.equalsIgnoreCase("all")) {
 			fillDataToJTableVRecord(borrowModel.findAllForHistory());
-		} else {
-			fillDataToJTableVRecord(borrowModel.findByStatusForHistory(status.equalsIgnoreCase("pending")));
+		} else if (status.equalsIgnoreCase("pending")) {
+			fillDataToJTableVRecord(borrowModel.findByStatusForHistory(false));
+		} else if (status.equalsIgnoreCase("returned")) {
+			fillDataToJTableVRecord(borrowModel.findByStatusForHistory(true));
 		}
 	}
 
@@ -152,7 +158,7 @@ public class JPanelVRecord extends JPanel {
 		defaultTableModel.addColumn("Status");
 		for (Borrow borrow : borrowList) {
 			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getCallNumber(), borrow.getCustomerName(),
-					borrow.getCreated(), borrow.getDue_date(), borrow.isStatus() ? "Pending" : "Returned" });
+					borrow.getCreated(), borrow.getDue_date(), borrow.isStatus() ? "Returned" : "Pending" });
 
 			jtableVRecord.setModel(defaultTableModel);
 			jtableVRecord.getTableHeader().setReorderingAllowed(false);

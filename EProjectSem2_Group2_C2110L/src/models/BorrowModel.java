@@ -449,7 +449,7 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-//				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setCallNumber(rs.getString("callNumber"));
 				borrow.setCustomerName(rs.getString("customerName"));
 				borrow.setStatus(rs.getBoolean("status"));
 
@@ -471,8 +471,9 @@ public class BorrowModel {
 					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
 							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
-							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber"
-							+ "WHERE borrow.created >= ? and <= ?");
+							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
+							+ "WHERE borrow.created >= ? AND borrow.due_date <= ?");
+
 			preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
 			preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
 			ResultSet rs = preparedStatement.executeQuery();
@@ -481,7 +482,7 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-//				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setCallNumber(rs.getString("callNumber"));
 				borrow.setCustomerName(rs.getString("customerName"));
 				borrow.setStatus(rs.getBoolean("status"));
 
@@ -503,7 +504,8 @@ public class BorrowModel {
 					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
 							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
-							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber" + "WHERE borrow.status = ?");
+							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
+							+ "WHERE borrow.status = ?");
 			ps.setBoolean(1, status);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -533,7 +535,8 @@ public class BorrowModel {
 					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
 							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
-							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber" + "WHERE borrow.id_customer = ?");
+							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
+							+ "WHERE borrow.id_customer = ?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -544,6 +547,8 @@ public class BorrowModel {
 				borrow.setCallNumber(rs.getString("callNumber"));
 				borrow.setCustomerName(rs.getString("customerName"));
 				borrow.setStatus(rs.getBoolean("status"));
+
+				borrowList.add(borrow);
 			}
 
 		} catch (SQLException e1) {

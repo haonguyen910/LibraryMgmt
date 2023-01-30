@@ -342,8 +342,10 @@ public class JPanelCustmList extends JPanel {
 
 	public void jbuttonGetHistory_actionPerformed(ActionEvent e) {
 		int customerId = Integer.parseInt(jtextFieldID.getText());
+		System.out.println(customerId);
 		BorrowModel borrowModel = new BorrowModel();
 		setDataToTableGetHistory(borrowModel.findByCustomerIdForHistory(customerId));
+		System.out.println(borrowModel.findByCustomerIdForHistory(customerId).toString());
 	}
 
 	private void setDataToTableCust(List<Customer> customers) {
@@ -381,7 +383,7 @@ public class JPanelCustmList extends JPanel {
 		defaultTableModel.addColumn("Status");
 		for (Borrow borrow : borrowList) {
 			defaultTableModel.addRow(new Object[] { borrow.getCallNumber(), borrow.getCreated(), borrow.getDue_date(),
-					borrow.isStatus() ? "Pending" : "Returned" });
+					borrow.isStatus() ? "Returned":  "Pending"});
 			jtableIGetHistory.setModel(defaultTableModel);
 			jtableIGetHistory.getTableHeader().setReorderingAllowed(false);
 		}
