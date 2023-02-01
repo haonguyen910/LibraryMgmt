@@ -303,8 +303,9 @@ public class JPanelBookAdd extends JPanel {
 				.getScaledInstance(jlabelPhoto.getWidth(), jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
 		jlabelPhoto.setIcon(imageIcon);
 		file = new File("D:\\photo\\no-image.png");
-		author = authorModel.setDefault();
-		category = categoryModel.setDefault();
+
+		author = (Author) jcomboBoxAuthor.getSelectedItem();
+		category = (Category) jcomboBoxCategory.getSelectedItem();
 	}
 
 	private void jbuttonBrowser_actionPerformed(ActionEvent e) {
