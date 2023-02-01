@@ -303,6 +303,8 @@ public class JPanelBookAdd extends JPanel {
 				.getScaledInstance(jlabelPhoto.getWidth(), jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
 		jlabelPhoto.setIcon(imageIcon);
 		file = new File("D:\\photo\\no-image.png");
+		author = authorModel.setDefault();
+		category = categoryModel.setDefault();
 	}
 
 	private void jbuttonBrowser_actionPerformed(ActionEvent e) {
@@ -320,11 +322,11 @@ public class JPanelBookAdd extends JPanel {
 	}
 
 	private void jcomboBoxAuthor_actionPerformed(ActionEvent e) {
-		Author author = (Author) jcomboBoxAuthor.getSelectedItem();
+		author = (Author) jcomboBoxAuthor.getSelectedItem();
 	}
 
 	private void jcomboBoxCategory_actionPerformed(ActionEvent e) {
-		Category category = (Category) jcomboBoxCategory.getSelectedItem();
+		category = (Category) jcomboBoxCategory.getSelectedItem();
 	}
 
 	private void jbuttonSave_actionPerformed(ActionEvent e) {
@@ -344,12 +346,10 @@ public class JPanelBookAdd extends JPanel {
 				book.setPhoto(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
 			}
 
-			author = (Author) jcomboBoxAuthor.getSelectedItem();
 			book_Author = new Book_Author();
 			book_Author.setId_book(jtextFieldCallNumber.getText());
 			book_Author.setId_author(author.getId());
 
-			category = (Category) jcomboBoxCategory.getSelectedItem();
 			book_Category = new Book_Category();
 			book_Category.setId_book(jtextFieldCallNumber.getText());
 			book_Category.setId_category(category.getId());

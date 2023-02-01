@@ -88,6 +88,29 @@ public class CategoryModel {
 		return category;
 	}
 
+	public Category setDefault() {
+		Category category = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM category LIMIT 1");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				category = new Category();
+				category.setId(resultSet.getInt("id"));
+				category.setName(resultSet.getString("name"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			category = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return category;
+	}
+
 	public Category findOneByName(String name) {
 		Category category = null;
 		try {

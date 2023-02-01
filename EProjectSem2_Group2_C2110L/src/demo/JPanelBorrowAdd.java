@@ -966,7 +966,7 @@ public class JPanelBorrowAdd extends JPanel {
 
 		for (Book book : bookList) {
 			defaultTableModel.addRow(new Object[] { book.getCallNumber(), book.getISBN(), book.getPhoto(),
-					book.getTitle(), book.getAuthor(), book.getCategory().toUpperCase(), book.getQuantity(),
+					book.getTitle(), book.getAuthor(), book.getCategory(), book.getQuantity(),
 					book.getPrice(), book.isStatus() ? "In Library" : "Out of Stock", });
 		}
 

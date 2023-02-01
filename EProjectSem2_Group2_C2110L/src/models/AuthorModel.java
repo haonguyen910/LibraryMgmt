@@ -113,6 +113,29 @@ public class AuthorModel {
 		return author;
 	}
 
+	public Author setDefault() {
+		Author author = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM author LIMIT 1");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				author = new Author();
+				author.setId(resultSet.getInt("id"));
+				author.setName(resultSet.getString("name"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			author = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return author;
+	}
+
 	// List
 	public List<Author> findAll() {
 		List<Author> authorList = new ArrayList<Author>();

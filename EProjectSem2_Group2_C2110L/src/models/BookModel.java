@@ -160,7 +160,8 @@ public class BookModel {
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
 					.prepareStatement("SELECT book.*, author.name AS author, category.name as category\r\n"
-							+ "FROM book \r\n" + "LEFT JOIN book_author ON book.callNumber = book_author.id_book\r\n"
+							+ "FROM book\r\n"
+							+ "LEFT JOIN book_author ON book.callNumber = book_author.id_book\r\n"
 							+ "LEFT JOIN author ON author.id = book_author.id_author\r\n"
 							+ "LEFT JOIN book_category ON book.callNumber = book_category.id_book\r\n"
 							+ "LEFT JOIN category ON category.id = book_category.id_category");
