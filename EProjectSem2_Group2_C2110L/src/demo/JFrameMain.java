@@ -204,7 +204,7 @@ public class JFrameMain extends JFrame {
 	
 	public void jbuttonVRecord_actionPerformed(ActionEvent e) {
 		clearScreen();
-		JPanelVRecord jpanelVRecord = new JPanelVRecord();
+		JPanelRecord jpanelVRecord = new JPanelRecord();
 		jpanelRight.add(jpanelVRecord);
 		jpanelVRecord.setVisible(true);
 	}

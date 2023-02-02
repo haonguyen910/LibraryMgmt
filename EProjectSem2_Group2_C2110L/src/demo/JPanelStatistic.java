@@ -30,16 +30,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
 public class JPanelStatistic extends JPanel {
-	private JTable jtableBookDetail;
-	private JTable jtableCustDetail;
 	private List<Book> books;
 	private JLabel jlabelNBook;
 	private JLabel jlabelNCust;
 	private JLabel jlabelNIssueBook;
 	private JLabel jlabelNDefaulter;
 	private JPanel panelPieChart;
+	private JTable jtableBookDetail;
+	private JTable jtableCustDetail;
 
 	/**
 	 * Create the panel.
@@ -53,101 +56,139 @@ public class JPanelStatistic extends JPanel {
 
 		JLabel lblNewLabel = new JLabel("Statistic Report");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_head.add(lblNewLabel);
+		
+		JPanel panel_8 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
+		flowLayout.setVgap(15);
+		add(panel_8);
+		
+		JPanel panel_1 = new JPanel();
+		add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 6, 0, 0));
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setPreferredSize(new Dimension(100, 150));
+		panel_1.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JPanel panel_3 = new JPanel();
+		panel_1.add(panel_3);
+		panel_3.setLayout(null);
+		
+		JLabel lblNewLabel_1_4 = new JLabel("No. of Books");
+		lblNewLabel_1_4.setBounds(39, 11, 120, 14);
+		panel_3.add(lblNewLabel_1_4);
+		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		jlabelNBook = new JLabel("");
+		jlabelNBook.setBounds(39, 36, 120, 100);
+		panel_3.add(jlabelNBook);
+		jlabelNBook.setOpaque(true);
+		jlabelNBook.setHorizontalAlignment(SwingConstants.CENTER);
+		jlabelNBook.setFont(new Font("Tahoma", Font.BOLD, 30));
+		jlabelNBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 128, 0)));
+		jlabelNBook.setBackground(Color.WHITE);
+		
+		JPanel panel_4 = new JPanel();
+		panel_1.add(panel_4);
+		panel_4.setLayout(null);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("No. of Customers");
+		lblNewLabel_1_1_1.setBounds(40, 11, 120, 14);
+		panel_4.add(lblNewLabel_1_1_1);
+		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		jlabelNCust = new JLabel("");
+		jlabelNCust.setBounds(40, 36, 120, 100);
+		panel_4.add(jlabelNCust);
+		jlabelNCust.setOpaque(true);
+		jlabelNCust.setHorizontalAlignment(SwingConstants.CENTER);
+		jlabelNCust.setFont(new Font("Tahoma", Font.BOLD, 30));
+		jlabelNCust.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(51, 204, 255)));
+		jlabelNCust.setBackground(Color.WHITE);
+		
+		JPanel panel_5 = new JPanel();
+		panel_1.add(panel_5);
+		panel_5.setLayout(null);
+		
+		JLabel lblNewLabel_1_2_1 = new JLabel("Issued Books");
+		lblNewLabel_1_2_1.setBounds(39, 11, 120, 14);
+		panel_5.add(lblNewLabel_1_2_1);
+		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		jlabelNIssueBook = new JLabel("");
+		jlabelNIssueBook.setBounds(39, 36, 120, 100);
+		panel_5.add(jlabelNIssueBook);
+		jlabelNIssueBook.setOpaque(true);
+		jlabelNIssueBook.setHorizontalAlignment(SwingConstants.CENTER);
+		jlabelNIssueBook.setForeground(Color.BLACK);
+		jlabelNIssueBook.setFont(new Font("Tahoma", Font.BOLD, 30));
+		jlabelNIssueBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 128, 0)));
+		jlabelNIssueBook.setBackground(Color.WHITE);
+		
+		JPanel panel_6 = new JPanel();
+		panel_1.add(panel_6);
+		panel_6.setLayout(null);
+		
+		JLabel lblNewLabel_1_3_1 = new JLabel("Defaulter List");
+		lblNewLabel_1_3_1.setBounds(39, 11, 120, 14);
+		panel_6.add(lblNewLabel_1_3_1);
+		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		jlabelNDefaulter = new JLabel("");
+		jlabelNDefaulter.setBounds(39, 36, 120, 100);
+		panel_6.add(jlabelNDefaulter);
+		jlabelNDefaulter.setOpaque(true);
+		jlabelNDefaulter.setHorizontalAlignment(SwingConstants.CENTER);
+		jlabelNDefaulter.setFont(new Font("Tahoma", Font.BOLD, 30));
+		jlabelNDefaulter.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(51, 204, 255)));
+		jlabelNDefaulter.setBackground(Color.WHITE);
+		
+		JPanel panel_7 = new JPanel();
+		panel_1.add(panel_7);
+		panel_7.setLayout(null);
+		
+		JPanel panel_11 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_11.getLayout();
+		flowLayout_1.setVgap(10);
+		add(panel_11);
 
 		JPanel panel_body = new JPanel();
 		add(panel_body);
 		panel_body.setLayout(new BorderLayout(0, 0));
-
+		
+		panelPieChart = new JPanel();
+		panelPieChart.setPreferredSize(new Dimension(400, 10));
+		panel_body.add(panelPieChart, BorderLayout.WEST);
+		panelPieChart.setLayout(null);
+		
 		JPanel panel = new JPanel();
 		panel_body.add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-
-		jlabelNBook = new JLabel("");
-		jlabelNBook.setHorizontalAlignment(SwingConstants.CENTER);
-		jlabelNBook.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNBook.setBackground(new Color(255, 255, 255));
-		jlabelNBook.setOpaque(true);
-		jlabelNBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 128, 0)));
-		jlabelNBook.setBounds(142, 54, 120, 100);
-		panel.add(jlabelNBook);
-
-		jlabelNCust = new JLabel("");
-		jlabelNCust.setHorizontalAlignment(SwingConstants.CENTER);
-		jlabelNCust.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNCust.setBackground(new Color(255, 255, 255));
-		jlabelNCust.setOpaque(true);
-		jlabelNCust.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(51, 204, 255)));
-		jlabelNCust.setBounds(312, 54, 120, 100);
-		panel.add(jlabelNCust);
-
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JPanel panel_9 = new JPanel();
+		panel.add(panel_9);
+		panel_9.setLayout(new BorderLayout(0, 0));
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 206, 442, 127);
-		panel.add(scrollPane);
-
+		panel_9.add(scrollPane, BorderLayout.CENTER);
+		
 		jtableBookDetail = new JTable();
+		jtableBookDetail.setPreferredScrollableViewportSize(new Dimension(450, 250));
 		scrollPane.setViewportView(jtableBookDetail);
-
+		
+		JPanel panel_10 = new JPanel();
+		panel.add(panel_10);
+		panel_10.setLayout(new BorderLayout(0, 0));
+		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(20, 373, 442, 127);
-		panel.add(scrollPane_1);
-
+		panel_10.add(scrollPane_1, BorderLayout.CENTER);
+		
 		jtableCustDetail = new JTable();
+		jtableCustDetail.setPreferredScrollableViewportSize(new Dimension(450, 250));
 		scrollPane_1.setViewportView(jtableCustDetail);
-
-		JLabel lblNewLabel_2 = new JLabel("Customer Details");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_2.setBounds(20, 348, 132, 14);
-		panel.add(lblNewLabel_2);
-
-		JLabel lblNewLabel_2_1 = new JLabel("Book Details");
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_2_1.setBounds(20, 181, 106, 14);
-		panel.add(lblNewLabel_2_1);
-
-		JLabel lblNewLabel_1 = new JLabel("No. of Books");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(142, 29, 120, 14);
-		panel.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_1_1 = new JLabel("No. of Customers");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_1.setBounds(312, 29, 120, 14);
-		panel.add(lblNewLabel_1_1);
-
-		JLabel lblNewLabel_1_2 = new JLabel("Issued Books");
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_2.setBounds(482, 29, 120, 14);
-		panel.add(lblNewLabel_1_2);
-
-		JLabel lblNewLabel_1_3 = new JLabel("Defaulter List");
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_3.setBounds(652, 29, 120, 14);
-		panel.add(lblNewLabel_1_3);
-
-		jlabelNIssueBook = new JLabel("");
-		jlabelNIssueBook.setHorizontalAlignment(SwingConstants.CENTER);
-		jlabelNIssueBook.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNIssueBook.setOpaque(true);
-		jlabelNIssueBook.setForeground(new Color(0, 0, 0));
-		jlabelNIssueBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 128, 0)));
-		jlabelNIssueBook.setBackground(Color.WHITE);
-		jlabelNIssueBook.setBounds(482, 54, 120, 100);
-		panel.add(jlabelNIssueBook);
-
-		jlabelNDefaulter = new JLabel("");
-		jlabelNDefaulter.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNDefaulter.setHorizontalAlignment(SwingConstants.CENTER);
-		jlabelNDefaulter.setOpaque(true);
-		jlabelNDefaulter.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(51, 204, 255)));
-		jlabelNDefaulter.setBackground(Color.WHITE);
-		jlabelNDefaulter.setBounds(652, 54, 120, 100);
-		panel.add(jlabelNDefaulter);
-
-		panelPieChart = new JPanel();
-		panelPieChart.setBounds(495, 206, 395, 294);
-		panel.add(panelPieChart);
 
 		JPanel panel_bottom = new JPanel();
 		add(panel_bottom);
@@ -165,9 +206,7 @@ public class JPanelStatistic extends JPanel {
 		fillDataToCustomerDetail(customerModel.findAll());
 
 		fillDataToCards();
-		
 		showPieChart();
-
 	}
 
 	private void fillDataToBookDetail(List<Book> books) {
@@ -245,33 +284,38 @@ public class JPanelStatistic extends JPanel {
 	public void showPieChart() {
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 		try {
-			PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT book_category.id_category, COUNT(borrow_detail.id) as NumberOfCheckOut FROM borrow_detail LEFT JOIN book_category ON borrow_detail.id_book = book_category.id_book GROUP BY id_category");
+			PreparedStatement ps = ConnectDB.connection().prepareStatement(
+					"SELECT category.name AS categoryName, COUNT(borrow_detail.id) AS numberOfCheckOut\r\n"
+					+ "FROM category LEFT JOIN book_category ON category.id = book_category.id_category\r\n"
+					+ "LEFT JOIN borrow_detail ON book_category.id_book = borrow_detail.id_book\r\n"
+					+ "GROUP BY categoryName");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				pieDataset.setValue(rs.getString("id_category"), new Double(rs.getDouble("NumberOfCheckOut")));
+				pieDataset.setValue(rs.getString("categoryName"), new Double(rs.getDouble("numberOfCheckOut")));
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		JFreeChart pieChart = ChartFactory.createPieChart("Category Detail", pieDataset, true, true, false);
+		JFreeChart pieChart = ChartFactory.createPieChart("Check-out rate by Category", pieDataset, true, true, false);
 		PiePlot piePlot = (PiePlot) pieChart.getPlot();
 		
-		piePlot.setSectionPaint("novel", new Color(255, 255, 102));
-		piePlot.setSectionPaint("poem", new Color(102, 255, 102));
-		piePlot.setSectionPaint("short story", new Color(255, 102, 153));
-		piePlot.setSectionPaint("prose", new Color(0, 204, 204));
-		piePlot.setSectionPaint("long story", new Color(255, 255, 102));
-		piePlot.setSectionPaint("autobiography", new Color(102, 255, 102));
+		piePlot.setSectionPaint("novel", new Color(236, 107, 86));
+		piePlot.setSectionPaint("poem", new Color(255, 193, 84));
+		piePlot.setSectionPaint("short story", new Color(71, 179, 156));
+		piePlot.setSectionPaint("prose", new Color(253, 103, 135));
+		piePlot.setSectionPaint("long story", new Color(255, 244, 76));
+		piePlot.setSectionPaint("autobiography", new Color(40, 142, 235));
 		piePlot.setBackgroundPaint(Color.white);
 		
 		ChartPanel chartPanel = new ChartPanel(pieChart);
-		chartPanel.setBounds(0, 0, 385, 294);
+		chartPanel.setBounds(0, 0, 385, 512);
 		panelPieChart.removeAll();
 		panelPieChart.setLayout(null);
 		panelPieChart.add(chartPanel);
 		chartPanel.setLayout(null);
 		panelPieChart.validate();
 	}
+	
 }

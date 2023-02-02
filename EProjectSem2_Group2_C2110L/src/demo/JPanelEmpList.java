@@ -39,32 +39,45 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
-import javax.swing.JFileChooser;
 import javax.swing.JPasswordField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
 import java.awt.Dimension;
+import javax.swing.border.EtchedBorder;
 
 public class JPanelEmpList extends JPanel {
 	private JButton jbuttonDelete;
 	private JButton jbuttonEdit;
 	private JButton jbuttonAdd;
 	private ImageIcon imageIcon;
-	private JTable jtableEmp;
-	private JTextField jtextFieldName;
-	private JTextField jtextFieldAddress;
-	private JTextField jtextFieldPhone;
-	private JTextField jtextFieldID;
-	private JTextField jtextFieldDepartment;
-	private JTextField jtextFieldUsername;
-	private JPasswordField jpasswordFieldPassword;
-	private JButton jbuttonBrowse;
 	private File file;
-	private JLabel jlablePhoto;
-	private JDateChooser jdateChooser;
-	private JCheckBox jcheckboxAdmin;
 	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private JButton jbuttonReset;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JScrollPane scrollPane;
+	private JTable jtableEmp;
+	private JLabel lblNewLabel_1;
+	private JTextField jtextFieldName;
+	private JLabel lblNewLabel_1_1;
+	private JTextField jtextFieldAddress;
+	private JLabel lblNewLabel_1_2;
+	private JTextField jtextFieldPhone;
+	private JLabel lblNewLabel_1_3;
+	private JTextField jtextFieldID;
+	private JLabel jlablePhoto;
+	private JLabel lblNewLabel_1_3_1;
+	private JTextField jtextFieldDepartment;
+	private JLabel lblNewLabel_1_1_1;
+	private JTextField jtextFieldUsername;
+	private JLabel lblNewLabel_1_1_1_1;
+	private JPasswordField jpasswordFieldPassword;
+	private JButton jbuttonBrowse;
+	private JLabel lblNewLabel_1_2_1;
+	private JDateChooser jdateChooser;
+	private JCheckBox jcheckboxAdmin;
+	private JLabel lblNewLabel_2;
+	private JPanel panel_2;
 
 	/**
 	 * Create the panel.
@@ -75,27 +88,145 @@ public class JPanelEmpList extends JPanel {
 		JPanel panel_head = new JPanel();
 		panel_head.setBackground(new Color(128, 128, 192));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("Employee List");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_head.add(lblNewLabel);
+		
+		panel_2 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
+		flowLayout_2.setVgap(15);
+		add(panel_2);
 
 		JPanel panel_body = new JPanel();
 		add(panel_body);
 		panel_body.setLayout(new BorderLayout(0, 0));
-
-		JPanel panel = new JPanel();
-		panel_body.add(panel, BorderLayout.CENTER);
+		
+		panel = new JPanel();
+		panel.setPreferredSize(new Dimension(340, 200));
+		panel_body.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 850, 250);
-		panel.add(scrollPane);
-
+		
+		jlablePhoto = new JLabel("");
+		jlablePhoto.setBounds(105, 44, 150, 150);
+		panel.add(jlablePhoto);
+		jlablePhoto.setIconTextGap(8);
+		jlablePhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+		jbuttonBrowse = new JButton("Browse...");
+		jbuttonBrowse.setBounds(105, 205, 150, 30);
+		panel.add(jbuttonBrowse);
+		jbuttonBrowse.setPreferredSize(new Dimension(79, 30));
+		jbuttonBrowse.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		lblNewLabel_1_3 = new JLabel("ID");
+		lblNewLabel_1_3.setBounds(47, 279, 46, 22);
+		panel.add(lblNewLabel_1_3);
+		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		jtextFieldID = new JTextField();
+		jtextFieldID.setBounds(131, 275, 150, 35);
+		panel.add(jtextFieldID);
+		jtextFieldID.setColumns(10);
+		
+		jtextFieldName = new JTextField();
+		jtextFieldName.setBounds(131, 326, 150, 35);
+		panel.add(jtextFieldName);
+		jtextFieldName.setColumns(10);
+		
+		lblNewLabel_1 = new JLabel("Name");
+		lblNewLabel_1.setBounds(47, 330, 46, 22);
+		panel.add(lblNewLabel_1);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		lblNewLabel_1_1 = new JLabel("Address");
+		lblNewLabel_1_1.setBounds(47, 384, 62, 22);
+		panel.add(lblNewLabel_1_1);
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		jtextFieldAddress = new JTextField();
+		jtextFieldAddress.setBounds(131, 380, 150, 35);
+		panel.add(jtextFieldAddress);
+		jtextFieldAddress.setColumns(10);
+		
+		lblNewLabel_1_2 = new JLabel("Phone");
+		lblNewLabel_1_2.setBounds(47, 440, 46, 22);
+		panel.add(lblNewLabel_1_2);
+		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		jtextFieldPhone = new JTextField();
+		jtextFieldPhone.setBounds(131, 436, 150, 35);
+		panel.add(jtextFieldPhone);
+		jtextFieldPhone.setPreferredSize(new Dimension(7, 35));
+		jtextFieldPhone.setColumns(10);
+		
+		lblNewLabel_1_3_1 = new JLabel("Department");
+		lblNewLabel_1_3_1.setBounds(47, 492, 74, 22);
+		panel.add(lblNewLabel_1_3_1);
+		lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		jtextFieldDepartment = new JTextField();
+		jtextFieldDepartment.setBounds(131, 488, 150, 35);
+		panel.add(jtextFieldDepartment);
+		jtextFieldDepartment.setColumns(10);
+		
+		lblNewLabel_1_2_1 = new JLabel("Created");
+		lblNewLabel_1_2_1.setBounds(47, 541, 56, 22);
+		panel.add(lblNewLabel_1_2_1);
+		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		jdateChooser = new JDateChooser();
+		jdateChooser.setBounds(131, 539, 150, 35);
+		panel.add(jdateChooser);
+		
+		lblNewLabel_1_1_1 = new JLabel("Username");
+		lblNewLabel_1_1_1.setBounds(47, 597, 62, 22);
+		panel.add(lblNewLabel_1_1_1);
+		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		jtextFieldUsername = new JTextField();
+		jtextFieldUsername.setBounds(131, 593, 150, 35);
+		panel.add(jtextFieldUsername);
+		jtextFieldUsername.setColumns(10);
+		
+		lblNewLabel_1_1_1_1 = new JLabel("Password");
+		lblNewLabel_1_1_1_1.setBounds(47, 653, 62, 22);
+		panel.add(lblNewLabel_1_1_1_1);
+		lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		jpasswordFieldPassword = new JPasswordField();
+		jpasswordFieldPassword.setBounds(131, 649, 150, 35);
+		panel.add(jpasswordFieldPassword);
+		
+		jcheckboxAdmin = new JCheckBox("Admin Authority");
+		jcheckboxAdmin.setSize(new Dimension(10, 10));
+		jcheckboxAdmin.setBounds(105, 714, 150, 40);
+		panel.add(jcheckboxAdmin);
+		jcheckboxAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		lblNewLabel_2.setBounds(10, 0, 320, 773);
+		panel.add(lblNewLabel_2);
+		
+		panel_1 = new JPanel();
+		panel_body.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		scrollPane = new JScrollPane();
+		panel_1.add(scrollPane, BorderLayout.CENTER);
+		
 		jtableEmp = new JTable();
 		jtableEmp.addMouseListener(new MouseAdapter() {
 			@Override
@@ -104,120 +235,6 @@ public class JPanelEmpList extends JPanel {
 			}
 		});
 		scrollPane.setViewportView(jtableEmp);
-
-		JPanel panel_5 = new JPanel();
-		panel_5.setLayout(null);
-		panel_5.setBorder(new TitledBorder(null, "Information", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(10, 272, 850, 250);
-		panel.add(panel_5);
-
-		JLabel lblNewLabel_1 = new JLabel("Name");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(274, 82, 46, 22);
-		panel_5.add(lblNewLabel_1);
-
-		jtextFieldName = new JTextField();
-		jtextFieldName.setColumns(10);
-		jtextFieldName.setBounds(330, 82, 150, 26);
-		panel_5.add(jtextFieldName);
-
-		JLabel lblNewLabel_1_1 = new JLabel("Address");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(258, 115, 62, 22);
-		panel_5.add(lblNewLabel_1_1);
-
-		jtextFieldAddress = new JTextField();
-		jtextFieldAddress.setColumns(10);
-		jtextFieldAddress.setBounds(330, 115, 150, 26);
-		panel_5.add(jtextFieldAddress);
-
-		JLabel lblNewLabel_1_2 = new JLabel("Phone");
-		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2.setBounds(274, 152, 46, 22);
-		panel_5.add(lblNewLabel_1_2);
-
-		jtextFieldPhone = new JTextField();
-		jtextFieldPhone.setColumns(10);
-		jtextFieldPhone.setBounds(330, 152, 150, 26);
-		panel_5.add(jtextFieldPhone);
-
-		JLabel lblNewLabel_1_5 = new JLabel("ID");
-		lblNewLabel_1_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_5.setBounds(274, 45, 46, 22);
-		panel_5.add(lblNewLabel_1_5);
-
-		jtextFieldID = new JTextField();
-		jtextFieldID.setColumns(10);
-		jtextFieldID.setBounds(330, 45, 150, 26);
-		panel_5.add(jtextFieldID);
-
-		jlablePhoto = new JLabel("");
-		jlablePhoto.setIconTextGap(8);
-		jlablePhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		jlablePhoto.setBounds(60, 34, 150, 150);
-		panel_5.add(jlablePhoto);
-
-		JLabel lblNewLabel_1_3 = new JLabel("Department");
-		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_3.setBounds(529, 45, 86, 22);
-		panel_5.add(lblNewLabel_1_3);
-
-		jtextFieldDepartment = new JTextField();
-		jtextFieldDepartment.setColumns(10);
-		jtextFieldDepartment.setBounds(625, 45, 150, 26);
-		panel_5.add(jtextFieldDepartment);
-
-		JLabel lblNewLabel_1_1_1 = new JLabel("Username");
-		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1_1.setBounds(553, 118, 62, 22);
-		panel_5.add(lblNewLabel_1_1_1);
-
-		jtextFieldUsername = new JTextField();
-		jtextFieldUsername.setColumns(10);
-		jtextFieldUsername.setBounds(625, 118, 150, 26);
-		panel_5.add(jtextFieldUsername);
-
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("Password");
-		lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1_1_1.setBounds(553, 155, 62, 22);
-		panel_5.add(lblNewLabel_1_1_1_1);
-
-		jpasswordFieldPassword = new JPasswordField();
-		jpasswordFieldPassword.setBounds(625, 157, 150, 26);
-		panel_5.add(jpasswordFieldPassword);
-
-		jbuttonBrowse = new JButton("Browse...");
-		jbuttonBrowse.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		jbuttonBrowse.setPreferredSize(new Dimension(79, 30));
-		jbuttonBrowse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonBrowse_actionPerformed(e);
-			}
-		});
-		jbuttonBrowse.setBounds(60, 195, 150, 30);
-		panel_5.add(jbuttonBrowse);
-
-		JLabel lblNewLabel_1_2_1 = new JLabel("Created");
-		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2_1.setBounds(559, 82, 56, 22);
-		panel_5.add(lblNewLabel_1_2_1);
-
-		jdateChooser = new JDateChooser();
-		jdateChooser.setBounds(625, 82, 150, 26);
-		panel_5.add(jdateChooser);
-
-		jcheckboxAdmin = new JCheckBox("Admin Authority");
-		jcheckboxAdmin.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		jcheckboxAdmin.setBounds(591, 192, 152, 23);
-		panel_5.add(jcheckboxAdmin);
 
 		JPanel panel_bottom = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_bottom.getLayout();
@@ -274,7 +291,7 @@ public class JPanelEmpList extends JPanel {
 		jbuttonDelete.setEnabled(false);
 		jbuttonEdit.setEnabled(false);
 	}
-
+	
 	public void jtableEmp_mouseClicked(MouseEvent e) {
 		jbuttonDelete.setEnabled(true);
 		jbuttonEdit.setEnabled(true);
@@ -301,19 +318,6 @@ public class JPanelEmpList extends JPanel {
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-		}
-	}
-
-	public void jbuttonBrowse_actionPerformed(ActionEvent e) {
-		JFileChooser jfileChooser = new JFileChooser("C:\\Users\\admin\\Desktop\\Image");
-		jfileChooser.setDialogTitle("Select a Photo");
-		jfileChooser.setMultiSelectionEnabled(false);
-		int result = jfileChooser.showOpenDialog(this);
-		if (result == JFileChooser.APPROVE_OPTION) {
-			file = jfileChooser.getSelectedFile();
-			ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage()
-					.getScaledInstance(jlablePhoto.getWidth(), jlablePhoto.getHeight(), Image.SCALE_DEFAULT));
-			jlablePhoto.setIcon(imageIcon);
 		}
 	}
 

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import entities.Author;
 import entities.Borrow;
 
 public class BorrowModel {
@@ -433,15 +432,44 @@ public class BorrowModel {
 		return borrowList;
 	}
 
-	// HAO
 //HAO
-	public List<Borrow> findAllForHistory() {
+//	public List<Borrow> findAllForRecord() {
+//		List<Borrow> borrowList = new ArrayList<Borrow>();
+//		try {
+//			PreparedStatement ps = ConnectDB.connection().prepareStatement(
+//					"SELECT borrow.*, customer.name AS customerName, book.title AS bookTitle\r\n"
+//							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
+//							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
+//							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber");
+//			ResultSet rs = ps.executeQuery();
+//			while (rs.next()) {
+//				Borrow borrow = new Borrow();
+//				borrow.setId(rs.getInt("id"));
+//				borrow.setCreated(rs.getDate("created"));
+//				borrow.setDue_date(rs.getDate("due_date"));
+//				borrow.setBookTitle(rs.getString("bookTitle"));
+//				borrow.setCustomerName(rs.getString("customerName"));
+//				borrow.setStatus(rs.getBoolean("status"));
+//
+//				borrowList.add(borrow);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			borrowList = null;
+//		} finally {
+//			ConnectDB.disconnect();
+//		}
+//		return borrowList;
+//	}
+	
+	public List<Borrow> findAllForRecord() {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement(
-					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
-							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
-							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
+					"SELECT borrow_detail.*, borrow.created, borrow.due_date, customer.name AS customerName, book.title AS bookTitle, borrow.status\r\n"
+							+ "FROM borrow_detail\r\n"
+							+ "JOIN borrow ON borrow_detail.id_borrow = borrow.id\r\n"
+							+ "LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -449,7 +477,7 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setBookTitle(rs.getString("bookTitle"));
 				borrow.setCustomerName(rs.getString("customerName"));
 				borrow.setStatus(rs.getBoolean("status"));
 
@@ -468,11 +496,11 @@ public class BorrowModel {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
+					"SELECT borrow.*, customer.name AS customerName, book.title AS bookTitle\r\n"
 							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
 							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
-							+ "WHERE borrow.created >= ? AND borrow.due_date <= ?");
+							+ "WHERE borrow.created >= ? AND borrow.created <= ?");
 
 			preparedStatement.setDate(1, new java.sql.Date(startDate.getTime()));
 			preparedStatement.setDate(2, new java.sql.Date(endDate.getTime()));
@@ -482,7 +510,7 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setBookTitle(rs.getString("bookTitle"));
 				borrow.setCustomerName(rs.getString("customerName"));
 				borrow.setStatus(rs.getBoolean("status"));
 
@@ -501,7 +529,7 @@ public class BorrowModel {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement(
-					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
+					"SELECT borrow.*, customer.name AS customerName, book.title AS bookTitle\r\n"
 							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
 							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
@@ -513,7 +541,7 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setBookTitle(rs.getString("bookTitle"));
 				borrow.setCustomerName(rs.getString("customerName"));
 				borrow.setStatus(rs.getBoolean("status"));
 
@@ -532,7 +560,7 @@ public class BorrowModel {
 		List<Borrow> borrowList = new ArrayList<Borrow>();
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement(
-					"SELECT borrow.*, customer.name AS customerName, book.callNumber AS callNumber\r\n"
+					"SELECT borrow.*, customer.name AS customerName, book.title AS bookTitle\r\n"
 							+ "FROM borrow LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
 							+ "LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
 							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
@@ -544,7 +572,7 @@ public class BorrowModel {
 				borrow.setId(rs.getInt("id"));
 				borrow.setCreated(rs.getDate("created"));
 				borrow.setDue_date(rs.getDate("due_date"));
-				borrow.setCallNumber(rs.getString("callNumber"));
+				borrow.setBookTitle(rs.getString("bookTitle"));
 				borrow.setCustomerName(rs.getString("customerName"));
 				borrow.setStatus(rs.getBoolean("status"));
 
@@ -559,5 +587,58 @@ public class BorrowModel {
 		}
 		return borrowList;
 	}
+	
+//PAGINATION
+	public int count() {
+		int countID = 0;
+		try {
+			PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT COUNT(id) from borrow_detail");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				countID = rs.getInt("COUNT(id)");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ConnectDB.disconnect();
+		} 
+		return countID;
+	}
+	
+	public List<Borrow> findAllPagination(int page, int pageSize) {
+		List<Borrow> borrowList = new ArrayList<Borrow>();
+		
+		if(count()==0) {
+			return borrowList;
+		}
+		try {
+			PreparedStatement ps = ConnectDB.connection().prepareStatement(
+					"SELECT borrow_detail.*, borrow.created, borrow.due_date, customer.name AS customerName, book.title AS bookTitle, borrow.status\r\n"
+							+ "FROM borrow_detail\r\n"
+							+ "JOIN borrow ON borrow_detail.id_borrow = borrow.id\r\n"
+							+ "LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
+							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber"
+							+ "LIMIT ?,?");
+			ps.setInt(1, pageSize * (page-1));
+			ps.setInt(2, pageSize);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Borrow borrow = new Borrow();
+				borrow.setId(rs.getInt("id"));
+				borrow.setCreated(rs.getDate("created"));
+				borrow.setDue_date(rs.getDate("due_date"));
+				borrow.setBookTitle(rs.getString("bookTitle"));
+				borrow.setCustomerName(rs.getString("customerName"));
+				borrow.setStatus(rs.getBoolean("status"));
 
+				borrowList.add(borrow);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrowList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowList;
+	}
 }

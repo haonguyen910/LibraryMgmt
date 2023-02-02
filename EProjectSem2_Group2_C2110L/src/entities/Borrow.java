@@ -16,7 +16,7 @@ public class Borrow {
 	private List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
 	private String employeeName;
 	private String customerName;
-	private String callNumber;
+	private String bookTitle;
 
 //	ToString
 	@Override
@@ -24,7 +24,7 @@ public class Borrow {
 		return "Borrow [id=" + id + ", created=" + created + ", due_date=" + due_date + ", id_employee=" + id_employee
 				+ ", id_customer=" + id_customer + ", deposit=" + deposit + ", status=" + status + ", borrowDetailList="
 				+ borrowDetailList + ", employeeName=" + employeeName + ", customerName=" + customerName
-				+ ", callNumber=" + callNumber + "]";
+				+ ", bookTitle=" + bookTitle + "]";
 	}
 
 //	Constructor
@@ -33,7 +33,7 @@ public class Borrow {
 	}
 
 	public Borrow(int id, Date created, Date due_date, int id_employee, int id_customer, double deposit, boolean status,
-			List<BorrowDetail> borrowDetailList, String employeeName, String customerName, String callNumber) {
+			List<BorrowDetail> borrowDetailList, String employeeName, String customerName, String bookTitle) {
 		super();
 		this.id = id;
 		this.created = created;
@@ -45,7 +45,7 @@ public class Borrow {
 		this.borrowDetailList = borrowDetailList;
 		this.employeeName = employeeName;
 		this.customerName = customerName;
-		this.callNumber = callNumber;
+		this.bookTitle = bookTitle;
 	}
 
 //Get-Set
@@ -129,12 +129,12 @@ public class Borrow {
 		this.customerName = customerName;
 	}
 
-	public String getCallNumber() {
-		return callNumber;
+	public String getBookTitle() {
+		return bookTitle;
 	}
 
-	public void setCallNumber(String callNumber) {
-		this.callNumber = callNumber;
+	public void setBookTitle(String bookTitle) {
+		this.bookTitle = bookTitle;
 	}
 
 }

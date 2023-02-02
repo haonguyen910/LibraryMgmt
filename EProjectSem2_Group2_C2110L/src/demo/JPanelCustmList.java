@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 
 import entities.Borrow;
 import entities.Customer;
-import models.BookModel;
 import models.BorrowModel;
 import models.ConnectDB;
 import models.CustomerModel;
@@ -29,28 +28,31 @@ import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import javax.swing.border.EtchedBorder;
 
 public class JPanelCustmList extends JPanel {
 	private JPanel panel_body;
-	private JTable jtableCust;
 	private JTextField jtextFieldSearch;
-	private JTable jtableIGetHistory;
-	private JTextField jtextFieldID;
-	private JTextField jtextFieldAddress;
-	private JTextField jtextFieldPhone;
 	private JButton jbuttonDelete;
 	private JButton jbuttonEdit;
 	private JButton jbuttonReset;
 	private JButton jbuttonAdd;
-	private JDateChooser jdateChooser;
 	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	private JTextField jtextFieldName;
 	private JButton jbuttonSearch;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JTextField jtextFieldID;
+	private JTable jtableCust;
+	private JTable jtableGetHistory;
+	private JDateChooser jdateChooser;
+	private JTextField jtextFieldName;
+	private JTextField jtextFieldAddress;
+	private JTextField jtextFieldPhone;
+	private JLabel lblNewLabel_2;
 
 	/**
 	 * Create the panel.
@@ -62,25 +64,26 @@ public class JPanelCustmList extends JPanel {
 		JPanel panel_head_1 = new JPanel();
 		panel_head_1.setBackground(new Color(128, 128, 192));
 		FlowLayout fl_panel_head_1 = (FlowLayout) panel_head_1.getLayout();
-		fl_panel_head_1.setAlignment(FlowLayout.LEFT);
 		add(panel_head_1);
 
 		JLabel lblNewLabel = new JLabel("Customer List");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_head_1.add(lblNewLabel);
 
 		JPanel panel_head_2 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head_2.getLayout();
+		flowLayout_1.setVgap(30);
 		flowLayout_1.setHgap(15);
 		add(panel_head_2);
 
 		jtextFieldSearch = new JTextField();
-		jtextFieldSearch.setPreferredSize(new Dimension(250, 30));
+		jtextFieldSearch.setPreferredSize(new Dimension(250, 35));
 		jtextFieldSearch.setColumns(20);
 		panel_head_2.add(jtextFieldSearch);
 
-		jbuttonSearch = new JButton("Find by Name");
+		jbuttonSearch = new JButton("Enter Name");
 		jbuttonSearch.setPreferredSize(new Dimension(120, 30));
 		jbuttonSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -94,13 +97,101 @@ public class JPanelCustmList extends JPanel {
 		add(panel_body);
 		panel_body.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		panel_body.add(panel, BorderLayout.CENTER);
+		panel = new JPanel();
+		panel.setPreferredSize(new Dimension(340, 220));
+		panel.setMinimumSize(new Dimension(500, 500));
+		panel_body.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
 
+		JLabel lblNewLabel_1 = new JLabel("ID");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(65, 46, 36, 25);
+		panel.add(lblNewLabel_1);
+
+		jtextFieldID = new JTextField();
+		jtextFieldID.setMinimumSize(new Dimension(10, 20));
+		jtextFieldID.setPreferredSize(new Dimension(10, 40));
+		jtextFieldID.setColumns(10);
+		jtextFieldID.setBounds(128, 43, 150, 35);
+		panel.add(jtextFieldID);
+
+		JLabel lblNewLabel_1_3 = new JLabel("Name");
+		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_3.setBounds(65, 102, 36, 25);
+		panel.add(lblNewLabel_1_3);
+
+		JLabel lblNewLabel_1_1 = new JLabel("Address");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_1.setBounds(65, 158, 53, 25);
+		panel.add(lblNewLabel_1_1);
+
+		JLabel lblNewLabel_1_2 = new JLabel("Phone");
+		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_2.setBounds(65, 216, 46, 25);
+		panel.add(lblNewLabel_1_2);
+
+		JLabel lblNewLabel_1_2_1 = new JLabel("Created");
+		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_2_1.setBounds(65, 274, 57, 25);
+		panel.add(lblNewLabel_1_2_1);
+
+		jdateChooser = new JDateChooser();
+		jdateChooser.setPreferredSize(new Dimension(7, 40));
+		jdateChooser.setBounds(128, 271, 150, 35);
+		panel.add(jdateChooser);
+
+		JButton jbuttonGetHistory = new JButton("Get History");
+		jbuttonGetHistory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonGetHistory_actionPerformed(e);
+			}
+		});
+		jbuttonGetHistory.setPreferredSize(new Dimension(80, 25));
+		jbuttonGetHistory.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		jbuttonGetHistory.setBounds(95, 337, 157, 35);
+		panel.add(jbuttonGetHistory);
+		
+		jtextFieldName = new JTextField();
+		jtextFieldName.setPreferredSize(new Dimension(10, 40));
+		jtextFieldName.setMinimumSize(new Dimension(10, 20));
+		jtextFieldName.setColumns(10);
+		jtextFieldName.setBounds(128, 99, 150, 35);
+		panel.add(jtextFieldName);
+		
+		jtextFieldAddress = new JTextField();
+		jtextFieldAddress.setPreferredSize(new Dimension(10, 40));
+		jtextFieldAddress.setMinimumSize(new Dimension(10, 20));
+		jtextFieldAddress.setColumns(10);
+		jtextFieldAddress.setBounds(128, 155, 150, 35);
+		panel.add(jtextFieldAddress);
+		
+		jtextFieldPhone = new JTextField();
+		jtextFieldPhone.setPreferredSize(new Dimension(10, 40));
+		jtextFieldPhone.setMinimumSize(new Dimension(10, 20));
+		jtextFieldPhone.setColumns(10);
+		jtextFieldPhone.setBounds(128, 213, 150, 35);
+		panel.add(jtextFieldPhone);
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBorder(new TitledBorder(new TitledBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)), "Information", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		lblNewLabel_2.setBounds(10, 0, 320, 403);
+		panel.add(lblNewLabel_2);
+
+		panel_1 = new JPanel();
+		panel_body.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 850, 250);
-		panel.add(scrollPane);
+		panel_2.add(scrollPane, BorderLayout.CENTER);
 
 		jtableCust = new JTable();
 		jtableCust.addMouseListener(new MouseAdapter() {
@@ -111,84 +202,15 @@ public class JPanelCustmList extends JPanel {
 		});
 		scrollPane.setViewportView(jtableCust);
 
+		JPanel panel_3 = new JPanel();
+		panel_1.add(panel_3);
+		panel_3.setLayout(new BorderLayout(0, 0));
+
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBorder(new TitledBorder(null, "History", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		scrollPane_1.setBounds(430, 272, 430, 183);
-		panel.add(scrollPane_1);
+		panel_3.add(scrollPane_1, BorderLayout.CENTER);
 
-		jtableIGetHistory = new JTable();
-		scrollPane_1.setViewportView(jtableIGetHistory);
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Information", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 272, 410, 183);
-		panel.add(panel_2);
-		panel_2.setLayout(null);
-
-		JLabel lblNewLabel_1 = new JLabel("ID");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(27, 28, 36, 25);
-		panel_2.add(lblNewLabel_1);
-
-		jtextFieldID = new JTextField();
-		jtextFieldID.setBounds(73, 28, 120, 25);
-		panel_2.add(jtextFieldID);
-		jtextFieldID.setColumns(10);
-
-		JLabel lblNewLabel_1_1 = new JLabel("Address");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(10, 119, 53, 25);
-		panel_2.add(lblNewLabel_1_1);
-
-		jtextFieldAddress = new JTextField();
-		jtextFieldAddress.setColumns(10);
-		jtextFieldAddress.setBounds(73, 119, 120, 25);
-		panel_2.add(jtextFieldAddress);
-
-		JLabel lblNewLabel_1_2 = new JLabel("Phone");
-		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2.setBounds(213, 28, 46, 25);
-		panel_2.add(lblNewLabel_1_2);
-
-		jtextFieldPhone = new JTextField();
-		jtextFieldPhone.setColumns(10);
-		jtextFieldPhone.setBounds(269, 30, 125, 25);
-		panel_2.add(jtextFieldPhone);
-
-		JLabel lblNewLabel_1_2_1 = new JLabel("Created");
-		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2_1.setBounds(203, 75, 57, 25);
-		panel_2.add(lblNewLabel_1_2_1);
-
-		jdateChooser = new JDateChooser();
-		jdateChooser.setBounds(269, 75, 125, 25);
-		panel_2.add(jdateChooser);
-
-		JLabel lblNewLabel_1_3 = new JLabel("Name");
-		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_3.setBounds(27, 75, 36, 25);
-		panel_2.add(lblNewLabel_1_3);
-
-		jtextFieldName = new JTextField();
-		jtextFieldName.setColumns(10);
-		jtextFieldName.setBounds(73, 75, 120, 25);
-		panel_2.add(jtextFieldName);
-
-		JButton jbuttonGetHistory = new JButton("Get History");
-		jbuttonGetHistory.setPreferredSize(new Dimension(80, 25));
-		jbuttonGetHistory.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonGetHistory_actionPerformed(e);
-			}
-		});
-		jbuttonGetHistory.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		jbuttonGetHistory.setBounds(232, 126, 149, 35);
-		panel_2.add(jbuttonGetHistory);
+		jtableGetHistory = new JTable();
+		scrollPane_1.setViewportView(jtableGetHistory);
 
 		JPanel panel_bottom = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_bottom.getLayout();
@@ -267,6 +289,12 @@ public class JPanelCustmList extends JPanel {
 			e2.printStackTrace();
 		}
 	}
+	
+	public void jbuttonGetHistory_actionPerformed(ActionEvent e) {
+		int customerId = Integer.parseInt(jtextFieldID.getText());
+		BorrowModel borrowModel = new BorrowModel();
+		setDataToTableGetHistory(borrowModel.findByCustomerIdForHistory(customerId));
+	}
 
 	public void jbuttonSearch_actionPerformed(ActionEvent e) {
 		String search = jtextFieldSearch.getText().trim();
@@ -311,7 +339,6 @@ public class JPanelCustmList extends JPanel {
 		} else {
 			JOptionPane.showMessageDialog(this, "Please try again");
 		}
-
 	}
 
 	public void jbuttonEdit_actionPerformed(ActionEvent e) {
@@ -333,20 +360,17 @@ public class JPanelCustmList extends JPanel {
 	}
 
 	public void jbuttonReset_actionPerformed(ActionEvent e) {
+		jtextFieldSearch.setText(null);
 		jtextFieldAddress.setText(null);
 		jtextFieldID.setText(null);
 		jtextFieldName.setText(null);
 		jtextFieldPhone.setText(null);
 		jdateChooser.setDate(null);
+		DefaultTableModel defaultTableModel = (DefaultTableModel) jtableGetHistory.getModel();
+		defaultTableModel.setRowCount(0);
 	}
 
-	public void jbuttonGetHistory_actionPerformed(ActionEvent e) {
-		int customerId = Integer.parseInt(jtextFieldID.getText());
-		System.out.println(customerId);
-		BorrowModel borrowModel = new BorrowModel();
-		setDataToTableGetHistory(borrowModel.findByCustomerIdForHistory(customerId));
-		System.out.println(borrowModel.findByCustomerIdForHistory(customerId).toString());
-	}
+// SET DATA
 
 	private void setDataToTableCust(List<Customer> customers) {
 		DefaultTableModel defaultTableModel = new DefaultTableModel() {
@@ -377,15 +401,17 @@ public class JPanelCustmList extends JPanel {
 				return false;
 			}
 		};
-		defaultTableModel.addColumn("Call Number");
+		defaultTableModel.addColumn("Issue ID");
+		defaultTableModel.addColumn("Book Title");
 		defaultTableModel.addColumn("Issue Date");
 		defaultTableModel.addColumn("Due Date");
 		defaultTableModel.addColumn("Status");
 		for (Borrow borrow : borrowList) {
-			defaultTableModel.addRow(new Object[] { borrow.getCallNumber(), borrow.getCreated(), borrow.getDue_date(),
-					borrow.isStatus() ? "Returned":  "Pending"});
-			jtableIGetHistory.setModel(defaultTableModel);
-			jtableIGetHistory.getTableHeader().setReorderingAllowed(false);
+			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getBookTitle(), borrow.getCreated(), borrow.getDue_date(),
+					borrow.isStatus() ? "Returned" : "Pending" });
+			jtableGetHistory.setModel(defaultTableModel);
+			jtableGetHistory.setRowHeight(40);
+			jtableGetHistory.getTableHeader().setReorderingAllowed(false);
 		}
 	}
 }
