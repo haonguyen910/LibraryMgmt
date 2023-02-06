@@ -614,11 +614,11 @@ public class BorrowModel {
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement(
 					"SELECT borrow_detail.*, borrow.created, borrow.due_date, customer.name AS customerName, book.title AS bookTitle, borrow.status\r\n"
-							+ "FROM borrow_detail\r\n"
-							+ "JOIN borrow ON borrow_detail.id_borrow = borrow.id\r\n"
-							+ "LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
-							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber"
-							+ "LIMIT ?,?");
+					+ "FROM borrow_detail\r\n"
+					+ "JOIN borrow ON borrow_detail.id_borrow = borrow.id\r\n"
+					+ "LEFT JOIN customer ON borrow.id_customer = customer.id\r\n"
+					+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
+					+ "LIMIT ?,?");
 			ps.setInt(1, pageSize * (page-1));
 			ps.setInt(2, pageSize);
 			ResultSet rs = ps.executeQuery();

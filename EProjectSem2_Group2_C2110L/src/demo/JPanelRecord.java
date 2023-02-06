@@ -136,6 +136,11 @@ public class JPanelRecord extends JPanel {
 		panel.add(jbuttonPrevious);
 
 		jcomboBoxItem = new JComboBox();
+		jcomboBoxItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jcomboBoxItem_actionPerformed(e);
+			}
+		});
 		jcomboBoxItem.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				jcomboBoxItem_itemStateChanged(e);
@@ -184,11 +189,10 @@ public class JPanelRecord extends JPanel {
 	private void initJPanel() {
 //		BorrowModel borrowModel = new BorrowModel();
 //		fillDataToJTableRecord(borrowModel.findAllForRecord());
-		
+
 		initPagination();
 		fillDataToJCombobox();
 		fillDataToComboboxItem();
-
 	}
 
 	public void jcomboBoxStatus_actionPerformed(ActionEvent e) {
@@ -275,10 +279,11 @@ public class JPanelRecord extends JPanel {
 		initPagination();
 	}
 
-//	public void jcomboBoxItem_actionPerformed(ActionEvent e) {
-//		initPagination();
-//	}
-	
+	public void jcomboBoxItem_actionPerformed(ActionEvent e) {
+		rowCountPerPage = Integer.parseInt(jcomboBoxItem.getSelectedItem().toString());
+		initPagination();
+	}
+
 	public void jcomboBoxItem_itemStateChanged(ItemEvent e) {
 		initPagination();
 	}
@@ -286,7 +291,7 @@ public class JPanelRecord extends JPanel {
 	private void initPagination() {
 		borrowModel = new BorrowModel();
 		totalData = borrowModel.count();
-		rowCountPerPage = Integer.parseInt(jcomboBoxItem.getSelectedItem().toString());
+//		rowCountPerPage = Integer.parseInt(jcomboBoxItem.getSelectedItem().toString());
 		Double totalPageD = Math.ceil(totalData.doubleValue() / rowCountPerPage.doubleValue());
 		totalPage = totalPageD.intValue();
 
