@@ -5,12 +5,16 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
 import entities.Borrow;
 import models.BorrowModel;
+
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -25,8 +29,10 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import java.awt.Color;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 public class JPanelRecord extends JPanel {
 	private JDateChooser jdateChooserStart;
@@ -39,12 +45,18 @@ public class JPanelRecord extends JPanel {
 	private JButton jbuttonFirst;
 	private JButton jbuttonPrevious;
 	private JButton jbuttonNext;
+	private JButton jbuttonLast;
+	private JButton jbuttonPrint;
 	private BorrowModel borrowModel = new BorrowModel();
 	Integer page = 1;
 	Integer rowCountPerPage = 5;
 	Integer totalPage = 1;
 	Integer totalData = 0;
-	private JButton jbuttonLast;
+	private JPanel panel_3;
+	private JPanel panel_4;
+	
+	
+	
 
 	/**
 	 * Create the panel.
@@ -141,16 +153,7 @@ public class JPanelRecord extends JPanel {
 				jcomboBoxItem_actionPerformed(e);
 			}
 		});
-		jcomboBoxItem.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				jcomboBoxItem_itemStateChanged(e);
-			}
-		});
-//		jcomboBoxItem.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				jcomboBoxItem_actionPerformed(e);
-//			}
-//		});
+
 		jcomboBoxItem.setPreferredSize(new Dimension(100, 22));
 		panel.add(jcomboBoxItem);
 
@@ -172,7 +175,7 @@ public class JPanelRecord extends JPanel {
 		jbuttonLast.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panel.add(jbuttonLast);
 
-		JPanel panel_3 = new JPanel();
+		panel_3 = new JPanel();
 		add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 
@@ -181,10 +184,60 @@ public class JPanelRecord extends JPanel {
 
 		jtableRecord = new JTable();
 		scrollPane.setViewportView(jtableRecord);
+		
+		panel_4 = new JPanel();
+		add(panel_4);
+		
+		jbuttonPrint = new JButton("Print");
+		panel_4.add(jbuttonPrint);
+		jbuttonPrint.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		jbuttonPrint.setPreferredSize(new Dimension(80, 30));
+		jbuttonPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonPrint_actionPerformed(e);
+			}
+		});
 
 		initJPanel();
 
 	}
+	
+	public void jbuttonPrint_actionPerformed(ActionEvent e) {
+		PrinterJob job =  PrinterJob.getPrinterJob();
+			job.setJobName("Print Data");
+			
+			job.setPrintable(new Printable() {
+				
+				@Override
+				public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+					pageFormat.setOrientation(PageFormat.PORTRAIT);
+					if(pageIndex > 0) {
+						return Printable.NO_SUCH_PAGE;
+					}
+					
+					Graphics2D g2 =  (Graphics2D) graphics;
+					g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+					g2.scale(0.47, 0.47);
+					
+//					JPanelRecord jPanelRecord = new JPanelRecord();
+//					jPanelRecord.print(g2);
+					
+					panel_3.print(g2);
+					
+					return Printable.PAGE_EXISTS;
+				}
+			});
+			
+			boolean ok = job.printDialog();
+			if(ok) {
+				try {
+					job.print();
+				} catch (PrinterException e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
+	
 
 	private void initJPanel() {
 //		BorrowModel borrowModel = new BorrowModel();
@@ -284,14 +337,9 @@ public class JPanelRecord extends JPanel {
 		initPagination();
 	}
 
-	public void jcomboBoxItem_itemStateChanged(ItemEvent e) {
-		initPagination();
-	}
-
 	private void initPagination() {
 		borrowModel = new BorrowModel();
 		totalData = borrowModel.count();
-//		rowCountPerPage = Integer.parseInt(jcomboBoxItem.getSelectedItem().toString());
 		Double totalPageD = Math.ceil(totalData.doubleValue() / rowCountPerPage.doubleValue());
 		totalPage = totalPageD.intValue();
 
