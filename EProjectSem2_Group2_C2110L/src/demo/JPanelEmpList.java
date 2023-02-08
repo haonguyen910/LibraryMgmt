@@ -85,10 +85,11 @@ public class JPanelEmpList extends JPanel {
 	 * Create the panel.
 	 */
 	public JPanelEmpList() {
+		setBackground(new Color(255, 255, 255));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head = new JPanel();
-		panel_head.setBackground(new Color(128, 128, 192));
+		panel_head.setBackground(new Color(51, 51, 51));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head.getLayout();
 		add(panel_head);
 
@@ -99,6 +100,7 @@ public class JPanelEmpList extends JPanel {
 		panel_head.add(lblNewLabel);
 		
 		panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
 		flowLayout_2.setVgap(15);
 		add(panel_2);
@@ -108,6 +110,7 @@ public class JPanelEmpList extends JPanel {
 		panel_body.setLayout(new BorderLayout(0, 0));
 		
 		panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setPreferredSize(new Dimension(340, 200));
 		panel_body.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
@@ -192,6 +195,7 @@ public class JPanelEmpList extends JPanel {
 		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		jdateChooser = new JDateChooser();
+		jdateChooser.setOpaque(false);
 		jdateChooser.setBounds(131, 539, 150, 35);
 		panel.add(jdateChooser);
 		
@@ -228,6 +232,7 @@ public class JPanelEmpList extends JPanel {
 		panel.add(lblNewLabel_2);
 		
 		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
 		panel_body.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
@@ -244,6 +249,7 @@ public class JPanelEmpList extends JPanel {
 		scrollPane.setViewportView(jtableEmp);
 
 		JPanel panel_bottom = new JPanel();
+		panel_bottom.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_bottom.getLayout();
 		flowLayout.setVgap(10);
 		flowLayout.setHgap(20);

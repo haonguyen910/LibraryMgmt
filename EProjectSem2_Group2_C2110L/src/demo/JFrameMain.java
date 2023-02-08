@@ -120,29 +120,29 @@ public class JFrameMain extends JFrame {
 		JPanel jpanelLeft = new JPanel();
 		jpanelLeft.setBackground(new Color(51, 51, 51));
 		jpanelMain.add(jpanelLeft, BorderLayout.WEST);
-		jpanelLeft.setLayout(new BoxLayout(jpanelLeft, BoxLayout.Y_AXIS));
 
-		jbuttonBookList = new JButton("   Book List");
+		jbuttonBookList = new JButton("   Book");
 		jbuttonBookList.setPreferredSize(new Dimension(100, 50));
 		jbuttonBookList.setBorderPainted(false);
 		jbuttonBookList.setContentAreaFilled(false);
-		jbuttonBookList.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonBookList.setForeground(new Color(255, 255, 255));
+		jbuttonBookList.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonBookList.setForeground(new Color(192, 192, 192));
 		jbuttonBookList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonBookList_actionPerformed(e);
 			}
 		});
-		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book.png")));
+		jpanelLeft.setLayout(new BoxLayout(jpanelLeft, BoxLayout.Y_AXIS));
+		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Book_26px.png")));
 		jpanelLeft.add(jbuttonBookList);
 
 		jbuttonAuthorList = new JButton("   Author");
 		jbuttonAuthorList.setPreferredSize(new Dimension(63, 50));
 		jbuttonAuthorList.setBorderPainted(false);
 		jbuttonAuthorList.setContentAreaFilled(false);
-		jbuttonAuthorList.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonAuthorList.setForeground(new Color(255, 255, 255));
-		jbuttonAuthorList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/author.png")));
+		jbuttonAuthorList.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonAuthorList.setForeground(new Color(192, 192, 192));
+		jbuttonAuthorList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8-writer-male-24.png")));
 		jbuttonAuthorList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonAuthorList_actionPerformed(e);
@@ -153,9 +153,9 @@ public class JFrameMain extends JFrame {
 		jbuttonCategory = new JButton("   Category");
 		jbuttonCategory.setBorderPainted(false);
 		jbuttonCategory.setContentAreaFilled(false);
-		jbuttonCategory.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonCategory.setForeground(new Color(255, 255, 255));
-		jbuttonCategory.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/category.png")));
+		jbuttonCategory.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonCategory.setForeground(new Color(192, 192, 192));
+		jbuttonCategory.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8-diversity-24(1).png")));
 		jbuttonCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonCategory_actionPerformed(e);
@@ -163,83 +163,83 @@ public class JFrameMain extends JFrame {
 		});
 		jpanelLeft.add(jbuttonCategory);
 
-		jbuttonBorrowList = new JButton("   Borrow List");
+		jbuttonBorrowList = new JButton("   Issue Book");
 		jbuttonBorrowList.setMinimumSize(new Dimension(90, 50));
 		jbuttonBorrowList.setBorderPainted(false);
 		jbuttonBorrowList.setContentAreaFilled(false);
-		jbuttonBorrowList.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonBorrowList.setForeground(new Color(255, 255, 255));
+		jbuttonBorrowList.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonBorrowList.setForeground(new Color(192, 192, 192));
 		jbuttonBorrowList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonBorrowList_actionPerformed(e);
 			}
 		});
-		jbuttonBorrowList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrow.png")));
+		jbuttonBorrowList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Sell_26px.png")));
 		jpanelLeft.add(jbuttonBorrowList);
 
-		jbuttonBorrowedList = new JButton("   Borrowed List");
+		jbuttonBorrowedList = new JButton("   Return Book");
 		jbuttonBorrowedList.setBorderPainted(false);
 		jbuttonBorrowedList.setContentAreaFilled(false);
-		jbuttonBorrowedList.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonBorrowedList.setForeground(new Color(255, 255, 255));
+		jbuttonBorrowedList.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonBorrowedList.setForeground(new Color(192, 192, 192));
 		jbuttonBorrowedList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonBorrowedList_actionPerformed(e);
 			}
 		});
-		jbuttonBorrowedList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrowed.png")));
+		jbuttonBorrowedList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Return_Purchase_26px.png")));
 		jpanelLeft.add(jbuttonBorrowedList);
 
 		jbuttonVRecord = new JButton("   View Record");
 		jbuttonVRecord.setBorderPainted(false);
 		jbuttonVRecord.setContentAreaFilled(false);
-		jbuttonVRecord.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonVRecord.setForeground(new Color(255, 255, 255));
+		jbuttonVRecord.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonVRecord.setForeground(new Color(192, 192, 192));
 		jbuttonVRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonVRecord_actionPerformed(e);
 			}
 		});
-		jbuttonVRecord.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/issue.png")));
+		jbuttonVRecord.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_View_Details_26px.png")));
 		jpanelLeft.add(jbuttonVRecord);
 
 		JButton jbuttonStatistic = new JButton("   Statistic Report");
 		jbuttonStatistic.setBorderPainted(false);
 		jbuttonStatistic.setContentAreaFilled(false);
-		jbuttonStatistic.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonStatistic.setForeground(new Color(255, 255, 255));
+		jbuttonStatistic.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonStatistic.setForeground(new Color(192, 192, 192));
 		jbuttonStatistic.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonStatistic_actionPerformed(e);
 			}
 		});
-		jbuttonStatistic.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/reportStatic.png")));
+		jbuttonStatistic.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Library_26px_1.png")));
 		jpanelLeft.add(jbuttonStatistic);
 
-		jbuttonCustmList = new JButton("   Customer List");
+		jbuttonCustmList = new JButton("   Customer");
 		jbuttonCustmList.setBorderPainted(false);
 		jbuttonCustmList.setContentAreaFilled(false);
-		jbuttonCustmList.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonCustmList.setForeground(new Color(255, 255, 255));
+		jbuttonCustmList.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonCustmList.setForeground(new Color(192, 192, 192));
 		jbuttonCustmList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonCustmList_actionPerformed(e);
 			}
 		});
-		jbuttonCustmList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/reader.png")));
+		jbuttonCustmList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Read_Online_26px.png")));
 		jpanelLeft.add(jbuttonCustmList);
 
-		JButton jbuttonEmplList = new JButton("   Employee List");
+		JButton jbuttonEmplList = new JButton("   Employee");
 		jbuttonEmplList.setBorderPainted(false);
 		jbuttonEmplList.setContentAreaFilled(false);
-		jbuttonEmplList.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		jbuttonEmplList.setForeground(new Color(255, 255, 255));
+		jbuttonEmplList.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonEmplList.setForeground(new Color(192, 192, 192));
 		jbuttonEmplList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonEmployeeList_actionPerformed(e);
 			}
 		});
-		jbuttonEmplList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/employees.png")));
+		jbuttonEmplList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Conference_26px.png")));
 		jpanelLeft.add(jbuttonEmplList);
 
 		jpanelRight = new JPanel();
