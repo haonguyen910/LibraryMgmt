@@ -5,18 +5,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import entities.Employee;
+
 import java.awt.BorderLayout;
 import javax.swing.UIManager;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Dimension;
 
 public class JFrameMain extends JFrame {
 
@@ -30,6 +35,13 @@ public class JFrameMain extends JFrame {
 	private JButton jbuttonCustmList;
 	private JButton jbuttonVRecord;
 	private JButton jbuttonBorrowedList;
+	private Map<String, Object> data;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JPanel panel_3;
+	private JPanel panel_4;
+	private JLabel lblNewLabel;
+	private JLabel jlabelWelcome;
 
 	/**
 	 * Launch the application.
@@ -56,57 +68,66 @@ public class JFrameMain extends JFrame {
 	 * Create the frame.
 	 */
 	public JFrameMain() {
-		setBounds(100, 100, 1050, 701);
-
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-
-		JMenu mnNewMenu_1 = new JMenu("Add");
-		menuBar.add(mnNewMenu_1);
-
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Book");
-		mnNewMenu_1.add(mntmNewMenuItem_2);
-
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Employee");
-		mnNewMenu_1.add(mntmNewMenuItem_3);
-
-		JMenuItem jmenuItemAddReader = new JMenuItem("Reader");
-		mnNewMenu_1.add(jmenuItemAddReader);
-
-		JMenu mnNewMenu = new JMenu("Account");
-		menuBar.add(mnNewMenu);
-
-		JMenuItem mntmNewMenuItem = new JMenuItem("Profile");
-		mnNewMenu.add(mntmNewMenuItem);
-
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Log-out");
-		mnNewMenu.add(mntmNewMenuItem_1);
+		setBounds(100, 100, 1059, 701);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-
-		JToolBar toolBar = new JToolBar();
-		toolBar.setFloatable(false);
-		contentPane.add(toolBar, BorderLayout.NORTH);
-
-		JButton btnNewButton = new JButton("Check-in");
-		toolBar.add(btnNewButton);
-
-		JButton btnNewButton_1 = new JButton("Check-out");
-		toolBar.add(btnNewButton_1);
+		
+		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(10, 60));
+		panel.setBackground(new Color(102, 102, 255));
+		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new GridLayout(0, 4, 0, 15));
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(102, 102, 255));
+		panel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		lblNewLabel = new JLabel("Library Management System");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(12, 6, 274, 48);
+		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+		panel_1.add(lblNewLabel);
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(new Color(102, 102, 255));
+		panel.add(panel_2);
+		
+		panel_3 = new JPanel();
+		panel_3.setBackground(new Color(102, 102, 255));
+		panel.add(panel_3);
+		
+		panel_4 = new JPanel();
+		panel_4.setForeground(new Color(255, 255, 255));
+		panel_4.setBackground(new Color(102, 102, 255));
+		panel.add(panel_4);
+		panel_4.setLayout(null);
+		
+		jlabelWelcome = new JLabel("Welcome");
+		jlabelWelcome.setForeground(new Color(255, 255, 255));
+		jlabelWelcome.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/male_user_50px.png")));
+		jlabelWelcome.setFont(new Font("SansSerif", Font.BOLD, 16));
+		jlabelWelcome.setBounds(160, 6, 274, 48);
+		panel_4.add(jlabelWelcome);
 
 		jpanelMain = new JPanel();
 		contentPane.add(jpanelMain, BorderLayout.WEST);
 		jpanelMain.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelLeft = new JPanel();
-		jpanelLeft.setBackground(new Color(128, 128, 192));
+		jpanelLeft.setBackground(new Color(51, 51, 51));
 		jpanelMain.add(jpanelLeft, BorderLayout.WEST);
 		jpanelLeft.setLayout(new BoxLayout(jpanelLeft, BoxLayout.Y_AXIS));
 
-		jbuttonBookList = new JButton("Book List");
+		jbuttonBookList = new JButton("   Book List");
+		jbuttonBookList.setPreferredSize(new Dimension(100, 50));
+		jbuttonBookList.setBorderPainted(false);
+		jbuttonBookList.setContentAreaFilled(false);
+		jbuttonBookList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonBookList.setForeground(new Color(255, 255, 255));
 		jbuttonBookList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonBookList_actionPerformed(e);
@@ -115,7 +136,12 @@ public class JFrameMain extends JFrame {
 		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/book.png")));
 		jpanelLeft.add(jbuttonBookList);
 
-		jbuttonAuthorList = new JButton("Author");
+		jbuttonAuthorList = new JButton("   Author");
+		jbuttonAuthorList.setPreferredSize(new Dimension(63, 50));
+		jbuttonAuthorList.setBorderPainted(false);
+		jbuttonAuthorList.setContentAreaFilled(false);
+		jbuttonAuthorList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonAuthorList.setForeground(new Color(255, 255, 255));
 		jbuttonAuthorList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/author.png")));
 		jbuttonAuthorList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +150,11 @@ public class JFrameMain extends JFrame {
 		});
 		jpanelLeft.add(jbuttonAuthorList);
 
-		jbuttonCategory = new JButton("Category");
+		jbuttonCategory = new JButton("   Category");
+		jbuttonCategory.setBorderPainted(false);
+		jbuttonCategory.setContentAreaFilled(false);
+		jbuttonCategory.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonCategory.setForeground(new Color(255, 255, 255));
 		jbuttonCategory.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/category.png")));
 		jbuttonCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +163,12 @@ public class JFrameMain extends JFrame {
 		});
 		jpanelLeft.add(jbuttonCategory);
 
-		jbuttonBorrowList = new JButton("Borrow List");
+		jbuttonBorrowList = new JButton("   Borrow List");
+		jbuttonBorrowList.setMinimumSize(new Dimension(90, 50));
+		jbuttonBorrowList.setBorderPainted(false);
+		jbuttonBorrowList.setContentAreaFilled(false);
+		jbuttonBorrowList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonBorrowList.setForeground(new Color(255, 255, 255));
 		jbuttonBorrowList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonBorrowList_actionPerformed(e);
@@ -142,7 +177,11 @@ public class JFrameMain extends JFrame {
 		jbuttonBorrowList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrow.png")));
 		jpanelLeft.add(jbuttonBorrowList);
 
-		jbuttonBorrowedList = new JButton("Borrowed List");
+		jbuttonBorrowedList = new JButton("   Borrowed List");
+		jbuttonBorrowedList.setBorderPainted(false);
+		jbuttonBorrowedList.setContentAreaFilled(false);
+		jbuttonBorrowedList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonBorrowedList.setForeground(new Color(255, 255, 255));
 		jbuttonBorrowedList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonBorrowedList_actionPerformed(e);
@@ -151,7 +190,11 @@ public class JFrameMain extends JFrame {
 		jbuttonBorrowedList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/borrowed.png")));
 		jpanelLeft.add(jbuttonBorrowedList);
 
-		jbuttonVRecord = new JButton("View Record");
+		jbuttonVRecord = new JButton("   View Record");
+		jbuttonVRecord.setBorderPainted(false);
+		jbuttonVRecord.setContentAreaFilled(false);
+		jbuttonVRecord.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonVRecord.setForeground(new Color(255, 255, 255));
 		jbuttonVRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonVRecord_actionPerformed(e);
@@ -160,7 +203,11 @@ public class JFrameMain extends JFrame {
 		jbuttonVRecord.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/issue.png")));
 		jpanelLeft.add(jbuttonVRecord);
 
-		JButton jbuttonStatistic = new JButton("Statistic Report");
+		JButton jbuttonStatistic = new JButton("   Statistic Report");
+		jbuttonStatistic.setBorderPainted(false);
+		jbuttonStatistic.setContentAreaFilled(false);
+		jbuttonStatistic.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonStatistic.setForeground(new Color(255, 255, 255));
 		jbuttonStatistic.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonStatistic_actionPerformed(e);
@@ -169,7 +216,11 @@ public class JFrameMain extends JFrame {
 		jbuttonStatistic.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/reportStatic.png")));
 		jpanelLeft.add(jbuttonStatistic);
 
-		jbuttonCustmList = new JButton("Customer List");
+		jbuttonCustmList = new JButton("   Customer List");
+		jbuttonCustmList.setBorderPainted(false);
+		jbuttonCustmList.setContentAreaFilled(false);
+		jbuttonCustmList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonCustmList.setForeground(new Color(255, 255, 255));
 		jbuttonCustmList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonCustmList_actionPerformed(e);
@@ -178,7 +229,11 @@ public class JFrameMain extends JFrame {
 		jbuttonCustmList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/reader.png")));
 		jpanelLeft.add(jbuttonCustmList);
 
-		JButton jbuttonEmplList = new JButton("Employee List");
+		JButton jbuttonEmplList = new JButton("   Employee List");
+		jbuttonEmplList.setBorderPainted(false);
+		jbuttonEmplList.setContentAreaFilled(false);
+		jbuttonEmplList.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		jbuttonEmplList.setForeground(new Color(255, 255, 255));
 		jbuttonEmplList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonEmployeeList_actionPerformed(e);
@@ -191,12 +246,20 @@ public class JFrameMain extends JFrame {
 		contentPane.add(jpanelRight, BorderLayout.CENTER);
 		jpanelRight.setLayout(new BoxLayout(jpanelRight, BoxLayout.X_AXIS));
 
+	}
+	
+	public JFrameMain(Map<String, Object> data) {
+		this();
+		this.data = data;
+		
 		initJFrame();
 	}
 
-//	Functions
+//	Functions 
 	private void initJFrame() {
 		clearScreen();
+		Employee employee = (Employee) data.get("employee");
+		jlabelWelcome.setText("Welcome, " + employee.getName());
 		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);

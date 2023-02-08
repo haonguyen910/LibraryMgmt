@@ -42,6 +42,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.JPasswordField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+
 import java.awt.Dimension;
 import javax.swing.border.EtchedBorder;
 
@@ -67,7 +69,7 @@ public class JPanelEmpList extends JPanel {
 	private JTextField jtextFieldID;
 	private JLabel jlablePhoto;
 	private JLabel lblNewLabel_1_3_1;
-	private JTextField jtextFieldDepartment;
+	private JTextField jtextFieldEmail;
 	private JLabel lblNewLabel_1_1_1;
 	private JTextField jtextFieldUsername;
 	private JLabel lblNewLabel_1_1_1_1;
@@ -117,6 +119,11 @@ public class JPanelEmpList extends JPanel {
 		jlablePhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		jbuttonBrowse = new JButton("Browse...");
+		jbuttonBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonBrowse_actionPerformed(e);
+			}
+		});
 		jbuttonBrowse.setBounds(105, 205, 150, 30);
 		panel.add(jbuttonBrowse);
 		jbuttonBrowse.setPreferredSize(new Dimension(79, 30));
@@ -167,16 +174,16 @@ public class JPanelEmpList extends JPanel {
 		jtextFieldPhone.setPreferredSize(new Dimension(7, 35));
 		jtextFieldPhone.setColumns(10);
 		
-		lblNewLabel_1_3_1 = new JLabel("Department");
+		lblNewLabel_1_3_1 = new JLabel("Email");
 		lblNewLabel_1_3_1.setBounds(47, 492, 74, 22);
 		panel.add(lblNewLabel_1_3_1);
 		lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		jtextFieldDepartment = new JTextField();
-		jtextFieldDepartment.setBounds(131, 488, 150, 35);
-		panel.add(jtextFieldDepartment);
-		jtextFieldDepartment.setColumns(10);
+		jtextFieldEmail = new JTextField();
+		jtextFieldEmail.setBounds(131, 488, 150, 35);
+		panel.add(jtextFieldEmail);
+		jtextFieldEmail.setColumns(10);
 		
 		lblNewLabel_1_2_1 = new JLabel("Created");
 		lblNewLabel_1_2_1.setBounds(47, 541, 56, 22);
@@ -306,7 +313,7 @@ public class JPanelEmpList extends JPanel {
 				jtextFieldName.setText(rs.getString("name"));
 				jtextFieldAddress.setText(rs.getString("address"));
 				jtextFieldPhone.setText(rs.getString("phone"));
-				jtextFieldDepartment.setText(rs.getString("department"));
+				jtextFieldEmail.setText(rs.getString("email"));
 				jdateChooser.setDate(rs.getDate("created"));
 				jtextFieldUsername.setText(rs.getString("username"));
 				jcheckboxAdmin.setSelected(rs.getBoolean("is_admin"));
@@ -327,7 +334,7 @@ public class JPanelEmpList extends JPanel {
 			employee.setName(jtextFieldName.getText().trim());
 			employee.setAddress(jtextFieldAddress.getText());
 			employee.setPhone(jtextFieldPhone.getText());
-			employee.setDepartment(jtextFieldDepartment.getText());
+			employee.setEmail(jtextFieldEmail.getText());
 			employee.setUsername(jtextFieldUsername.getText());
 			String password = new String(jpasswordFieldPassword.getPassword());
 			employee.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
@@ -349,13 +356,13 @@ public class JPanelEmpList extends JPanel {
 	}
 
 	public void jbuttonEdit_actionPerformed(ActionEvent e) {
-		String sql = "update employee set name = ?, address = ?, phone = ?, department = ?, username = ?, is_admin = ?, created = ?, photo = ? where id = ?";
+		String sql = "update employee set name = ?, address = ?, phone = ?, email = ?, username = ?, is_admin = ?, created = ?, photo = ? where id = ?";
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement(sql);
 			ps.setString(1, jtextFieldName.getText());
 			ps.setString(2, jtextFieldAddress.getText());
 			ps.setString(3, jtextFieldPhone.getText());
-			ps.setString(4, jtextFieldDepartment.getText());
+			ps.setString(4, jtextFieldEmail.getText());
 			ps.setString(5, jtextFieldUsername.getText());
 			ps.setBoolean(6, jcheckboxAdmin.isSelected());
 			ps.setDate(7, new java.sql.Date(jdateChooser.getDate().getTime()));
@@ -390,12 +397,25 @@ public class JPanelEmpList extends JPanel {
 		jtextFieldName.setText(null);
 		jtextFieldAddress.setText(null);
 		jtextFieldPhone.setText(null);
-		jtextFieldDepartment.setText(null);
+		jtextFieldEmail.setText(null);
 		jtextFieldUsername.setText(null);
 		jdateChooser.setDate(null);
 		jpasswordFieldPassword.setText(null);
 		jlablePhoto.setIcon(null);
 		jcheckboxAdmin.setSelected(false);
+	}
+	
+	public void jbuttonBrowse_actionPerformed(ActionEvent e) {
+		JFileChooser jfileChooser = new JFileChooser("C:\\Users\\admin\\Desktop\\Image");
+		jfileChooser.setDialogTitle("Select a Photo");
+		jfileChooser.setMultiSelectionEnabled(false);
+		int result = jfileChooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			file = jfileChooser.getSelectedFile();
+			ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage()
+					.getScaledInstance(jlablePhoto.getWidth(), jlablePhoto.getHeight(), Image.SCALE_DEFAULT));
+			jlablePhoto.setIcon(imageIcon);
+		}
 	}
 
 	private void fillDataToJTable(List<Employee> employees) {
@@ -410,7 +430,7 @@ public class JPanelEmpList extends JPanel {
 		defaultTableModel.addColumn("Name");
 		defaultTableModel.addColumn("Address");
 		defaultTableModel.addColumn("Phone");
-		defaultTableModel.addColumn("Department");
+		defaultTableModel.addColumn("Email");
 		defaultTableModel.addColumn("Username");
 		defaultTableModel.addColumn("Password");
 		defaultTableModel.addColumn("Created");
@@ -419,7 +439,7 @@ public class JPanelEmpList extends JPanel {
 		;
 		for (Employee employee : employees) {
 			defaultTableModel.addRow(new Object[] { employee.getId(), employee.getName(), employee.getAddress(),
-					employee.getPhone(), employee.getDepartment(), employee.getUsername(), employee.getPassword(),
+					employee.getPhone(), employee.getEmail(), employee.getUsername(), employee.getPassword(),
 					simpleDateFormat.format(employee.getCreated()), employee.isIs_admin() ? "admin" : "employee", employee.getPhoto() });
 			jtableEmp.setModel(defaultTableModel);
 			jtableEmp.setRowHeight(40);

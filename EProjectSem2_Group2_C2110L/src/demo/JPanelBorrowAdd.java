@@ -933,11 +933,11 @@ public class JPanelBorrowAdd extends JPanel {
 		defaultTableModel.addColumn("ID");
 		defaultTableModel.addColumn("Photo");
 		defaultTableModel.addColumn("Name");
-		defaultTableModel.addColumn("Department");
+		defaultTableModel.addColumn("Email");
 
 		for (Employee employee : employeeList) {
 			defaultTableModel.addRow(new Object[] { employee.getId(), employee.getPhoto(), employee.getName(),
-					employee.getDepartment() });
+					employee.getEmail() });
 		}
 
 		jtableEmployee.setModel(defaultTableModel);

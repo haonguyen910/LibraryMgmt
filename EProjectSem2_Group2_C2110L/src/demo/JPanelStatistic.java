@@ -51,6 +51,8 @@ public class JPanelStatistic extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_head.getLayout();
+		flowLayout.setVgap(15);
 		panel_head.setBackground(new Color(128, 128, 192));
 		add(panel_head);
 
@@ -58,11 +60,6 @@ public class JPanelStatistic extends JPanel {
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_head.add(lblNewLabel);
-		
-		JPanel panel_8 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_8.getLayout();
-		flowLayout.setVgap(15);
-		add(panel_8);
 		
 		JPanel panel_1 = new JPanel();
 		add(panel_1);

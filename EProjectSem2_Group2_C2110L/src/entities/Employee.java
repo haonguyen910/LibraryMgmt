@@ -9,7 +9,7 @@ public class Employee {
 	private String name;
 	private String address;
 	private String phone;
-	private String department;
+	private String email;
 	private String username;
 	private String password;
 	private Date created;
@@ -20,14 +20,14 @@ public class Employee {
 		super();
 	}
 
-	public Employee(int id, String name, String address, String phone, String department, String username,
+	public Employee(int id, String name, String address, String phone, String email, String username,
 			String password, Date created, boolean is_admin, byte[] photo) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
-		this.department = department;
+		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.created = created;
@@ -67,12 +67,12 @@ public class Employee {
 		this.phone = phone;
 	}
 
-	public String getDepartment() {
-		return department;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {
@@ -118,7 +118,7 @@ public class Employee {
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", department="
-				+ department + ", username=" + username + ", password=" + password + ", created=" + created
+				+ email + ", username=" + username + ", password=" + password + ", created=" + created
 				+ ", is_admin=" + is_admin + ", photo=" + Arrays.toString(photo) + "]";
 	}
 

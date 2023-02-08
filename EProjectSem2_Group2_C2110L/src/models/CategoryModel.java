@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Author;
 import entities.Category;
 
 public class CategoryModel {

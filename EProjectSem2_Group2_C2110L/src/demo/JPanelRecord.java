@@ -219,9 +219,6 @@ public class JPanelRecord extends JPanel {
 					g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 					g2.scale(0.47, 0.47);
 					
-//					JPanelRecord jPanelRecord = new JPanelRecord();
-//					jPanelRecord.print(g2);
-					
 					panel_3.print(g2);
 					
 					return Printable.PAGE_EXISTS;
@@ -286,6 +283,7 @@ public class JPanelRecord extends JPanel {
 					borrow.getCreated(), borrow.getDue_date(), borrow.isStatus() ? "Returned" : "Pending" });
 
 			jtableRecord.setModel(defaultTableModel);
+			jtableRecord.setRowHeight(40);
 			jtableRecord.getTableHeader().setReorderingAllowed(false);
 		}
 	}
