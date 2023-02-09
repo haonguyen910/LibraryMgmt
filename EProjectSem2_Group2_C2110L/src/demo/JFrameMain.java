@@ -19,9 +19,9 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
+import javax.swing.SwingConstants;
 
 public class JFrameMain extends JFrame {
 
@@ -42,6 +42,7 @@ public class JFrameMain extends JFrame {
 	private JPanel panel_4;
 	private JLabel lblNewLabel;
 	private JLabel jlabelWelcome;
+	private JButton jbuttonLogOut;
 
 	/**
 	 * Launch the application.
@@ -122,6 +123,8 @@ public class JFrameMain extends JFrame {
 		jpanelMain.add(jpanelLeft, BorderLayout.WEST);
 
 		jbuttonBookList = new JButton("   Book");
+		jbuttonBookList.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonBookList.setMaximumSize(new Dimension(200, 60));
 		jbuttonBookList.setPreferredSize(new Dimension(100, 50));
 		jbuttonBookList.setBorderPainted(false);
 		jbuttonBookList.setContentAreaFilled(false);
@@ -133,10 +136,28 @@ public class JFrameMain extends JFrame {
 			}
 		});
 		jpanelLeft.setLayout(new BoxLayout(jpanelLeft, BoxLayout.Y_AXIS));
+		
+				JButton jbuttonStatistic = new JButton("   Dash Board");
+				jbuttonStatistic.setHorizontalAlignment(SwingConstants.LEFT);
+				jbuttonStatistic.setBackground(new Color(255, 51, 51));
+				jbuttonStatistic.setMaximumSize(new Dimension(200, 60));
+				jbuttonStatistic.setPreferredSize(new Dimension(110, 28));
+				jbuttonStatistic.setBorderPainted(false);
+				jbuttonStatistic.setFont(new Font("SansSerif", Font.BOLD, 14));
+				jbuttonStatistic.setForeground(new Color(255, 255, 255));
+				jbuttonStatistic.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						jbuttonStatistic_actionPerformed(e);
+					}
+				});
+				jbuttonStatistic.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Home_26px_2.png")));
+				jpanelLeft.add(jbuttonStatistic);
 		jbuttonBookList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Book_26px.png")));
 		jpanelLeft.add(jbuttonBookList);
 
 		jbuttonAuthorList = new JButton("   Author");
+		jbuttonAuthorList.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonAuthorList.setMaximumSize(new Dimension(200, 60));
 		jbuttonAuthorList.setPreferredSize(new Dimension(63, 50));
 		jbuttonAuthorList.setBorderPainted(false);
 		jbuttonAuthorList.setContentAreaFilled(false);
@@ -151,6 +172,8 @@ public class JFrameMain extends JFrame {
 		jpanelLeft.add(jbuttonAuthorList);
 
 		jbuttonCategory = new JButton("   Category");
+		jbuttonCategory.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonCategory.setMaximumSize(new Dimension(200, 60));
 		jbuttonCategory.setBorderPainted(false);
 		jbuttonCategory.setContentAreaFilled(false);
 		jbuttonCategory.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -164,6 +187,8 @@ public class JFrameMain extends JFrame {
 		jpanelLeft.add(jbuttonCategory);
 
 		jbuttonBorrowList = new JButton("   Issue Book");
+		jbuttonBorrowList.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonBorrowList.setMaximumSize(new Dimension(200, 60));
 		jbuttonBorrowList.setMinimumSize(new Dimension(90, 50));
 		jbuttonBorrowList.setBorderPainted(false);
 		jbuttonBorrowList.setContentAreaFilled(false);
@@ -178,6 +203,8 @@ public class JFrameMain extends JFrame {
 		jpanelLeft.add(jbuttonBorrowList);
 
 		jbuttonBorrowedList = new JButton("   Return Book");
+		jbuttonBorrowedList.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonBorrowedList.setMaximumSize(new Dimension(200, 60));
 		jbuttonBorrowedList.setBorderPainted(false);
 		jbuttonBorrowedList.setContentAreaFilled(false);
 		jbuttonBorrowedList.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -191,6 +218,8 @@ public class JFrameMain extends JFrame {
 		jpanelLeft.add(jbuttonBorrowedList);
 
 		jbuttonVRecord = new JButton("   View Record");
+		jbuttonVRecord.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonVRecord.setMaximumSize(new Dimension(200, 60));
 		jbuttonVRecord.setBorderPainted(false);
 		jbuttonVRecord.setContentAreaFilled(false);
 		jbuttonVRecord.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -203,20 +232,9 @@ public class JFrameMain extends JFrame {
 		jbuttonVRecord.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_View_Details_26px.png")));
 		jpanelLeft.add(jbuttonVRecord);
 
-		JButton jbuttonStatistic = new JButton("   Statistic Report");
-		jbuttonStatistic.setBorderPainted(false);
-		jbuttonStatistic.setContentAreaFilled(false);
-		jbuttonStatistic.setFont(new Font("SansSerif", Font.BOLD, 14));
-		jbuttonStatistic.setForeground(new Color(192, 192, 192));
-		jbuttonStatistic.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonStatistic_actionPerformed(e);
-			}
-		});
-		jbuttonStatistic.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Library_26px_1.png")));
-		jpanelLeft.add(jbuttonStatistic);
-
 		jbuttonCustmList = new JButton("   Customer");
+		jbuttonCustmList.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonCustmList.setMaximumSize(new Dimension(200, 60));
 		jbuttonCustmList.setBorderPainted(false);
 		jbuttonCustmList.setContentAreaFilled(false);
 		jbuttonCustmList.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -230,6 +248,8 @@ public class JFrameMain extends JFrame {
 		jpanelLeft.add(jbuttonCustmList);
 
 		JButton jbuttonEmplList = new JButton("   Employee");
+		jbuttonEmplList.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonEmplList.setMaximumSize(new Dimension(200, 60));
 		jbuttonEmplList.setBorderPainted(false);
 		jbuttonEmplList.setContentAreaFilled(false);
 		jbuttonEmplList.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -241,6 +261,21 @@ public class JFrameMain extends JFrame {
 		});
 		jbuttonEmplList.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Conference_26px.png")));
 		jpanelLeft.add(jbuttonEmplList);
+		
+		jbuttonLogOut = new JButton("   Log Out");
+		jbuttonLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonLogOut_actionPerformed(e);
+			}
+		});
+		jbuttonLogOut.setBorderPainted(false);
+		jbuttonLogOut.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonLogOut.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Exit_26px_2.png")));
+		jbuttonLogOut.setBackground(new Color(102, 102, 255));
+		jbuttonLogOut.setForeground(new Color(255, 255, 255));
+		jbuttonLogOut.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonLogOut.setMaximumSize(new Dimension(200, 60));
+		jpanelLeft.add(jbuttonLogOut);
 
 		jpanelRight = new JPanel();
 		contentPane.add(jpanelRight, BorderLayout.CENTER);
@@ -260,9 +295,10 @@ public class JFrameMain extends JFrame {
 		clearScreen();
 		Employee employee = (Employee) data.get("employee");
 		jlabelWelcome.setText("Welcome, " + employee.getName());
-		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
-		jpanelRight.add(jPanelBorrowList);
-		jPanelBorrowList.setVisible(true);
+		
+		JPanelDashBoard jpanelHome = new JPanelDashBoard();
+		jpanelRight.add(jpanelHome);
+		jpanelHome.setVisible(true);
 	}
 	
 	public void jbuttonVRecord_actionPerformed(ActionEvent e) {
@@ -274,7 +310,7 @@ public class JFrameMain extends JFrame {
 	
 	public void jbuttonStatistic_actionPerformed(ActionEvent e) {
 		clearScreen();
-		JPanelStatistic jpanelStatistic = new JPanelStatistic();
+		JPanelDashBoard jpanelStatistic = new JPanelDashBoard();
 		jpanelRight.add(jpanelStatistic);
 		jpanelStatistic.setVisible(true);
 	}
@@ -332,6 +368,13 @@ public class JFrameMain extends JFrame {
 		JPanelBorrowedAdd jPanelBorrowedAdd = new JPanelBorrowedAdd(jpanelRight);
 		jpanelRight.add(jPanelBorrowedList);
 		jPanelBorrowedList.setVisible(true);
+	}
+	
+	public void jbuttonLogOut_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JFrameLogin jframeLogin = new JFrameLogin();
+		jframeLogin.setVisible(true);
+		this.dispose();
 	}
 
 //	Components

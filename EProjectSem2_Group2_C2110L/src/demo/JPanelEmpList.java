@@ -1,6 +1,7 @@
 package demo;
 
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,7 +19,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.mindrot.jbcrypt.BCrypt;
 
+import entities.Borrow;
 import entities.Employee;
+import models.BorrowModel;
 import models.ConnectDB;
 import models.EmployeeModel;
 
@@ -57,8 +60,6 @@ public class JPanelEmpList extends JPanel {
 	private JButton jbuttonReset;
 	private JPanel panel;
 	private JPanel panel_1;
-	private JScrollPane scrollPane;
-	private JTable jtableEmp;
 	private JLabel lblNewLabel_1;
 	private JTextField jtextFieldName;
 	private JLabel lblNewLabel_1_1;
@@ -80,6 +81,12 @@ public class JPanelEmpList extends JPanel {
 	private JCheckBox jcheckboxAdmin;
 	private JLabel lblNewLabel_2;
 	private JPanel panel_2;
+	private JButton jbuttonGetRecord;
+	private JPanel panel_3;
+	private JPanel panel_4;
+	private JScrollPane scrollPane;
+	private JTable jtableEmp;
+	private JTable jtableGetRecord;
 
 	/**
 	 * Create the panel.
@@ -94,11 +101,11 @@ public class JPanelEmpList extends JPanel {
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("Employee List");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_head.add(lblNewLabel);
-		
+
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
@@ -108,19 +115,19 @@ public class JPanelEmpList extends JPanel {
 		JPanel panel_body = new JPanel();
 		add(panel_body);
 		panel_body.setLayout(new BorderLayout(0, 0));
-		
+
 		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setPreferredSize(new Dimension(340, 200));
 		panel_body.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
-		
+
 		jlablePhoto = new JLabel("");
 		jlablePhoto.setBounds(105, 44, 150, 150);
 		panel.add(jlablePhoto);
 		jlablePhoto.setIconTextGap(8);
 		jlablePhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		
+
 		jbuttonBrowse = new JButton("Browse...");
 		jbuttonBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,115 +138,135 @@ public class JPanelEmpList extends JPanel {
 		panel.add(jbuttonBrowse);
 		jbuttonBrowse.setPreferredSize(new Dimension(79, 30));
 		jbuttonBrowse.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
+
 		lblNewLabel_1_3 = new JLabel("ID");
 		lblNewLabel_1_3.setBounds(47, 279, 46, 22);
 		panel.add(lblNewLabel_1_3);
 		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		jtextFieldID = new JTextField();
 		jtextFieldID.setBounds(131, 275, 150, 35);
 		panel.add(jtextFieldID);
 		jtextFieldID.setColumns(10);
-		
+
 		jtextFieldName = new JTextField();
 		jtextFieldName.setBounds(131, 326, 150, 35);
 		panel.add(jtextFieldName);
 		jtextFieldName.setColumns(10);
-		
+
 		lblNewLabel_1 = new JLabel("Name");
 		lblNewLabel_1.setBounds(47, 330, 46, 22);
 		panel.add(lblNewLabel_1);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		lblNewLabel_1_1 = new JLabel("Address");
 		lblNewLabel_1_1.setBounds(47, 384, 62, 22);
 		panel.add(lblNewLabel_1_1);
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		jtextFieldAddress = new JTextField();
 		jtextFieldAddress.setBounds(131, 380, 150, 35);
 		panel.add(jtextFieldAddress);
 		jtextFieldAddress.setColumns(10);
-		
+
 		lblNewLabel_1_2 = new JLabel("Phone");
 		lblNewLabel_1_2.setBounds(47, 440, 46, 22);
 		panel.add(lblNewLabel_1_2);
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		jtextFieldPhone = new JTextField();
 		jtextFieldPhone.setBounds(131, 436, 150, 35);
 		panel.add(jtextFieldPhone);
 		jtextFieldPhone.setPreferredSize(new Dimension(7, 35));
 		jtextFieldPhone.setColumns(10);
-		
+
 		lblNewLabel_1_3_1 = new JLabel("Email");
 		lblNewLabel_1_3_1.setBounds(47, 492, 74, 22);
 		panel.add(lblNewLabel_1_3_1);
 		lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		jtextFieldEmail = new JTextField();
 		jtextFieldEmail.setBounds(131, 488, 150, 35);
 		panel.add(jtextFieldEmail);
 		jtextFieldEmail.setColumns(10);
-		
+
 		lblNewLabel_1_2_1 = new JLabel("Created");
 		lblNewLabel_1_2_1.setBounds(47, 541, 56, 22);
 		panel.add(lblNewLabel_1_2_1);
 		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		jdateChooser = new JDateChooser();
 		jdateChooser.setOpaque(false);
 		jdateChooser.setBounds(131, 539, 150, 35);
 		panel.add(jdateChooser);
-		
+
 		lblNewLabel_1_1_1 = new JLabel("Username");
 		lblNewLabel_1_1_1.setBounds(47, 597, 62, 22);
 		panel.add(lblNewLabel_1_1_1);
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		jtextFieldUsername = new JTextField();
 		jtextFieldUsername.setBounds(131, 593, 150, 35);
 		panel.add(jtextFieldUsername);
 		jtextFieldUsername.setColumns(10);
-		
+
 		lblNewLabel_1_1_1_1 = new JLabel("Password");
 		lblNewLabel_1_1_1_1.setBounds(47, 653, 62, 22);
 		panel.add(lblNewLabel_1_1_1_1);
 		lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		jpasswordFieldPassword = new JPasswordField();
 		jpasswordFieldPassword.setBounds(131, 649, 150, 35);
 		panel.add(jpasswordFieldPassword);
-		
+
 		jcheckboxAdmin = new JCheckBox("Admin Authority");
 		jcheckboxAdmin.setSize(new Dimension(10, 10));
-		jcheckboxAdmin.setBounds(105, 714, 150, 40);
+		jcheckboxAdmin.setBounds(105, 701, 150, 40);
 		panel.add(jcheckboxAdmin);
 		jcheckboxAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
+
 		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		lblNewLabel_2.setBounds(10, 0, 320, 773);
+		lblNewLabel_2.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"Information", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		lblNewLabel_2.setBounds(10, 0, 320, 825);
 		panel.add(lblNewLabel_2);
-		
+
+		jbuttonGetRecord = new JButton("Pending Record");
+		jbuttonGetRecord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonGetRecord_actionPerformed(e);
+			}
+		});
+		jbuttonGetRecord.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		jbuttonGetRecord.setPreferredSize(new Dimension(89, 25));
+		jbuttonGetRecord.setBounds(105, 761, 150, 35);
+		panel.add(jbuttonGetRecord);
+
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_body.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+
+		panel_3 = new JPanel();
+		panel_3.setBackground(new Color(255, 255, 255));
+		panel_1.add(panel_3);
+		panel_3.setLayout(new BorderLayout(0, 0));
+
 		scrollPane = new JScrollPane();
-		panel_1.add(scrollPane, BorderLayout.CENTER);
-		
+		scrollPane.setBorder(BorderFactory.createTitledBorder ("Employee List"));
+		panel_3.add(scrollPane, BorderLayout.CENTER);
+
 		jtableEmp = new JTable();
+		jtableEmp.setSelectionBackground(new Color(255, 51, 51));
 		jtableEmp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -247,6 +274,19 @@ public class JPanelEmpList extends JPanel {
 			}
 		});
 		scrollPane.setViewportView(jtableEmp);
+
+		panel_4 = new JPanel();
+		panel_4.setBackground(new Color(255, 255, 255));
+		panel_1.add(panel_4);
+		panel_4.setLayout(new BorderLayout(0, 0));
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBorder(BorderFactory.createTitledBorder ("Pending Issue"));
+		panel_4.add(scrollPane_1, BorderLayout.CENTER);
+
+		jtableGetRecord = new JTable();
+		jtableGetRecord.setSelectionBackground(new Color(255, 51, 51));
+		scrollPane_1.setViewportView(jtableGetRecord);
 
 		JPanel panel_bottom = new JPanel();
 		panel_bottom.setBackground(new Color(255, 255, 255));
@@ -300,11 +340,11 @@ public class JPanelEmpList extends JPanel {
 
 	private void initJFrame() {
 		EmployeeModel employeeModel = new EmployeeModel();
-		fillDataToJTable(employeeModel.findAll());
+		setDataToTableEmp(employeeModel.findAll());
 		jbuttonDelete.setEnabled(false);
 		jbuttonEdit.setEnabled(false);
 	}
-	
+
 	public void jtableEmp_mouseClicked(MouseEvent e) {
 		jbuttonDelete.setEnabled(true);
 		jbuttonEdit.setEnabled(true);
@@ -312,7 +352,8 @@ public class JPanelEmpList extends JPanel {
 		try {
 			int selectedRow = jtableEmp.getSelectedRow();
 			String tableClick = jtableEmp.getModel().getValueAt(selectedRow, 0).toString();
-			PreparedStatement ps = ConnectDB.connection().prepareStatement("select * from employee where id = '" + tableClick + "'");
+			PreparedStatement ps = ConnectDB.connection()
+					.prepareStatement("select * from employee where id = '" + tableClick + "'");
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				jtextFieldID.setText(rs.getString("id"));
@@ -352,7 +393,7 @@ public class JPanelEmpList extends JPanel {
 			EmployeeModel employeeModel = new EmployeeModel();
 			if (employeeModel.create(employee)) {
 				JOptionPane.showMessageDialog(this, "Saved");
-				fillDataToJTable(employeeModel.findAll());
+				setDataToTableEmp(employeeModel.findAll());
 			} else {
 				JOptionPane.showMessageDialog(this, "Failed, please try again");
 			}
@@ -376,7 +417,7 @@ public class JPanelEmpList extends JPanel {
 			ps.setString(9, jtextFieldID.getText());
 			ps.executeUpdate();
 			EmployeeModel employeeModel = new EmployeeModel();
-			fillDataToJTable(employeeModel.findAll());
+			setDataToTableEmp(employeeModel.findAll());
 			JOptionPane.showMessageDialog(this, "Updated");
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());
@@ -390,10 +431,10 @@ public class JPanelEmpList extends JPanel {
 			int id = Integer.parseInt(jtableEmp.getValueAt(selectedRow, 0).toString());
 			EmployeeModel employeeModel = new EmployeeModel();
 			if (employeeModel.delete(id)) {
-				fillDataToJTable(employeeModel.findAll());
+				setDataToTableEmp(employeeModel.findAll());
 				jbuttonDelete.setEnabled(false);
 			} else {
-				JOptionPane.showMessageDialog(this, "Please try again");
+				JOptionPane.showMessageDialog(this, "Employee still has Issue Record, cannot delete");
 			}
 		}
 	}
@@ -410,7 +451,7 @@ public class JPanelEmpList extends JPanel {
 		jlablePhoto.setIcon(null);
 		jcheckboxAdmin.setSelected(false);
 	}
-	
+
 	public void jbuttonBrowse_actionPerformed(ActionEvent e) {
 		JFileChooser jfileChooser = new JFileChooser("C:\\Users\\admin\\Desktop\\Image");
 		jfileChooser.setDialogTitle("Select a Photo");
@@ -424,7 +465,14 @@ public class JPanelEmpList extends JPanel {
 		}
 	}
 
-	private void fillDataToJTable(List<Employee> employees) {
+	public void jbuttonGetRecord_actionPerformed(ActionEvent e) {
+		int employeeID = Integer.parseInt(jtextFieldID.getText());
+		BorrowModel borrowModel = new BorrowModel();
+		setDataToTableRecord(borrowModel.findByEmpIdForRecord(employeeID));
+	}
+
+// SET DATA
+	private void setDataToTableEmp(List<Employee> employees) {
 
 		DefaultTableModel defaultTableModel = new DefaultTableModel() {
 			@Override
@@ -446,11 +494,19 @@ public class JPanelEmpList extends JPanel {
 		for (Employee employee : employees) {
 			defaultTableModel.addRow(new Object[] { employee.getId(), employee.getName(), employee.getAddress(),
 					employee.getPhone(), employee.getEmail(), employee.getUsername(), employee.getPassword(),
-					simpleDateFormat.format(employee.getCreated()), employee.isIs_admin() ? "admin" : "employee", employee.getPhoto() });
+					simpleDateFormat.format(employee.getCreated()), employee.isIs_admin() ? "admin" : "employee",
+					employee.getPhoto() });
 			jtableEmp.setModel(defaultTableModel);
-			jtableEmp.setRowHeight(40);
+			jtableEmp.setRowHeight(30);
 			jtableEmp.getTableHeader().setReorderingAllowed(false);
 			jtableEmp.getColumnModel().getColumn(9).setCellRenderer(new ImageCellRender());
+		}
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(new Color(102, 102, 255));
+		headerRenderer.setForeground(new Color(255, 255, 255));
+
+		for (int i = 0; i < jtableEmp.getModel().getColumnCount(); i++) {
+			jtableEmp.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
 		}
 	}
 
@@ -463,6 +519,38 @@ public class JPanelEmpList extends JPanel {
 			imageIcon = new ImageIcon(new ImageIcon(bytes).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 			jlabel.setIcon(imageIcon);
 			return jlabel;
+		}
+	}
+
+	private void setDataToTableRecord(List<Borrow> borrowList) {
+		DefaultTableModel defaultTableModel = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		defaultTableModel.addColumn("Issue ID");
+		defaultTableModel.addColumn("Book Title");
+		defaultTableModel.addColumn("Issue Day");
+		defaultTableModel.addColumn("Due Date");
+		defaultTableModel.addColumn("Customer ID");
+		defaultTableModel.addColumn("Deposit");
+		defaultTableModel.addColumn("Status");
+		;
+		for (Borrow borrow : borrowList) {
+			defaultTableModel.addRow(
+					new Object[] { borrow.getId(), borrow.getBookTitle(), borrow.getCreated(), borrow.getDue_date(),
+							borrow.getId_customer(), borrow.getDeposit(), borrow.isStatus() ? "Returned" : "Pending" });
+			jtableGetRecord.setModel(defaultTableModel);
+			jtableGetRecord.setRowHeight(30);
+			jtableGetRecord.getTableHeader().setReorderingAllowed(false);
+		}
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(new Color(102, 102, 255));
+		headerRenderer.setForeground(new Color(255, 255, 255));
+
+		for (int i = 0; i < jtableGetRecord.getModel().getColumnCount(); i++) {
+			jtableGetRecord.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
 		}
 	}
 }

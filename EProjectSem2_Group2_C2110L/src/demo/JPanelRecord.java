@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
@@ -65,24 +66,28 @@ public class JPanelRecord extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(128, 128, 192));
+		panel_1.setBackground(new Color(51, 51, 51));
 		add(panel_1);
 
 		JLabel lblNewLabel = new JLabel("Issue Register ");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBackground(new Color(51, 51, 51));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_1.add(lblNewLabel);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
 		flowLayout.setVgap(30);
 		add(panel_2);
 
 		JLabel lblNewLabel_1 = new JLabel("Start Date");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_2.add(lblNewLabel_1);
 
 		jdateChooserStart = new JDateChooser();
+		jdateChooserStart.setOpaque(false);
+		jdateChooserStart.setBackground(new Color(255, 255, 255));
 		jdateChooserStart.setDateFormatString("yyyy-MM-dd");
 		jdateChooserStart.setToolTipText("select");
 		jdateChooserStart.setPreferredSize(new Dimension(150, 30));
@@ -92,10 +97,11 @@ public class JPanelRecord extends JPanel {
 		panel_2.add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("End Date");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_2.add(lblNewLabel_3);
 
 		jdateChooserEnd = new JDateChooser();
+		jdateChooserEnd.setOpaque(false);
 		jdateChooserEnd.setDateFormatString("yyyy-MM-dd");
 		jdateChooserEnd.setPreferredSize(new Dimension(150, 30));
 		panel_2.add(jdateChooserEnd);
@@ -111,7 +117,7 @@ public class JPanelRecord extends JPanel {
 		});
 		jbuttonSearch.setPreferredSize(new Dimension(120, 30));
 		jbuttonSearch.setMargin(new Insets(5, 20, 5, 20));
-		jbuttonSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jbuttonSearch.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_2.add(jbuttonSearch);
 
 		JLabel lblNewLabel_4_1 = new JLabel("        ");
@@ -127,6 +133,10 @@ public class JPanelRecord extends JPanel {
 		panel_2.add(jcomboBoxStatus);
 
 		JPanel panel = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
+		flowLayout_1.setHgap(10);
+		flowLayout_1.setVgap(10);
+		panel.setBackground(new Color(255, 255, 255));
 		add(panel);
 
 		jbuttonFirst = new JButton("First");
@@ -183,9 +193,11 @@ public class JPanelRecord extends JPanel {
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 
 		jtableRecord = new JTable();
+		jtableRecord.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane.setViewportView(jtableRecord);
 		
 		panel_4 = new JPanel();
+		panel_4.setBackground(new Color(255, 255, 255));
 		add(panel_4);
 		
 		jbuttonPrint = new JButton("Print");
@@ -239,7 +251,6 @@ public class JPanelRecord extends JPanel {
 	private void initJPanel() {
 //		BorrowModel borrowModel = new BorrowModel();
 //		fillDataToJTableRecord(borrowModel.findAllForRecord());
-
 		initPagination();
 		fillDataToJCombobox();
 		fillDataToComboboxItem();
@@ -280,11 +291,18 @@ public class JPanelRecord extends JPanel {
 		defaultTableModel.addColumn("Status");
 		for (Borrow borrow : borrowList) {
 			defaultTableModel.addRow(new Object[] { borrow.getId(), borrow.getBookTitle(), borrow.getCustomerName(),
-					borrow.getCreated(), borrow.getDue_date(), borrow.isStatus() ? "Returned" : "Pending" });
+					sdf.format(borrow.getCreated()),sdf.format(borrow.getDue_date()), borrow.isStatus() ? "Returned" : "Pending" });
 
 			jtableRecord.setModel(defaultTableModel);
-			jtableRecord.setRowHeight(40);
+			jtableRecord.setRowHeight(30);
 			jtableRecord.getTableHeader().setReorderingAllowed(false);
+		}
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(new Color(102, 102, 255));
+		headerRenderer.setForeground(new Color(255, 255, 255));
+
+		for (int i = 0; i < jtableRecord.getModel().getColumnCount(); i++) {
+			jtableRecord.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
 		}
 	}
 

@@ -588,6 +588,38 @@ public class BorrowModel {
 		return borrowList;
 	}
 	
+	public List<Borrow> findByEmpIdForRecord(int id) {
+		List<Borrow> borrowList = new ArrayList<Borrow>();
+		try {
+			PreparedStatement ps = ConnectDB.connection().prepareStatement(
+					"SELECT borrow.*, book.title AS bookTitle\r\n"
+							+ "FROM borrow LEFT JOIN borrow_detail ON borrow.id = borrow_detail.id_borrow\r\n"
+							+ "LEFT JOIN book ON borrow_detail.id_book = book.callNumber\r\n"
+							+ "WHERE borrow.id_employee = ? and borrow.status = false");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Borrow borrow = new Borrow();
+				borrow.setId(rs.getInt("id"));
+				borrow.setCreated(rs.getDate("created"));
+				borrow.setDue_date(rs.getDate("due_date"));
+				borrow.setBookTitle(rs.getString("bookTitle"));
+				borrow.setId_customer(rs.getInt("id_customer"));
+				borrow.setStatus(rs.getBoolean("status"));
+				borrow.setDeposit(rs.getDouble("deposit"));
+
+				borrowList.add(borrow);
+			}
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			borrowList = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowList;
+	}
+	
 //PAGINATION
 	public int count() {
 		int countID = 0;
