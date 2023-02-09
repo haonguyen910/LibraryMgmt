@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -15,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import entities.Borrow;
 import entities.Customer;
@@ -26,8 +28,12 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.UIResource;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
+
+import demo.JPanelEmpList.HeaderRenderer;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.PreparedStatement;
@@ -35,6 +41,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import javax.swing.border.EtchedBorder;
+import javax.swing.ImageIcon;
 
 public class JPanelCustmList extends JPanel {
 	private JPanel panel_body;
@@ -64,13 +71,14 @@ public class JPanelCustmList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head_1 = new JPanel();
-		panel_head_1.setBackground(new Color(51, 51, 51));
+		panel_head_1.setBackground(new Color(255, 255, 255));
 		FlowLayout fl_panel_head_1 = (FlowLayout) panel_head_1.getLayout();
 		add(panel_head_1);
 
-		JLabel lblNewLabel = new JLabel("Customer List");
+		JLabel lblNewLabel = new JLabel("  Customer List");
+		lblNewLabel.setIcon(new ImageIcon(JPanelCustmList.class.getResource("/resources/images/icons8-user-50.png")));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_head_1.add(lblNewLabel);
 
@@ -201,6 +209,7 @@ public class JPanelCustmList extends JPanel {
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 
 		jtableCust = new JTable();
+		jtableCust.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jtableCust.setSelectionBackground(new Color(255, 51, 51));
 		jtableCust.addMouseListener(new MouseAdapter() {
 			@Override
@@ -221,6 +230,7 @@ public class JPanelCustmList extends JPanel {
 		panel_3.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableGetHistory = new JTable();
+		jtableGetHistory.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jtableGetHistory.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane_1.setViewportView(jtableGetHistory);
 
@@ -404,12 +414,9 @@ public class JPanelCustmList extends JPanel {
 			jtableCust.setRowHeight(40);
 			jtableCust.getTableHeader().setReorderingAllowed(false);
 		}
-		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(new Color(102, 102, 255));
-		headerRenderer.setForeground(new Color(255, 255, 255));
-
+		HeaderRenderer header = new HeaderRenderer(jtableCust.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableCust.getModel().getColumnCount(); i++) {
-			jtableCust.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+			jtableCust.getColumnModel().getColumn(i).setHeaderRenderer(header);
 		}
 	}
 
@@ -432,12 +439,27 @@ public class JPanelCustmList extends JPanel {
 			jtableGetHistory.setRowHeight(40);
 			jtableGetHistory.getTableHeader().setReorderingAllowed(false);
 		}
-		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(new Color(102, 102, 255));
-		headerRenderer.setForeground(new Color(255, 255, 255));
-
+		
+		HeaderRenderer header = new HeaderRenderer(jtableGetHistory.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableGetHistory.getModel().getColumnCount(); i++) {
-			jtableGetHistory.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+			jtableGetHistory.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
+	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(102, 102, 255));
+			return comp;
 		}
 	}
 }

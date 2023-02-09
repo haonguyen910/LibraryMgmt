@@ -10,9 +10,11 @@ import java.awt.Graphics2D;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import com.toedter.calendar.JDateChooser;
 
+import demo.JPanelDashBoard.HeaderRenderer;
 import entities.Borrow;
 import models.BorrowModel;
 
@@ -23,6 +25,8 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.plaf.UIResource;
+
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,10 +34,12 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import javax.swing.ImageIcon;
 
 public class JPanelRecord extends JPanel {
 	private JDateChooser jdateChooserStart;
@@ -66,12 +72,13 @@ public class JPanelRecord extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(51, 51, 51));
+		panel_1.setBackground(new Color(255, 255, 255));
 		add(panel_1);
 
-		JLabel lblNewLabel = new JLabel("Issue Register ");
+		JLabel lblNewLabel = new JLabel("  Issue Register ");
+		lblNewLabel.setIcon(new ImageIcon(JPanelRecord.class.getResource("/resources/images/icons8_Edit_Property_50px.png")));
 		lblNewLabel.setBackground(new Color(51, 51, 51));
-		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_1.add(lblNewLabel);
 
@@ -193,6 +200,7 @@ public class JPanelRecord extends JPanel {
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 
 		jtableRecord = new JTable();
+		jtableRecord.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jtableRecord.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane.setViewportView(jtableRecord);
 		
@@ -297,12 +305,9 @@ public class JPanelRecord extends JPanel {
 			jtableRecord.setRowHeight(30);
 			jtableRecord.getTableHeader().setReorderingAllowed(false);
 		}
-		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(new Color(102, 102, 255));
-		headerRenderer.setForeground(new Color(255, 255, 255));
-
+		HeaderRenderer header = new HeaderRenderer(jtableRecord.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableRecord.getModel().getColumnCount(); i++) {
-			jtableRecord.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+			jtableRecord.getColumnModel().getColumn(i).setHeaderRenderer(header);
 		}
 	}
 
@@ -381,5 +386,22 @@ public class JPanelRecord extends JPanel {
 
 		fillDataToJTableRecord(borrowModel.findAllPagination(page, rowCountPerPage));
 
+	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(102, 102, 255));
+			return comp;
+		}
 	}
 }

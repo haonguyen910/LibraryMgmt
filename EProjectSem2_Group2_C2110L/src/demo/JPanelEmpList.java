@@ -11,12 +11,18 @@ import java.awt.Font;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.UIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import entities.Borrow;
@@ -92,16 +98,18 @@ public class JPanelEmpList extends JPanel {
 	 * Create the panel.
 	 */
 	public JPanelEmpList() {
+
 		setBackground(new Color(255, 255, 255));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head = new JPanel();
-		panel_head.setBackground(new Color(51, 51, 51));
+		panel_head.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head.getLayout();
 		add(panel_head);
 
-		JLabel lblNewLabel = new JLabel("Employee List");
-		lblNewLabel.setForeground(new Color(192, 192, 192));
+		JLabel lblNewLabel = new JLabel("  Employee List");
+		lblNewLabel.setIcon(new ImageIcon(JPanelEmpList.class.getResource("/resources/images/icons8-staff-52.png")));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_head.add(lblNewLabel);
@@ -262,10 +270,11 @@ public class JPanelEmpList extends JPanel {
 		panel_3.setLayout(new BorderLayout(0, 0));
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBorder(BorderFactory.createTitledBorder ("Employee List"));
+		scrollPane.setBorder(BorderFactory.createTitledBorder("Employee List"));
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 
 		jtableEmp = new JTable();
+		jtableEmp.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jtableEmp.setSelectionBackground(new Color(255, 51, 51));
 		jtableEmp.addMouseListener(new MouseAdapter() {
 			@Override
@@ -281,10 +290,11 @@ public class JPanelEmpList extends JPanel {
 		panel_4.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBorder(BorderFactory.createTitledBorder ("Pending Issue"));
+		scrollPane_1.setBorder(BorderFactory.createTitledBorder("Pending Issue"));
 		panel_4.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableGetRecord = new JTable();
+		jtableGetRecord.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		jtableGetRecord.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane_1.setViewportView(jtableGetRecord);
 
@@ -336,6 +346,7 @@ public class JPanelEmpList extends JPanel {
 		panel_bottom.add(jbuttonReset);
 
 		initJFrame();
+
 	}
 
 	private void initJFrame() {
@@ -501,12 +512,10 @@ public class JPanelEmpList extends JPanel {
 			jtableEmp.getTableHeader().setReorderingAllowed(false);
 			jtableEmp.getColumnModel().getColumn(9).setCellRenderer(new ImageCellRender());
 		}
-		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(new Color(102, 102, 255));
-		headerRenderer.setForeground(new Color(255, 255, 255));
-
+		
+		HeaderRenderer header = new HeaderRenderer(jtableEmp.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableEmp.getModel().getColumnCount(); i++) {
-			jtableEmp.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+			jtableEmp.getColumnModel().getColumn(i).setHeaderRenderer(header);
 		}
 	}
 
@@ -545,12 +554,33 @@ public class JPanelEmpList extends JPanel {
 			jtableGetRecord.setRowHeight(30);
 			jtableGetRecord.getTableHeader().setReorderingAllowed(false);
 		}
-		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(new Color(102, 102, 255));
-		headerRenderer.setForeground(new Color(255, 255, 255));
+//		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+//		headerRenderer.setBackground(new Color(102, 102, 255));
+//		headerRenderer.setForeground(new Color(255, 255, 255));
+//		for (int i = 0; i < jtableGetRecord.getModel().getColumnCount(); i++) {
+//			jtableGetRecord.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+//		}
 
+		HeaderRenderer header = new HeaderRenderer(jtableGetRecord.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableGetRecord.getModel().getColumnCount(); i++) {
-			jtableGetRecord.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+			jtableGetRecord.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
+	}
+
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(102, 102, 255));
+			return comp;
 		}
 	}
 }
