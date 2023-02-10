@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
+import demo.JPanelRecord.HeaderRenderer;
 import entities.Author;
 import entities.Book;
 import entities.Book_Author;
@@ -31,6 +34,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.UIResource;
 
 public class JPanelAuthorList extends JPanel {
 //	JPanel Right Of JFrameMain
@@ -46,10 +52,6 @@ public class JPanelAuthorList extends JPanel {
 
 //	Global Variable
 	AuthorModel authorModel = new AuthorModel();
-	private JPanel panel_4;
-	private JLabel lblNewLabel_2;
-	private JPanel panel_5;
-	private JLabel lblNewLabel_3;
 
 	/**
 	 * Create the panel.
@@ -60,19 +62,22 @@ public class JPanelAuthorList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
+		flowLayout.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Author List");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		JLabel lblNewLabel = new JLabel(" Author List");
+		lblNewLabel.setIcon(new ImageIcon(JPanelAuthorList.class.getResource("/resources/images/icons8-writer-male-52.png")));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		flowLayout_1.setHgap(10);
+		flowLayout_1.setVgap(15);
 		add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("Keyword:");
@@ -109,24 +114,17 @@ public class JPanelAuthorList extends JPanel {
 		});
 		panel_1.add(jbuttonCancelSearch);
 
-		panel_4 = new JPanel();
-		add(panel_4);
-
-		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setPreferredSize(new Dimension(60, 30));
-		lblNewLabel_2.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_2.setMaximumSize(new Dimension(60, 30));
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_4.add(lblNewLabel_2);
-
 		JPanel panel_2 = new JPanel();
 		add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBackground(new Color(255, 255, 255));
+		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144), 1, true));
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 
 		jtableAuthor = new JTable();
+		jtableAuthor.setSelectionBackground(new Color(255, 51, 51));
 		jtableAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableAuthor.addMouseListener(new MouseAdapter() {
 			@Override
@@ -137,19 +135,11 @@ public class JPanelAuthorList extends JPanel {
 		jtableAuthor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(jtableAuthor);
 
-		panel_5 = new JPanel();
-		add(panel_5);
-
-		lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setPreferredSize(new Dimension(60, 30));
-		lblNewLabel_3.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_3.setMaximumSize(new Dimension(60, 30));
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_5.add(lblNewLabel_3);
-
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		flowLayout_2.setVgap(10);
+		flowLayout_2.setHgap(10);
 		add(panel_3);
 
 		jbuttonAdd = new JButton("Add");
@@ -281,6 +271,27 @@ public class JPanelAuthorList extends JPanel {
 		jtableAuthor.setModel(defaultTableModel);
 		jtableAuthor.getTableHeader().setReorderingAllowed(false);
 		jtableAuthor.setRowHeight(30);
+		
+		HeaderRenderer header = new HeaderRenderer(jtableAuthor.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableAuthor.getModel().getColumnCount(); i++) {
+			jtableAuthor.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
 
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(102, 102, 255));
+			return comp;
+		}
+	}
 }

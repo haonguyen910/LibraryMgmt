@@ -3,12 +3,10 @@ package demo;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
@@ -16,7 +14,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +21,7 @@ import java.util.Map;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import entities.Author;
 import entities.Book;
@@ -41,17 +39,13 @@ import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
-import java.io.Serial;
 import java.awt.event.ActionEvent;
-import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
-import javax.swing.JScrollBar;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
+import javax.swing.plaf.UIResource;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
@@ -97,19 +91,22 @@ public class JPanelBookList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		flowLayout_1.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Book List");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		JLabel lblNewLabel = new JLabel(" Book");
+		lblNewLabel.setIcon(new ImageIcon(JPanelBookList.class.getResource("/resources/images/icons8-literature-52.png")));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
+		flowLayout.setVgap(15);
+		flowLayout.setHgap(10);
 		add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("Keyword:");
@@ -137,6 +134,7 @@ public class JPanelBookList extends JPanel {
 		});
 
 		jcomboBoxSearchType = new JComboBox();
+		jcomboBoxSearchType.setBackground(new Color(255, 255, 255));
 		jcomboBoxSearchType.setPreferredSize(new Dimension(150, 30));
 		jcomboBoxSearchType.setMinimumSize(new Dimension(150, 30));
 		panel_1.add(jcomboBoxSearchType);
@@ -159,6 +157,7 @@ public class JPanelBookList extends JPanel {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		panel_7 = new JPanel();
+		panel_7.setBackground(new Color(255, 255, 255));
 		panel_7.setBorder(new TitledBorder(null, "Book Detail", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_7.setMinimumSize(new Dimension(400, 400));
 		panel_7.setPreferredSize(new Dimension(400, 400));
@@ -344,9 +343,13 @@ public class JPanelBookList extends JPanel {
 		panel_8.setLayout(new BorderLayout(0, 0));
 
 		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBorder(new LineBorder(new Color(130, 135, 144), 1, true));
 		panel_8.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableBook = new JTable();
+		jtableBook.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtableBook.setSelectionBackground(new Color(255, 51, 51));
+		jtableBook.setBackground(new Color(255, 255, 255));
 		jtableBook.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -356,8 +359,9 @@ public class JPanelBookList extends JPanel {
 		scrollPane_1.setViewportView(jtableBook);
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		flowLayout_2.setVgap(10);
 		add(panel_3);
 
 		jbuttonAdd = new JButton("Add");
@@ -557,6 +561,11 @@ public class JPanelBookList extends JPanel {
 		jtableBook.getTableHeader().setReorderingAllowed(false);
 		jtableBook.setRowHeight(50);
 		jtableBook.getColumnModel().getColumn(2).setCellRenderer(new ImageCellRender());
+		
+		HeaderRenderer header = new HeaderRenderer(jtableBook.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableBook.getModel().getColumnCount(); i++) {
+			jtableBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
 
 	private void fillDataToJComboBox() {
@@ -581,6 +590,23 @@ public class JPanelBookList extends JPanel {
 			jlabel.setIcon(imageIcon);
 			jlabel.setHorizontalAlignment(jlabel.CENTER);
 			return jlabel;
+		}
+	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(102, 102, 255));
+			return comp;
 		}
 	}
 }

@@ -14,7 +14,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.BorderLayout;
 
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -24,7 +23,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
-import demo.JPanelCustmList.HeaderRenderer;
 import entities.Book;
 import entities.Customer;
 import models.BookModel;
@@ -59,20 +57,15 @@ public class JPanelDashBoard extends JPanel {
 
 		JPanel panel_head = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_head.getLayout();
+		flowLayout.setVgap(15);
 		panel_head.setBackground(new Color(255, 255, 255));
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("  Dash Board");
 		lblNewLabel.setIcon(new ImageIcon(JPanelDashBoard.class.getResource("/resources/images/icons8-dashboard-layout-54.png")));
 		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		panel_head.add(lblNewLabel);
-
-		JPanel panel_8 = new JPanel();
-		panel_8.setBackground(new Color(255, 255, 255));
-		FlowLayout flowLayout_2 = (FlowLayout) panel_8.getLayout();
-		flowLayout_2.setVgap(10);
-		add(panel_8);
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1);

@@ -8,13 +8,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import com.toedter.calendar.JDateChooser;
 
-import demo.JPanelDashBoard.HeaderRenderer;
 import entities.Borrow;
 import models.BorrowModel;
 
@@ -40,6 +38,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
 
 public class JPanelRecord extends JPanel {
 	private JDateChooser jdateChooserStart;
@@ -61,6 +60,7 @@ public class JPanelRecord extends JPanel {
 	Integer totalData = 0;
 	private JPanel panel_3;
 	private JPanel panel_4;
+	private JLabel lblNewLabel_5;
 	
 	
 	
@@ -79,13 +79,13 @@ public class JPanelRecord extends JPanel {
 		lblNewLabel.setIcon(new ImageIcon(JPanelRecord.class.getResource("/resources/images/icons8_Edit_Property_50px.png")));
 		lblNewLabel.setBackground(new Color(51, 51, 51));
 		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		panel_1.add(lblNewLabel);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
-		flowLayout.setVgap(30);
+		flowLayout.setVgap(25);
 		add(panel_2);
 
 		JLabel lblNewLabel_1 = new JLabel("Start Date");
@@ -136,13 +136,17 @@ public class JPanelRecord extends JPanel {
 				jcomboBoxStatus_actionPerformed(e);
 			}
 		});
+		
+		lblNewLabel_5 = new JLabel("Status ");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_2.add(lblNewLabel_5);
 		jcomboBoxStatus.setPreferredSize(new Dimension(150, 30));
 		panel_2.add(jcomboBoxStatus);
 
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
 		flowLayout_1.setHgap(10);
-		flowLayout_1.setVgap(10);
+		flowLayout_1.setVgap(15);
 		panel.setBackground(new Color(255, 255, 255));
 		add(panel);
 
@@ -197,6 +201,7 @@ public class JPanelRecord extends JPanel {
 		panel_3.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 
 		jtableRecord = new JTable();

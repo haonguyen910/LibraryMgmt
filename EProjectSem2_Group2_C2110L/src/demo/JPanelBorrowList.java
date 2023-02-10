@@ -3,12 +3,10 @@ package demo;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
@@ -16,7 +14,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,36 +22,23 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import entities.Author;
 import entities.Book;
-import entities.Book_Author;
-import entities.Book_Category;
 import entities.Borrow;
 import entities.BorrowDetail;
-import entities.Category;
-import models.AuthorModel;
 import models.BookModel;
-import models.Book_AuthorModel;
-import models.Book_CategoryModel;
 import models.BorrowDetailModel;
 import models.BorrowModel;
-import models.CategoryModel;
-
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
-import java.io.Serial;
 import java.awt.event.ActionEvent;
-import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Dimension;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
 import javax.swing.border.TitledBorder;
 
 public class JPanelBorrowList extends JPanel {

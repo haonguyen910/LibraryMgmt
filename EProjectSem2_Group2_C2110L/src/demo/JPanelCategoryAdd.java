@@ -10,9 +10,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextField;
 
-import entities.Author;
 import entities.Category;
-import models.AuthorModel;
 import models.CategoryModel;
 
 import java.awt.BorderLayout;
@@ -42,19 +40,22 @@ public class JPanelCategoryAdd extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+		flowLayout.setHgap(10);
+		flowLayout.setVgap(15);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Category");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
 		add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 10));
 
 		JLabel lblNewLabel_1 = new JLabel("Name:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -71,7 +72,9 @@ public class JPanelCategoryAdd extends JPanel {
 		jtextFieldName.setColumns(10);
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
+		flowLayout_1.setVgap(10);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel_3);
 
@@ -107,6 +110,7 @@ public class JPanelCategoryAdd extends JPanel {
 		panel_3.add(jbuttonCancel);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 255, 255));
 		add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 

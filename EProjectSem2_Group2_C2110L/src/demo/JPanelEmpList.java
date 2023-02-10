@@ -11,7 +11,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.util.List;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
@@ -19,10 +18,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
-
 import org.mindrot.jbcrypt.BCrypt;
 
 import entities.Borrow;
@@ -111,7 +107,7 @@ public class JPanelEmpList extends JPanel {
 		lblNewLabel.setIcon(new ImageIcon(JPanelEmpList.class.getResource("/resources/images/icons8-staff-52.png")));
 		lblNewLabel.setForeground(new Color(255, 51, 51));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		panel_head.add(lblNewLabel);
 
 		panel_2 = new JPanel();

@@ -2,11 +2,8 @@ package demo;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
@@ -14,74 +11,46 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 
-import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-
-import com.toedter.calendar.JDateChooser;
-
-import entities.Author;
 import entities.Book;
-import entities.Book_Author;
-import entities.Book_Category;
 import entities.Borrow;
 import entities.BorrowDetail;
 import entities.Borrowed;
-import entities.Category;
 import entities.Customer;
 import entities.Employee;
-import models.AuthorModel;
 import models.BookModel;
-import models.Book_AuthorModel;
-import models.Book_CategoryModel;
 import models.BorrowDetailModel;
 import models.BorrowModel;
 import models.BorrowedModel;
-import models.CategoryModel;
 import models.CustomerModel;
 import models.EmployeeModel;
 
-import javax.swing.JTextArea;
-import javax.swing.JCheckBox;
 import java.awt.Dimension;
 import java.awt.Component;
-import javax.swing.SwingConstants;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.awt.ComponentOrientation;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.plaf.UIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.border.EtchedBorder;
+import javax.swing.table.TableCellRenderer;
+
+import demo.JPanelBorrowedList.HeaderRenderer;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
+import javax.swing.border.LineBorder;
 
 public class JPanelBorrowedAdd extends JPanel {
 	private JPanel jpanelRight;
@@ -131,14 +100,15 @@ public class JPanelBorrowedAdd extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 200));
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(255, 255, 255));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
+		fl_panel.setVgap(15);
 		fl_panel.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Borrowed");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -146,6 +116,7 @@ public class JPanelBorrowedAdd extends JPanel {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelBorrowTicket = new JPanel();
+		jpanelBorrowTicket.setBackground(new Color(255, 255, 255));
 		jpanelBorrowTicket
 				.setBorder(new TitledBorder(null, "Borrow Ticket", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		jpanelBorrowTicket.setPreferredSize(new Dimension(800, 650));
@@ -221,10 +192,12 @@ public class JPanelBorrowedAdd extends JPanel {
 		jpanelBorrowTicket.add(lblNewLabel_1_6);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
 		scrollPane.setBounds(400, 95, 424, 352);
 		jpanelBorrowTicket.add(scrollPane);
 
 		jtableBorrowBook = new JTable();
+		jtableBorrowBook.setBackground(new Color(255, 255, 255));
 		jtableBorrowBook.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(jtableBorrowBook);
 
@@ -466,6 +439,11 @@ public class JPanelBorrowedAdd extends JPanel {
 		jtableBorrowBook.setModel(defaultTableModel);
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
 		jtableBorrowBook.setRowHeight(50);
+		
+		HeaderRenderer header = new HeaderRenderer(jtableBorrowBook.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableBorrowBook.getModel().getColumnCount(); i++) {
+			jtableBorrowBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
 
 	private class ImageCellRender extends DefaultTableCellRenderer {
@@ -480,6 +458,23 @@ public class JPanelBorrowedAdd extends JPanel {
 			jlabel.setIcon(imageIcon);
 			jlabel.setHorizontalAlignment(jlabel.CENTER);
 			return jlabel;
+		}
+	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(102, 102, 255));
+			return comp;
 		}
 	}
 }

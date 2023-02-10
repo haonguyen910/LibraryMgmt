@@ -37,14 +37,11 @@ import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
 import java.awt.Dimension;
 import java.awt.Component;
-import javax.swing.SwingConstants;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.awt.ComponentOrientation;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import javax.swing.JScrollPane;
@@ -87,14 +84,15 @@ public class JPanelBookAdd extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 200));
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(255, 255, 255));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
 		fl_panel.setAlignment(FlowLayout.LEFT);
+		fl_panel.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Book");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -102,6 +100,7 @@ public class JPanelBookAdd extends JPanel {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(null);
 

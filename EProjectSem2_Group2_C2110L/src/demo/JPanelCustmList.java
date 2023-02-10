@@ -14,7 +14,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -31,8 +30,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
-
-import demo.JPanelEmpList.HeaderRenderer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -79,13 +76,13 @@ public class JPanelCustmList extends JPanel {
 		lblNewLabel.setIcon(new ImageIcon(JPanelCustmList.class.getResource("/resources/images/icons8-user-50.png")));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		panel_head_1.add(lblNewLabel);
 
 		JPanel panel_head_2 = new JPanel();
 		panel_head_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head_2.getLayout();
-		flowLayout_1.setVgap(30);
+		flowLayout_1.setVgap(20);
 		flowLayout_1.setHgap(15);
 		add(panel_head_2);
 

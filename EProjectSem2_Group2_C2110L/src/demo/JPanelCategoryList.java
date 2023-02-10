@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -24,10 +25,14 @@ import java.util.Map;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
-import entities.Author;
+import demo.JPanelAuthorList.HeaderRenderer;
 import entities.Category;
 import models.CategoryModel;
+import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.UIResource;
 
 public class JPanelCategoryList extends JPanel {
 //	JPanel Right Of JFrameMain
@@ -43,10 +48,6 @@ public class JPanelCategoryList extends JPanel {
 
 //	Global Variable
 	CategoryModel categoryModel = new CategoryModel();
-	private JPanel panel_4;
-	private JLabel lblNewLabel_2;
-	private JPanel panel_5;
-	private JLabel lblNewLabel_3;
 
 	/**
 	 * Create the panel.
@@ -57,19 +58,22 @@ public class JPanelCategoryList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
+		flowLayout.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Category List");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lblNewLabel = new JLabel(" Category List");
+		lblNewLabel.setIcon(new ImageIcon(JPanelCategoryList.class.getResource("/resources/images/icons8-diversity-52.png")));
+		lblNewLabel.setForeground(new Color(255, 51, 51));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		flowLayout_1.setVgap(15);
+		flowLayout_1.setHgap(10);
 		add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("Keyword:");
@@ -109,25 +113,18 @@ public class JPanelCategoryList extends JPanel {
 		jbuttonCancel.setMaximumSize(new Dimension(100, 30));
 		jbuttonCancel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(jbuttonCancel);
-		
-		panel_4 = new JPanel();
-		add(panel_4);
-		
-		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setPreferredSize(new Dimension(60, 30));
-		lblNewLabel_2.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_2.setMaximumSize(new Dimension(60, 30));
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_4.add(lblNewLabel_2);
 
 		JPanel panel_2 = new JPanel();
 		add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBackground(new Color(255, 255, 255));
+		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 
 		jtableCategory = new JTable();
+		jtableCategory.setSelectionBackground(new Color(255, 51, 51));
 		jtableCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableCategory.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtableCategory.addMouseListener(new MouseAdapter() {
@@ -137,20 +134,12 @@ public class JPanelCategoryList extends JPanel {
 			}
 		});
 		scrollPane.setViewportView(jtableCategory);
-		
-		panel_5 = new JPanel();
-		add(panel_5);
-		
-		lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setPreferredSize(new Dimension(60, 30));
-		lblNewLabel_3.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_3.setMaximumSize(new Dimension(60, 30));
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_5.add(lblNewLabel_3);
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		flowLayout_2.setVgap(10);
+		flowLayout_2.setHgap(10);
 		add(panel_3);
 
 		jbuttonAdd = new JButton("Add");
@@ -283,6 +272,27 @@ public class JPanelCategoryList extends JPanel {
 		jtableCategory.setModel(defaultTableModel);
 		jtableCategory.getTableHeader().setReorderingAllowed(false);
 		jtableCategory.setRowHeight(30);
+		
+		HeaderRenderer header = new HeaderRenderer(jtableCategory.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableCategory.getModel().getColumnCount(); i++) {
+			jtableCategory.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
 
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(102, 102, 255));
+			return comp;
+		}
+	}
 }
