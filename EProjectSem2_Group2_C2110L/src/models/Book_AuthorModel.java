@@ -61,6 +61,32 @@ public class Book_AuthorModel {
 		return result;
 	}
 
+	public Book_Author findOneByAuthorId(int id_author) {
+		Book_Author book_Author = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM book_author WHERE id_author = ?");
+
+			preparedStatement.setInt(1, id_author);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				book_Author = new Book_Author();
+				book_Author.setId_author(resultSet.getInt("id_author"));
+				book_Author.setId_book(resultSet.getString("id_book"));
+				book_Author.setId(resultSet.getInt("id"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			book_Author = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return book_Author;
+	}
+
 	public Book_Author find(String id_book, int id_author) {
 		Book_Author book_Author = null;
 		try {

@@ -32,6 +32,7 @@ import models.AuthorModel;
 import models.BookModel;
 import models.Book_AuthorModel;
 import models.Book_CategoryModel;
+import models.BorrowDetailModel;
 import models.CategoryModel;
 
 import javax.swing.JButton;
@@ -59,12 +60,6 @@ public class JPanelBookList extends JPanel {
 	private JButton jbuttonAdd;
 	private JButton jbuttonDelete;
 	private JButton jbuttonEdit;
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	BookModel bookModel = new BookModel();
-	AuthorModel authorModel = new AuthorModel();
-	CategoryModel categoryModel = new CategoryModel();
-	Book_AuthorModel book_AuthorModel = new Book_AuthorModel();
-	Book_CategoryModel book_CategoryModel = new Book_CategoryModel();
 	private JPanel panel_6;
 	private JPanel panel_7;
 	private JPanel panel_8;
@@ -81,6 +76,14 @@ public class JPanelBookList extends JPanel {
 	private JTextField jtextFieldDetailStatus;
 	private JLabel jlabelPhoto;
 	private JTextArea jtextAreaDetailDescription;
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	BookModel bookModel = new BookModel();
+	AuthorModel authorModel = new AuthorModel();
+	CategoryModel categoryModel = new CategoryModel();
+	Book_AuthorModel book_AuthorModel = new Book_AuthorModel();
+	Book_CategoryModel book_CategoryModel = new Book_CategoryModel();
+	BorrowDetailModel borrowDetailModel = new BorrowDetailModel();
+	
 
 	/**
 	 * Create the panel.
@@ -448,8 +451,6 @@ public class JPanelBookList extends JPanel {
 	}
 
 	private void jtableBook_mouseClicked(MouseEvent e) {
-		jbuttonEdit.setEnabled(true);
-		jbuttonDelete.setEnabled(true);
 
 		int selectedRow = jtableBook.getSelectedRow();
 		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
@@ -470,6 +471,13 @@ public class JPanelBookList extends JPanel {
 		ImageIcon photo = new ImageIcon(new ImageIcon(imageData).getImage().getScaledInstance(jlabelPhoto.getWidth(),
 				jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
 		jlabelPhoto.setIcon(photo);
+		
+		if(borrowDetailModel.findOneByBookId(callNumber) != null) {
+			jbuttonDelete.setEnabled(false);
+		}else {
+			jbuttonDelete.setEnabled(true);
+		}
+		jbuttonEdit.setEnabled(true);
 
 	}
 

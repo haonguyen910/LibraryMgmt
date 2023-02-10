@@ -61,6 +61,32 @@ public class Book_CategoryModel {
 		return result;
 	}
 
+	public Book_Category findByCategoryId(int id_category) {
+		Book_Category book_Category = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM book_Category WHERE id_category = ?");
+
+			preparedStatement.setInt(1, id_category);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				book_Category = new Book_Category();
+				book_Category.setId_category(resultSet.getInt("id_category"));
+				book_Category.setId_book(resultSet.getString("id_book"));
+				book_Category.setId(resultSet.getInt("id"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			book_Category = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return book_Category;
+	}
+
 	public Book_Category find(String id_book, int id_category) {
 		Book_Category book_Category = null;
 		try {

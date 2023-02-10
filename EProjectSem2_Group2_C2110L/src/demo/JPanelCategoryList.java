@@ -29,6 +29,7 @@ import javax.swing.table.TableCellRenderer;
 
 import demo.JPanelAuthorList.HeaderRenderer;
 import entities.Category;
+import models.Book_CategoryModel;
 import models.CategoryModel;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
@@ -48,6 +49,7 @@ public class JPanelCategoryList extends JPanel {
 
 //	Global Variable
 	CategoryModel categoryModel = new CategoryModel();
+	Book_CategoryModel book_CategoryModel = new Book_CategoryModel();
 
 	/**
 	 * Create the panel.
@@ -64,7 +66,8 @@ public class JPanelCategoryList extends JPanel {
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel(" Category List");
-		lblNewLabel.setIcon(new ImageIcon(JPanelCategoryList.class.getResource("/resources/images/icons8-diversity-52.png")));
+		lblNewLabel.setIcon(
+				new ImageIcon(JPanelCategoryList.class.getResource("/resources/images/icons8-diversity-52.png")));
 		lblNewLabel.setForeground(new Color(255, 51, 51));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		panel.add(lblNewLabel);
@@ -203,8 +206,15 @@ public class JPanelCategoryList extends JPanel {
 	}
 
 	private void jtableCategory_mouseClicked(MouseEvent e) {
+		int selectedRow = jtableCategory.getSelectedRow();
+		int id = Integer.parseInt(jtableCategory.getValueAt(selectedRow, 0).toString());
 		jbuttonEdit.setEnabled(true);
-		jbuttonDelete.setEnabled(true);
+
+		if (book_CategoryModel.findByCategoryId(id) != null) {
+			jbuttonDelete.setEnabled(false);
+		} else {
+			jbuttonDelete.setEnabled(true);
+		}
 	}
 
 	private void jbuttonAdd_actionPerformed(ActionEvent e) {
@@ -272,16 +282,16 @@ public class JPanelCategoryList extends JPanel {
 		jtableCategory.setModel(defaultTableModel);
 		jtableCategory.getTableHeader().setReorderingAllowed(false);
 		jtableCategory.setRowHeight(30);
-		
+
 		HeaderRenderer header = new HeaderRenderer(jtableCategory.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableCategory.getModel().getColumnCount(); i++) {
 			jtableCategory.getColumnModel().getColumn(i).setHeaderRenderer(header);
 		}
 	}
-	
+
 	public class HeaderRenderer implements UIResource, TableCellRenderer {
 		private TableCellRenderer original;
-		
+
 		public HeaderRenderer(TableCellRenderer original) {
 			this.original = original;
 		}

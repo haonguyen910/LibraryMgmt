@@ -298,7 +298,7 @@ public class JPanelBorrowList extends JPanel {
 				jbuttonSetBorrowed_actionPerformed(e);
 			}
 		});
-		jbuttonSetBorrowed.setIcon(new ImageIcon(JPanelBorrowList.class.getResource("/resources/borrowed.png")));
+
 		jbuttonSetBorrowed.setPreferredSize(new Dimension(150, 30));
 		jbuttonSetBorrowed.setMinimumSize(new Dimension(150, 30));
 		jbuttonSetBorrowed.setMaximumSize(new Dimension(150, 30));

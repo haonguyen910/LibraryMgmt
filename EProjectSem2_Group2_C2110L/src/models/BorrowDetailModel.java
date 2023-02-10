@@ -67,6 +67,34 @@ public class BorrowDetailModel {
 		return result;
 	}
 
+	public BorrowDetail findOneByBookId(String callNumber) {
+		BorrowDetail borrowDetail = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT * FROM borrow_detail WHERE id_book = ?");
+
+			preparedStatement.setString(1, callNumber);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				borrowDetail = new BorrowDetail();
+				borrowDetail.setId(resultSet.getInt("id"));
+				borrowDetail.setId_book(resultSet.getString("id_book"));
+				borrowDetail.setId_borrow(resultSet.getInt("id_borrow"));
+				borrowDetail.setQuantity(resultSet.getInt("quantity"));
+				borrowDetail.setPrice(resultSet.getDouble("price"));
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			borrowDetail = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return borrowDetail;
+	}
+
 //	List
 	public List<BorrowDetail> findByBorrowId(int id) {
 		List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
