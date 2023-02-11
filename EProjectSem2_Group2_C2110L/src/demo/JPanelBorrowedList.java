@@ -40,13 +40,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
 
-import demo.JPanelDashBoard.HeaderRenderer;
-
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.border.LineBorder;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EtchedBorder;
 
 public class JPanelBorrowedList extends JPanel {
 	private JPanel jpanelRight;
@@ -94,7 +93,7 @@ public class JPanelBorrowedList extends JPanel {
 		flowLayout_1.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Check-out Record");
+		JLabel lblNewLabel = new JLabel("Returned List");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
@@ -226,7 +225,7 @@ public class JPanelBorrowedList extends JPanel {
 
 		jpanelDetail = new JPanel();
 		jpanelDetail.setBorder(
-				new TitledBorder(null, "Borrow Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Issue Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jpanelDetail.setMinimumSize(new Dimension(400, 400));
 		jpanelDetail.setPreferredSize(new Dimension(400, 400));
 		panel_2.add(jpanelDetail, BorderLayout.WEST);

@@ -101,6 +101,7 @@ public class JPanelEmpList extends JPanel {
 		JPanel panel_head = new JPanel();
 		panel_head.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head.getLayout();
+		flowLayout_1.setVgap(15);
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("  Employee List");

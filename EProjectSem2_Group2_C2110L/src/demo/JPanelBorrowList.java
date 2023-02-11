@@ -47,6 +47,7 @@ import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EtchedBorder;
 
 public class JPanelBorrowList extends JPanel {
 	private JPanel jpanelRight;
@@ -93,9 +94,10 @@ public class JPanelBorrowList extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
+		flowLayout_1.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Borrow List");
+		JLabel lblNewLabel = new JLabel("Issue Book");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
@@ -220,7 +222,7 @@ public class JPanelBorrowList extends JPanel {
 
 		jpanelDetail = new JPanel();
 		jpanelDetail.setBorder(
-				new TitledBorder(null, "Borrow Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Issue Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jpanelDetail.setMinimumSize(new Dimension(400, 400));
 		jpanelDetail.setPreferredSize(new Dimension(400, 400));
 		panel_2.add(jpanelDetail, BorderLayout.WEST);
@@ -293,7 +295,7 @@ public class JPanelBorrowList extends JPanel {
 		});
 		panel_3.add(jbuttonEdit);
 
-		jbuttonSetBorrowed = new JButton("Set Borrowed");
+		jbuttonSetBorrowed = new JButton("Set Returned");
 		jbuttonSetBorrowed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonSetBorrowed_actionPerformed(e);

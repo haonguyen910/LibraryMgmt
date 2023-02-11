@@ -20,7 +20,6 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
@@ -198,7 +197,7 @@ public class JFrameMain extends JFrame {
 		});
 		jpanelLeft.add(jbuttonCategory);
 
-		jbuttonBorrowList = new JButton("   Borrow");
+		jbuttonBorrowList = new JButton("   Issue Book");
 		jbuttonBorrowList.setHorizontalAlignment(SwingConstants.LEFT);
 		jbuttonBorrowList.setMaximumSize(new Dimension(200, 60));
 		jbuttonBorrowList.setMinimumSize(new Dimension(90, 50));
@@ -215,7 +214,7 @@ public class JFrameMain extends JFrame {
 				.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Sell_26px.png")));
 		jpanelLeft.add(jbuttonBorrowList);
 
-		jbuttonBorrowedList = new JButton("   Borrowed");
+		jbuttonBorrowedList = new JButton("   Returned List");
 		jbuttonBorrowedList.setHorizontalAlignment(SwingConstants.LEFT);
 		jbuttonBorrowedList.setMaximumSize(new Dimension(200, 60));
 		jbuttonBorrowedList.setBorderPainted(false);
