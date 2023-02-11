@@ -72,18 +72,16 @@ public class JPanelRecord extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBackground(new Color(52, 52, 52));
 		add(panel_1);
 
 		JLabel lblNewLabel = new JLabel("  Issue Register ");
-		lblNewLabel.setIcon(new ImageIcon(JPanelRecord.class.getResource("/resources/images/icons8_Edit_Property_50px.png")));
 		lblNewLabel.setBackground(new Color(51, 51, 51));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_1.add(lblNewLabel);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
 		flowLayout.setVgap(25);
 		add(panel_2);
@@ -94,7 +92,6 @@ public class JPanelRecord extends JPanel {
 
 		jdateChooserStart = new JDateChooser();
 		jdateChooserStart.setOpaque(false);
-		jdateChooserStart.setBackground(new Color(255, 255, 255));
 		jdateChooserStart.setDateFormatString("yyyy-MM-dd");
 		jdateChooserStart.setToolTipText("select");
 		jdateChooserStart.setPreferredSize(new Dimension(150, 30));
@@ -147,7 +144,6 @@ public class JPanelRecord extends JPanel {
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
 		flowLayout_1.setHgap(10);
 		flowLayout_1.setVgap(15);
-		panel.setBackground(new Color(255, 255, 255));
 		add(panel);
 
 		jbuttonFirst = new JButton("First");
@@ -205,12 +201,10 @@ public class JPanelRecord extends JPanel {
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 
 		jtableRecord = new JTable();
-		jtableRecord.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		jtableRecord.setSelectionBackground(new Color(255, 51, 51));
+		jtableRecord.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		scrollPane.setViewportView(jtableRecord);
 		
 		panel_4 = new JPanel();
-		panel_4.setBackground(new Color(255, 255, 255));
 		add(panel_4);
 		
 		jbuttonPrint = new JButton("Print");
@@ -405,7 +399,7 @@ public class JPanelRecord extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 68, 98));
 			return comp;
 		}
 	}

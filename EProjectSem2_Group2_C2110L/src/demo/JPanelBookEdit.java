@@ -27,6 +27,7 @@ import entities.Book;
 import entities.Book_Author;
 import entities.Book_Category;
 import entities.Category;
+import entities.Employee;
 import models.AuthorModel;
 import models.BookModel;
 import models.Book_AuthorModel;
@@ -41,6 +42,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.BorderLayout;
@@ -86,6 +88,8 @@ public class JPanelBookEdit extends JPanel {
 	private JLabel lblNewLabel_2;
 	private JTextField jtextFieldAuthor;
 	private JTextField jtextFieldCategory;
+	private Map<String, Object> dataPut;
+	private Employee employee;
 
 	/**
 	 * Create the panel.
@@ -97,25 +101,22 @@ public class JPanelBookEdit extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 200));
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
 		fl_panel.setHgap(15);
 		fl_panel.setVgap(15);
-		fl_panel.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Edit Book");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(null);
 
@@ -212,7 +213,7 @@ public class JPanelBookEdit extends JPanel {
 				jcomboBoxCategory_actionPerformed(e);
 			}
 		});
-		jcomboBoxCategory.setBounds(577, 435, 200, 30);
+		jcomboBoxCategory.setBounds(632, 435, 200, 30);
 		panel_2.add(jcomboBoxCategory);
 
 		jcomboBoxAuthor = new JComboBox();
@@ -222,43 +223,43 @@ public class JPanelBookEdit extends JPanel {
 				jcomboBoxAuthor_actionPerformed(e);
 			}
 		});
-		jcomboBoxAuthor.setBounds(577, 395, 200, 30);
+		jcomboBoxAuthor.setBounds(632, 395, 200, 30);
 		panel_2.add(jcomboBoxAuthor);
 
 		jdateChooserCreated = new JDateChooser();
 		jdateChooserCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jdateChooserCreated.setBounds(351, 354, 200, 30);
+		jdateChooserCreated.setBounds(351, 354, 243, 30);
 		panel_2.add(jdateChooserCreated);
 
 		jtextFieldPrice = new JTextField();
 		jtextFieldPrice.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldPrice.setColumns(10);
-		jtextFieldPrice.setBounds(351, 312, 200, 30);
+		jtextFieldPrice.setColumns(25);
+		jtextFieldPrice.setBounds(351, 312, 243, 30);
 		panel_2.add(jtextFieldPrice);
 
 		jtextFieldQuantity = new JTextField();
 		jtextFieldQuantity.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldQuantity.setColumns(10);
-		jtextFieldQuantity.setBounds(351, 273, 200, 30);
+		jtextFieldQuantity.setColumns(25);
+		jtextFieldQuantity.setBounds(351, 273, 243, 30);
 		panel_2.add(jtextFieldQuantity);
 
 		jtextFieldTitle = new JTextField();
 		jtextFieldTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldTitle.setColumns(10);
-		jtextFieldTitle.setBounds(351, 111, 200, 30);
+		jtextFieldTitle.setColumns(25);
+		jtextFieldTitle.setBounds(351, 111, 243, 30);
 		panel_2.add(jtextFieldTitle);
 
 		jtextFieldISBN = new JTextField();
 		jtextFieldISBN.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldISBN.setColumns(10);
-		jtextFieldISBN.setBounds(351, 70, 200, 30);
+		jtextFieldISBN.setColumns(25);
+		jtextFieldISBN.setBounds(351, 70, 243, 30);
 		panel_2.add(jtextFieldISBN);
 
 		jtextFieldCallNumber = new JTextField();
 		jtextFieldCallNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldCallNumber.setEditable(false);
-		jtextFieldCallNumber.setColumns(10);
-		jtextFieldCallNumber.setBounds(351, 30, 200, 30);
+		jtextFieldCallNumber.setColumns(25);
+		jtextFieldCallNumber.setBounds(351, 30, 243, 30);
 		panel_2.add(jtextFieldCallNumber);
 
 		jbuttonAddAuthor = new JButton("Add Author");
@@ -268,7 +269,7 @@ public class JPanelBookEdit extends JPanel {
 			}
 		});
 		jbuttonAddAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonAddAuthor.setBounds(814, 394, 120, 30);
+		jbuttonAddAuthor.setBounds(869, 394, 120, 30);
 		panel_2.add(jbuttonAddAuthor);
 
 		jbuttonAddCategory = new JButton("Add Category");
@@ -278,41 +279,43 @@ public class JPanelBookEdit extends JPanel {
 			}
 		});
 		jbuttonAddCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonAddCategory.setBounds(814, 434, 120, 30);
+		jbuttonAddCategory.setBounds(869, 434, 120, 30);
 		panel_2.add(jbuttonAddCategory);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(351, 156, 200, 100);
+		scrollPane.setBounds(351, 156, 243, 100);
 		panel_2.add(scrollPane);
 
 		jtextAreaDescription = new JTextArea();
+		jtextAreaDescription.setColumns(25);
 		jtextAreaDescription.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		scrollPane.setViewportView(jtextAreaDescription);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(565, 30, 398, 111);
+		scrollPane_1.setBounds(626, 28, 398, 111);
 		panel_2.add(scrollPane_1);
 
 		txtrIsbnNnnnnnn = new JTextArea();
+		txtrIsbnNnnnnnn.setEditable(false);
 		txtrIsbnNnnnnnn.setText(
 				"*) ISBN: NNN-NNNN\r\n- 3 characters is ORDINAL NUMBER of the CATEGORY\r\n- 4 characters is ORDINAL NUMBER of the BOOK");
 		scrollPane_1.setViewportView(txtrIsbnNnnnnnn);
 
 		lblNewLabel_2 = new JLabel("NOTE:");
-		lblNewLabel_2.setForeground(new Color(255, 0, 0));
+		lblNewLabel_2.setForeground(new Color(128, 0, 0));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
 		scrollPane_1.setColumnHeaderView(lblNewLabel_2);
 
 		jtextFieldAuthor = new JTextField();
 		jtextFieldAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldAuthor.setColumns(10);
-		jtextFieldAuthor.setBounds(351, 394, 200, 30);
+		jtextFieldAuthor.setColumns(25);
+		jtextFieldAuthor.setBounds(351, 394, 243, 30);
 		panel_2.add(jtextFieldAuthor);
 
 		jtextFieldCategory = new JTextField();
 		jtextFieldCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldCategory.setColumns(10);
-		jtextFieldCategory.setBounds(351, 435, 200, 30);
+		jtextFieldCategory.setColumns(25);
+		jtextFieldCategory.setBounds(351, 435, 243, 30);
 		panel_2.add(jtextFieldCategory);
 	}
 
@@ -328,6 +331,9 @@ public class JPanelBookEdit extends JPanel {
 
 //	Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
 
 		String callNumber = this.data.get("callNumber").toString();
 		book = bookModel.find(callNumber);
@@ -415,7 +421,7 @@ public class JPanelBookEdit extends JPanel {
 				JOptionPane.showMessageDialog(this, "Success");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
-				JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight);
+				JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelBookList);
 				jPanelBookList.setVisible(true);
 			} else {
@@ -429,7 +435,7 @@ public class JPanelBookEdit extends JPanel {
 	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight);
+		JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBookList);
 		jPanelBookList.setVisible(true);
 	}
@@ -437,7 +443,7 @@ public class JPanelBookEdit extends JPanel {
 	public void jbuttonAddAuthor_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight);
+		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight, dataPut);
 		jpanelRight.add(jPanelAuthorAdd);
 		jPanelAuthorAdd.setVisible(true);
 	}
@@ -445,7 +451,7 @@ public class JPanelBookEdit extends JPanel {
 	public void jbuttonAddCategory_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelCategoryAdd jPanelCategoryAdd = new JPanelCategoryAdd(jpanelRight);
+		JPanelCategoryAdd jPanelCategoryAdd = new JPanelCategoryAdd(jpanelRight, dataPut);
 		jpanelRight.add(jPanelCategoryAdd);
 		jPanelCategoryAdd.setVisible(true);
 	}

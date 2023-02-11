@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 
 import com.toedter.calendar.JDateChooser;
 
+import demo.JPanelBorrowedAdd.HeaderRenderer;
 import entities.Author;
 import entities.Book;
 import entities.Book_Author;
@@ -56,7 +57,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.awt.ComponentOrientation;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
@@ -65,10 +68,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.AncestorListener;
+import javax.swing.plaf.UIResource;
 import javax.swing.event.AncestorEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -85,16 +90,11 @@ public class JPanelBorrowAdd extends JPanel {
 	private JTextField jtextFieldBorrowCreated;
 	private JTextField jtextFieldBorrowDueDate;
 	private JTextField jtextFieldBorrowDeposit;
-	private JTextField jtextFieldEmployee;
-	private JTable jtableEmployee;
-	private JButton jbuttonClearEmployee;
-	private JButton jbuttonSearchEmployee;
 	private JTextField jtextFieldCustomer;
 	private JTable jtableCustomer;
 	private JTextField jtextFieldBook;
 	private JTable jtableBook;
 	private JTable jtableBorrowBook;
-	private JComboBox jcomboBoxEmployee;
 	private JComboBox jcomboBoxCustomer;
 	private JComboBox jcomboBoxBook;
 	private JButton jbuttonSearchCustomer;
@@ -103,7 +103,6 @@ public class JPanelBorrowAdd extends JPanel {
 	private JButton jbuttonClearBook;
 	private JButton jbuttonAddBookList;
 	private JButton jbuttonRemoveBookList;
-	private JButton jbuttonAddCustomer;
 	private JButton jbuttonSave;
 //	Global Variable
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -122,6 +121,8 @@ public class JPanelBorrowAdd extends JPanel {
 	private List<BorrowDetail> borrowDetailListTemp;
 	private List<Book> bookBorrowList;
 	private JButton jbuttonCancel;
+	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
 
 	/**
 	 * Create the panel.
@@ -133,14 +134,13 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 200));
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
-		fl_panel.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Borrow");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -157,26 +157,26 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JLabel lblNewLabel_1_1 = new JLabel("Employee:");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(35, 60, 90, 13);
+		lblNewLabel_1_1.setBounds(35, 35, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_1);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("Customer:");
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_1.setBounds(35, 100, 90, 13);
+		lblNewLabel_1_1_1.setBounds(35, 75, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_1_1);
 
 		jtextFieldBorrowEmployee = new JTextField();
 		jtextFieldBorrowEmployee.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowEmployee.setEditable(false);
 		jtextFieldBorrowEmployee.setColumns(10);
-		jtextFieldBorrowEmployee.setBounds(135, 60, 200, 30);
+		jtextFieldBorrowEmployee.setBounds(135, 35, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowEmployee);
 
 		jtextFieldBorrowCustomer = new JTextField();
 		jtextFieldBorrowCustomer.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowCustomer.setEditable(false);
 		jtextFieldBorrowCustomer.setColumns(10);
-		jtextFieldBorrowCustomer.setBounds(135, 100, 200, 30);
+		jtextFieldBorrowCustomer.setBounds(135, 75, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowCustomer);
 
 		jtextFieldBorrowCreated = new JTextField();
@@ -184,17 +184,17 @@ public class JPanelBorrowAdd extends JPanel {
 		jtextFieldBorrowCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowCreated.setEditable(false);
 		jtextFieldBorrowCreated.setColumns(10);
-		jtextFieldBorrowCreated.setBounds(135, 169, 200, 30);
+		jtextFieldBorrowCreated.setBounds(135, 144, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowCreated);
 
 		JLabel lblNewLabel_1_2 = new JLabel("Created Date:");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(35, 169, 90, 13);
+		lblNewLabel_1_2.setBounds(35, 144, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_2);
 
 		JLabel lblNewLabel_1_3 = new JLabel("Due Date:");
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_3.setBounds(35, 216, 90, 13);
+		lblNewLabel_1_3.setBounds(35, 191, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_3);
 
 		jtextFieldBorrowDueDate = new JTextField();
@@ -202,28 +202,28 @@ public class JPanelBorrowAdd extends JPanel {
 		jtextFieldBorrowDueDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowDueDate.setEditable(false);
 		jtextFieldBorrowDueDate.setColumns(10);
-		jtextFieldBorrowDueDate.setBounds(135, 209, 200, 30);
+		jtextFieldBorrowDueDate.setBounds(135, 184, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowDueDate);
 
 		jtextFieldBorrowDeposit = new JTextField();
 		jtextFieldBorrowDeposit.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowDeposit.setEditable(false);
 		jtextFieldBorrowDeposit.setColumns(10);
-		jtextFieldBorrowDeposit.setBounds(135, 251, 200, 30);
+		jtextFieldBorrowDeposit.setBounds(135, 226, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowDeposit);
 
 		JLabel lblNewLabel_1_4 = new JLabel("Deposit:");
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_4.setBounds(35, 254, 90, 13);
+		lblNewLabel_1_4.setBounds(35, 229, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_4);
 
 		JLabel lblNewLabel_1_6 = new JLabel("Book List");
-		lblNewLabel_1_6.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_6.setBounds(10, 335, 90, 13);
+		lblNewLabel_1_6.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1_6.setBounds(10, 290, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_6);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 360, 380, 250);
+		scrollPane.setBounds(10, 315, 380, 250);
 		jpanelBorrowTicket.add(scrollPane);
 
 		jtableBorrowBook = new JTable();
@@ -246,7 +246,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonSave.setMinimumSize(new Dimension(100, 30));
 		jbuttonSave.setMaximumSize(new Dimension(100, 30));
 		jbuttonSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonSave.setBounds(10, 669, 100, 30);
+		jbuttonSave.setBounds(10, 625, 100, 30);
 		jpanelBorrowTicket.add(jbuttonSave);
 
 		jbuttonCancel = new JButton("Cancel");
@@ -259,7 +259,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonCancel.setMinimumSize(new Dimension(100, 30));
 		jbuttonCancel.setMaximumSize(new Dimension(100, 30));
 		jbuttonCancel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jbuttonCancel.setBounds(118, 669, 100, 30);
+		jbuttonCancel.setBounds(118, 625, 100, 30);
 		jpanelBorrowTicket.add(jbuttonCancel);
 
 		jbuttonRemoveBookList = new JButton("Remove Book List");
@@ -268,7 +268,7 @@ public class JPanelBorrowAdd extends JPanel {
 				jbuttonRemoveBookList_actionPerformed(e);
 			}
 		});
-		jbuttonRemoveBookList.setBounds(240, 624, 150, 30);
+		jbuttonRemoveBookList.setBounds(240, 575, 150, 30);
 		jpanelBorrowTicket.add(jbuttonRemoveBookList);
 		jbuttonRemoveBookList.setPreferredSize(new Dimension(150, 30));
 		jbuttonRemoveBookList.setMinimumSize(new Dimension(150, 30));
@@ -279,85 +279,9 @@ public class JPanelBorrowAdd extends JPanel {
 		panel_1.add(jpanelSearch, BorderLayout.CENTER);
 		jpanelSearch.setLayout(new BoxLayout(jpanelSearch, BoxLayout.Y_AXIS));
 
-		JPanel jpanelEmployee = new JPanel();
-		jpanelEmployee.setFont(new Font("Tahoma", Font.BOLD, 20));
-		jpanelEmployee.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		jpanelSearch.add(jpanelEmployee);
-		jpanelEmployee.setLayout(new BoxLayout(jpanelEmployee, BoxLayout.Y_AXIS));
-
-		JPanel panel_4 = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) panel_4.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		jpanelEmployee.add(panel_4);
-
-		JLabel lblNewLabel_1_1_2 = new JLabel("Employee:");
-		lblNewLabel_1_1_2.setPreferredSize(new Dimension(100, 30));
-		lblNewLabel_1_1_2.setMinimumSize(new Dimension(100, 30));
-		lblNewLabel_1_1_2.setMaximumSize(new Dimension(100, 30));
-		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_4.add(lblNewLabel_1_1_2);
-
-		jtextFieldEmployee = new JTextField();
-		jtextFieldEmployee.setMinimumSize(new Dimension(200, 30));
-		jtextFieldEmployee.setPreferredSize(new Dimension(200, 30));
-		jtextFieldEmployee.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_4.add(jtextFieldEmployee);
-		jtextFieldEmployee.setColumns(20);
-
-		jcomboBoxEmployee = new JComboBox();
-		jcomboBoxEmployee.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jcomboBoxEmployee.setPreferredSize(new Dimension(100, 30));
-		jcomboBoxEmployee.setMinimumSize(new Dimension(100, 30));
-		panel_4.add(jcomboBoxEmployee);
-
-		jbuttonSearchEmployee = new JButton("Search");
-		jbuttonSearchEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonSearchEmployee_actionPerformed(e);
-			}
-		});
-		jbuttonSearchEmployee.setPreferredSize(new Dimension(100, 30));
-		jbuttonSearchEmployee.setMinimumSize(new Dimension(100, 30));
-		jbuttonSearchEmployee.setMaximumSize(new Dimension(100, 30));
-		jbuttonSearchEmployee.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_4.add(jbuttonSearchEmployee);
-
-		jbuttonClearEmployee = new JButton("Clear");
-		jbuttonClearEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jbuttonClearEmployee_actionPerformed(e);
-			}
-		});
-		jbuttonClearEmployee.setPreferredSize(new Dimension(100, 30));
-		jbuttonClearEmployee.setMinimumSize(new Dimension(100, 30));
-		jbuttonClearEmployee.setMaximumSize(new Dimension(100, 30));
-		jbuttonClearEmployee.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_4.add(jbuttonClearEmployee);
-
-		JPanel panel_5 = new JPanel();
-		jpanelEmployee.add(panel_5);
-		panel_5.setLayout(new BorderLayout(0, 0));
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		panel_5.add(scrollPane_1, BorderLayout.CENTER);
-
-		jtableEmployee = new JTable();
-		jtableEmployee.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				jtableEmployee_mouseClicked(e);
-			}
-		});
-		jtableEmployee.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane_1.setViewportView(jtableEmployee);
-
 		JPanel jpanelCustomer = new JPanel();
 		jpanelCustomer.setFont(new Font("Tahoma", Font.BOLD, 16));
-		jpanelCustomer.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Employee Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jpanelCustomer.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jpanelSearch.add(jpanelCustomer);
 		jpanelCustomer.setLayout(new BoxLayout(jpanelCustomer, BoxLayout.Y_AXIS));
 
@@ -377,7 +301,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jtextFieldCustomer.setPreferredSize(new Dimension(200, 30));
 		jtextFieldCustomer.setMinimumSize(new Dimension(200, 30));
 		jtextFieldCustomer.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldCustomer.setColumns(20);
+		jtextFieldCustomer.setColumns(30);
 		panel_6.add(jtextFieldCustomer);
 
 		jcomboBoxCustomer = new JComboBox();
@@ -398,7 +322,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonSearchCustomer.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_6.add(jbuttonSearchCustomer);
 
-		jbuttonClearCustomer = new JButton("Clear");
+		jbuttonClearCustomer = new JButton("Cancel");
 		jbuttonClearCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonClearCustomer_actionPerformed(e);
@@ -449,7 +373,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jtextFieldBook.setPreferredSize(new Dimension(200, 30));
 		jtextFieldBook.setMinimumSize(new Dimension(200, 30));
 		jtextFieldBook.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldBook.setColumns(20);
+		jtextFieldBook.setColumns(30);
 		panel_8.add(jtextFieldBook);
 
 		jcomboBoxBook = new JComboBox();
@@ -470,7 +394,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonSearchBook.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_8.add(jbuttonSearchBook);
 
-		jbuttonClearBook = new JButton("Clear");
+		jbuttonClearBook = new JButton("Cancel");
 		jbuttonClearBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jbuttonClearBook_actionPerformed(e);
@@ -513,19 +437,15 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonAddBookList.setMinimumSize(new Dimension(120, 30));
 		jbuttonAddBookList.setMaximumSize(new Dimension(120, 30));
 		jbuttonAddBookList.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	}
 
-		JPanel panel_12 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_12.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		panel_10.add(panel_12);
-
-		jbuttonAddCustomer = new JButton("Add Customer");
-		jbuttonAddCustomer.setPreferredSize(new Dimension(120, 30));
-		jbuttonAddCustomer.setMinimumSize(new Dimension(120, 30));
-		jbuttonAddCustomer.setMaximumSize(new Dimension(120, 30));
-		jbuttonAddCustomer.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_12.add(jbuttonAddCustomer);
-//		Function
+//	Dynamic Data
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public JPanelBorrowAdd(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
 		initJFrame();
 	}
 
@@ -591,6 +511,10 @@ public class JPanelBorrowAdd extends JPanel {
 
 //	Event Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
+		jtextFieldBorrowEmployee.setText(employee.getName());
 
 		calendarToday = Calendar.getInstance();
 		calendarDueDate = Calendar.getInstance();
@@ -601,14 +525,11 @@ public class JPanelBorrowAdd extends JPanel {
 		jtextFieldBorrowCreated.setText(String.valueOf(simpleDateFormat.format(today)));
 		jtextFieldBorrowDueDate.setText(String.valueOf(simpleDateFormat.format(dueDate)));
 		fillDataToJTableCustomer(customerModel.findAll());
-		fillDataToJTableEmployee(employeeModel.findAll());
 		fillDataToJTableBook(bookModel.findAll());
 		fillDataToJComboBoxCustomer();
-		fillDataToJComboBoxEmployee();
 		fillDataToJComboBoxBook();
 		fillDataToJTableBorrowBookInit();
 
-		jbuttonClearEmployee.setVisible(false);
 		jbuttonClearCustomer.setVisible(false);
 		jbuttonClearBook.setVisible(false);
 		jbuttonRemoveBookList.setEnabled(false);
@@ -706,7 +627,7 @@ public class JPanelBorrowAdd extends JPanel {
 				JOptionPane.showMessageDialog(this, "Success Borrow Detail");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
-				JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
+				JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelBorrowList);
 				jPanelBorrowList.setVisible(true);
 
@@ -721,7 +642,7 @@ public class JPanelBorrowAdd extends JPanel {
 	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight);
+		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
 	}
@@ -730,30 +651,11 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonRemoveBookList.setEnabled(true);
 	}
 
-	private void jtableEmployee_mouseClicked(MouseEvent e) {
-		int selectedRow = jtableEmployee.getSelectedRow();
-		int id = Integer.parseInt(jtableEmployee.getValueAt(selectedRow, 0).toString());
-		employee = employeeModel.find(id);
-		jtextFieldBorrowEmployee.setText(employee.getName());
-	}
-
 	private void jtableCustomer_mouseClicked(MouseEvent e) {
 		int selectedRow = jtableCustomer.getSelectedRow();
 		int id = Integer.parseInt(jtableCustomer.getValueAt(selectedRow, 0).toString());
 		customer = customerModel.find(id);
 		jtextFieldBorrowCustomer.setText(customer.getName());
-	}
-
-	private void jbuttonSearchEmployee_actionPerformed(ActionEvent e) {
-		String keyword = jtextFieldEmployee.getText().trim();
-		String searchType = jcomboBoxEmployee.getSelectedItem().toString();
-		if (searchType.equalsIgnoreCase("ID")) {
-			int id = Integer.parseInt(keyword);
-			fillDataToJTableEmployee(employeeModel.findById(id));
-		} else {
-			fillDataToJTableEmployee(employeeModel.findByName(keyword));
-		}
-		jbuttonClearEmployee.setVisible(true);
 	}
 
 	private void jbuttonSearchCustomer_actionPerformed(ActionEvent e) {
@@ -781,12 +683,6 @@ public class JPanelBorrowAdd extends JPanel {
 			fillDataToJTableBook(bookModel.findByCallNumber(keyword));
 		}
 		jbuttonClearBook.setVisible(true);
-	}
-
-	private void jbuttonClearEmployee_actionPerformed(ActionEvent e) {
-		fillDataToJTableEmployee(employeeModel.findAll());
-		jtextFieldEmployee.setText("");
-		jbuttonClearEmployee.setVisible(false);
 	}
 
 	private void jbuttonClearCustomer_actionPerformed(ActionEvent e) {
@@ -896,6 +792,11 @@ public class JPanelBorrowAdd extends JPanel {
 		jtableBorrowBook.setModel(defaultTableModel);
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
 		jtableBorrowBook.setRowHeight(50);
+		
+		HeaderRenderer header = new HeaderRenderer(jtableBorrowBook.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableBorrowBook.getModel().getColumnCount(); i++) {
+			jtableBorrowBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
 
 	private void fillDataToJTableCustomer(List<Customer> customerList) {
@@ -912,38 +813,19 @@ public class JPanelBorrowAdd extends JPanel {
 		defaultTableModel.addColumn("Address");
 
 		for (Customer customer : customerList) {
-			defaultTableModel.addRow(new Object[] { customer.getId(), customer.getName(),
-					customer.getPhone(), customer.getAddress() });
+			defaultTableModel.addRow(
+					new Object[] { customer.getId(), customer.getName(), customer.getPhone(), customer.getAddress() });
 		}
 
 		jtableCustomer.setModel(defaultTableModel);
 		jtableCustomer.getTableHeader().setReorderingAllowed(false);
 		jtableCustomer.setRowHeight(50);
 		
-	}
-
-	private void fillDataToJTableEmployee(List<Employee> employeeList) {
-		DefaultTableModel defaultTableModel = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-
-		defaultTableModel.addColumn("ID");
-		defaultTableModel.addColumn("Photo");
-		defaultTableModel.addColumn("Name");
-		defaultTableModel.addColumn("Email");
-
-		for (Employee employee : employeeList) {
-			defaultTableModel.addRow(new Object[] { employee.getId(), employee.getPhoto(), employee.getName(),
-					employee.getEmail() });
+		HeaderRenderer header = new HeaderRenderer(jtableCustomer.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableCustomer.getModel().getColumnCount(); i++) {
+			jtableCustomer.getColumnModel().getColumn(i).setHeaderRenderer(header);
 		}
 
-		jtableEmployee.setModel(defaultTableModel);
-		jtableEmployee.getTableHeader().setReorderingAllowed(false);
-		jtableEmployee.setRowHeight(50);
-		jtableEmployee.getColumnModel().getColumn(1).setCellRenderer(new ImageCellRender());
 	}
 
 	private void fillDataToJTableBook(List<Book> bookList) {
@@ -966,36 +848,34 @@ public class JPanelBorrowAdd extends JPanel {
 
 		for (Book book : bookList) {
 			defaultTableModel.addRow(new Object[] { book.getCallNumber(), book.getISBN(), book.getPhoto(),
-					book.getTitle(), book.getAuthor(), book.getCategory(), book.getQuantity(),
-					book.getPrice(), book.isStatus() ? "In Library" : "Out of Stock", });
+					book.getTitle(), book.getAuthor(), book.getCategory(), book.getQuantity(), book.getPrice(),
+					book.isStatus() ? "In Library" : "Out of Stock", });
 		}
 
 		jtableBook.setModel(defaultTableModel);
 		jtableBook.getTableHeader().setReorderingAllowed(false);
 		jtableBook.setRowHeight(50);
 		jtableBook.getColumnModel().getColumn(2).setCellRenderer(new ImageCellRender());
+		
+		HeaderRenderer header = new HeaderRenderer(jtableBook.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableBook.getModel().getColumnCount(); i++) {
+			jtableBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
 
 	private void fillDataToJComboBoxCustomer() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
-		defaultComboBoxModel.addElement("ID");
 		defaultComboBoxModel.addElement("Name");
+		defaultComboBoxModel.addElement("ID");
 		jcomboBoxCustomer.setModel(defaultComboBoxModel);
-	}
-
-	private void fillDataToJComboBoxEmployee() {
-		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
-		defaultComboBoxModel.addElement("ID");
-		defaultComboBoxModel.addElement("Name");
-		jcomboBoxEmployee.setModel(defaultComboBoxModel);
 	}
 
 	private void fillDataToJComboBoxBook() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
-		defaultComboBoxModel.addElement("Call Number");
-		defaultComboBoxModel.addElement("ISBN");
 		defaultComboBoxModel.addElement("Title");
 		defaultComboBoxModel.addElement("Author");
+		defaultComboBoxModel.addElement("Call Number");
+		defaultComboBoxModel.addElement("ISBN");
 		jcomboBoxBook.setModel(defaultComboBoxModel);
 	}
 
@@ -1011,6 +891,23 @@ public class JPanelBorrowAdd extends JPanel {
 			jlabel.setIcon(imageIcon);
 			jlabel.setHorizontalAlignment(jlabel.CENTER);
 			return jlabel;
+		}
+	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(70, 67, 98));
+			return comp;
 		}
 	}
 }

@@ -11,12 +11,14 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import entities.Category;
+import entities.Employee;
 import models.CategoryModel;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
 
@@ -33,6 +35,8 @@ public class JPanelCategoryEdit extends JPanel {
 	CategoryModel categoryModel = new CategoryModel();
 	private Category category;
 	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
+	private Employee employee;
 
 	/**
 	 * Create the panel.
@@ -43,20 +47,18 @@ public class JPanelCategoryEdit extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setVgap(15);
 		flowLayout.setHgap(15);
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Edit Category");
-		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 10));
 
@@ -73,10 +75,9 @@ public class JPanelCategoryEdit extends JPanel {
 		jtextFieldId.setMinimumSize(new Dimension(200, 30));
 		jtextFieldId.setPreferredSize(new Dimension(200, 30));
 		panel_1.add(jtextFieldId);
-		jtextFieldId.setColumns(10);
+		jtextFieldId.setColumns(30);
 
 		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBackground(new Color(255, 255, 255));
 		add(panel_1_1);
 		panel_1_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 10));
 
@@ -91,11 +92,10 @@ public class JPanelCategoryEdit extends JPanel {
 		jtextFieldName.setPreferredSize(new Dimension(200, 30));
 		jtextFieldName.setMinimumSize(new Dimension(200, 30));
 		jtextFieldName.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtextFieldName.setColumns(10);
+		jtextFieldName.setColumns(30);
 		panel_1_1.add(jtextFieldName);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
 		flowLayout_1.setHgap(10);
 		flowLayout_1.setVgap(10);
@@ -134,7 +134,6 @@ public class JPanelCategoryEdit extends JPanel {
 		panel_3.add(jbuttonCancel);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
@@ -151,6 +150,10 @@ public class JPanelCategoryEdit extends JPanel {
 
 //	Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
+
 		int id = Integer.parseInt(this.data.get("id").toString());
 		category = categoryModel.find(id);
 
@@ -181,7 +184,7 @@ public class JPanelCategoryEdit extends JPanel {
 	private void backJPanelList() {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelCategoryList jPanelCategoryList = new JPanelCategoryList(jpanelRight);
+		JPanelCategoryList jPanelCategoryList = new JPanelCategoryList(jpanelRight, dataPut);
 		jpanelRight.add(jPanelCategoryList);
 		jPanelCategoryList.setVisible(true);
 	}

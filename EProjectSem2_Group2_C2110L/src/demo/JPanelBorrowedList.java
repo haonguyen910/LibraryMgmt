@@ -13,6 +13,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
+
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -44,6 +46,7 @@ import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.border.LineBorder;
+import javax.swing.ListSelectionModel;
 
 public class JPanelBorrowedList extends JPanel {
 	private JPanel jpanelRight;
@@ -55,8 +58,6 @@ public class JPanelBorrowedList extends JPanel {
 	private JPanel panel_4;
 	private JDateChooser jdateChooserCreated;
 	private JLabel lblNewLabel_2;
-	private JPanel panel_6;
-	private JLabel lblNewLabel_4;
 	private JPanel jpanelDetail;
 	private JScrollPane scrollPane;
 	private JTable jtableDetails;
@@ -76,6 +77,8 @@ public class JPanelBorrowedList extends JPanel {
 	private JPanel panel_5;
 	private JComboBox jcomboBoxSort;
 	private JLabel lblNewLabel_3;
+	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
 
 	/**
 	 * Create the panel.
@@ -86,18 +89,17 @@ public class JPanelBorrowedList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
 		flowLayout_1.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Check-out Record");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setVgap(10);
 		flowLayout.setHgap(10);
@@ -116,7 +118,7 @@ public class JPanelBorrowedList extends JPanel {
 		jtextFieldKeyword.setMinimumSize(new Dimension(500, 30));
 		jtextFieldKeyword.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(jtextFieldKeyword);
-		jtextFieldKeyword.setColumns(20);
+		jtextFieldKeyword.setColumns(30);
 
 		jbuttonSearch = new JButton("Search");
 		jbuttonSearch.setMinimumSize(new Dimension(80, 30));
@@ -149,7 +151,6 @@ public class JPanelBorrowedList extends JPanel {
 		panel_1.add(jbuttonCancelSearch);
 
 		panel_4 = new JPanel();
-		panel_4.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_3 = (FlowLayout) panel_4.getLayout();
 		flowLayout_3.setVgap(10);
 		flowLayout_3.setHgap(10);
@@ -165,7 +166,6 @@ public class JPanelBorrowedList extends JPanel {
 
 		jdateChooserCreated = new JDateChooser();
 		jdateChooserCreated.setOpaque(false);
-		jdateChooserCreated.setBackground(new Color(255, 255, 255));
 		jdateChooserCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jdateChooserCreated.setPreferredSize(new Dimension(200, 30));
 		jdateChooserCreated.setMinimumSize(new Dimension(200, 30));
@@ -196,7 +196,6 @@ public class JPanelBorrowedList extends JPanel {
 		panel_4.add(jbuttonCancelByCreated);
 
 		panel_5 = new JPanel();
-		panel_5.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_4 = (FlowLayout) panel_5.getLayout();
 		flowLayout_4.setVgap(10);
 		flowLayout_4.setHgap(10);
@@ -222,12 +221,10 @@ public class JPanelBorrowedList extends JPanel {
 		panel_5.add(jcomboBoxSort);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		jpanelDetail = new JPanel();
-		jpanelDetail.setBackground(new Color(255, 255, 255));
 		jpanelDetail.setBorder(
 				new TitledBorder(null, "Borrow Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		jpanelDetail.setMinimumSize(new Dimension(400, 400));
@@ -241,8 +238,9 @@ public class JPanelBorrowedList extends JPanel {
 		jpanelDetail.add(scrollPane);
 
 		jtableDetails = new JTable();
+		jtableDetails.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtableDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtableDetails.setOpaque(false);
-		jtableDetails.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane.setViewportView(jtableDetails);
 
 		jpanelBorrow = new JPanel();
@@ -251,13 +249,12 @@ public class JPanelBorrowedList extends JPanel {
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setOpaque(false);
-		scrollPane_1.setBackground(new Color(255, 255, 255));
 		scrollPane_1.setBorder(new LineBorder(new Color(130, 135, 144)));
 		jpanelBorrow.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableBorrowed = new JTable();
-		jtableBorrowed.setOpaque(false);
-		jtableBorrowed.setSelectionBackground(new Color(255, 51, 51));
+		jtableBorrowed.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtableBorrowed.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtableBorrowed.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -266,19 +263,14 @@ public class JPanelBorrowedList extends JPanel {
 		});
 		scrollPane_1.setViewportView(jtableBorrowed);
 
-		panel_6 = new JPanel();
-		panel_6.setBackground(new Color(255, 255, 255));
-		add(panel_6);
-
-		lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setPreferredSize(new Dimension(60, 30));
-		lblNewLabel_4.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_4.setMaximumSize(new Dimension(60, 30));
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_6.add(lblNewLabel_4);
-
+	}
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public JPanelBorrowedList(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
 		initJFrame();
-
 	}
 
 	// Functions
@@ -447,9 +439,9 @@ public class JPanelBorrowedList extends JPanel {
 	private void fillDataToJComboBox() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
 		defaultComboBoxModel.addElement("Customer Name");
+		defaultComboBoxModel.addElement("Employee Name");
 		defaultComboBoxModel.addElement("ID Borrow");
 		defaultComboBoxModel.addElement("ID");
-		defaultComboBoxModel.addElement("Employee Name");
 		jcomboBoxSearchType.setModel(defaultComboBoxModel);
 	}
 
@@ -488,7 +480,7 @@ public class JPanelBorrowedList extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 68, 98));
 			return comp;
 		}
 	}

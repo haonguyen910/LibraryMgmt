@@ -28,6 +28,7 @@ import entities.Book;
 import entities.Book_Author;
 import entities.Book_Category;
 import entities.Category;
+import entities.Employee;
 import models.AuthorModel;
 import models.Book_AuthorModel;
 
@@ -55,6 +56,9 @@ public class JPanelAuthorList extends JPanel {
 //	Global Variable
 	AuthorModel authorModel = new AuthorModel();
 	Book_AuthorModel book_AuthorModel = new Book_AuthorModel();
+	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
+	private Employee employee;
 
 	/**
 	 * Create the panel.
@@ -65,21 +69,19 @@ public class JPanelAuthorList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel(" Author List");
-		lblNewLabel.setIcon(
-				new ImageIcon(JPanelAuthorList.class.getResource("/resources/images/icons8-writer-male-52.png")));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		flowLayout_1.setHgap(10);
 		flowLayout_1.setVgap(15);
 		add(panel_1);
@@ -92,7 +94,7 @@ public class JPanelAuthorList extends JPanel {
 		jtextFieldSearch.setMinimumSize(new Dimension(200, 30));
 		jtextFieldSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(jtextFieldSearch);
-		jtextFieldSearch.setColumns(20);
+		jtextFieldSearch.setColumns(30);
 
 		jbuttonSearch = new JButton("Search");
 		jbuttonSearch.setPreferredSize(new Dimension(80, 30));
@@ -123,12 +125,10 @@ public class JPanelAuthorList extends JPanel {
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBackground(new Color(255, 255, 255));
 		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144), 1, true));
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 
 		jtableAuthor = new JTable();
-		jtableAuthor.setSelectionBackground(new Color(255, 51, 51));
 		jtableAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableAuthor.addMouseListener(new MouseAdapter() {
 			@Override
@@ -140,8 +140,8 @@ public class JPanelAuthorList extends JPanel {
 		scrollPane.setViewportView(jtableAuthor);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		flowLayout_2.setVgap(10);
 		flowLayout_2.setHgap(10);
 		add(panel_3);
@@ -180,17 +180,31 @@ public class JPanelAuthorList extends JPanel {
 			}
 		});
 		panel_3.add(jbuttonEdit);
+	}
 
+	public JPanelAuthorList(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
 		initJFrame();
-
 	}
 
 //	Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
+
 		fillDataToJTable(authorModel.findAll());
 		jbuttonCancelSearch.setVisible(false);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
+		if (employee.isIs_admin() == true) {
+			jbuttonDelete.setEnabled(false);
+			jbuttonEdit.setEnabled(false);
+		} else {
+			jbuttonDelete.setVisible(false);
+			jbuttonEdit.setVisible(false);
+			jbuttonAdd.setVisible(false);
+		}
+		jbuttonCancelSearch.setVisible(false);
 	}
 
 	private void jbuttonSearch_actionPerformed(ActionEvent e) {
@@ -207,7 +221,7 @@ public class JPanelAuthorList extends JPanel {
 
 	private void jbuttonAdd_actionPerformed(ActionEvent e) {
 		clearScreen();
-		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight);
+		JPanelAuthorAdd jPanelAuthorAdd = new JPanelAuthorAdd(jpanelRight, dataPut);
 		jpanelRight.add(jPanelAuthorAdd);
 		jPanelAuthorAdd.setVisible(true);
 	}
@@ -228,11 +242,10 @@ public class JPanelAuthorList extends JPanel {
 		int selectedRow = jtableAuthor.getSelectedRow();
 		int id = Integer.parseInt(jtableAuthor.getValueAt(selectedRow, 0).toString());
 
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("id", id);
+		dataPut.put("id", id);
 
 		clearScreen();
-		JPanelAuthorEdit jPanelAuthorEdit = new JPanelAuthorEdit(jpanelRight, data);
+		JPanelAuthorEdit jPanelAuthorEdit = new JPanelAuthorEdit(jpanelRight, dataPut);
 		jpanelRight.add(jPanelAuthorEdit);
 		jPanelAuthorEdit.setVisible(true);
 	}
@@ -272,8 +285,8 @@ public class JPanelAuthorList extends JPanel {
 			}
 		};
 
-		defaultTableModel.addColumn("ID");
 		defaultTableModel.addColumn("Name");
+		defaultTableModel.addColumn("ID");
 
 		for (Author author : authorList) {
 			defaultTableModel.addRow(new Object[] { author.getId(), author.getName() });
@@ -301,7 +314,7 @@ public class JPanelAuthorList extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 68, 98));
 			return comp;
 		}
 	}

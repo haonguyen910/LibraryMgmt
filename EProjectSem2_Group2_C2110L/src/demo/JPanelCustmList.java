@@ -68,19 +68,17 @@ public class JPanelCustmList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head_1 = new JPanel();
-		panel_head_1.setBackground(new Color(255, 255, 255));
+		panel_head_1.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel_head_1 = (FlowLayout) panel_head_1.getLayout();
 		add(panel_head_1);
 
 		JLabel lblNewLabel = new JLabel("  Customer List");
-		lblNewLabel.setIcon(new ImageIcon(JPanelCustmList.class.getResource("/resources/images/icons8-user-50.png")));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_head_1.add(lblNewLabel);
 
 		JPanel panel_head_2 = new JPanel();
-		panel_head_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head_2.getLayout();
 		flowLayout_1.setVgap(20);
 		flowLayout_1.setHgap(15);
@@ -106,7 +104,6 @@ public class JPanelCustmList extends JPanel {
 		panel_body.setLayout(new BorderLayout(0, 0));
 
 		panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
 		panel.setPreferredSize(new Dimension(340, 220));
 		panel.setMinimumSize(new Dimension(500, 500));
 		panel_body.add(panel, BorderLayout.WEST);
@@ -197,7 +194,6 @@ public class JPanelCustmList extends JPanel {
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
@@ -206,8 +202,7 @@ public class JPanelCustmList extends JPanel {
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 
 		jtableCust = new JTable();
-		jtableCust.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		jtableCust.setSelectionBackground(new Color(255, 51, 51));
+		jtableCust.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableCust.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -217,13 +212,11 @@ public class JPanelCustmList extends JPanel {
 		scrollPane.setViewportView(jtableCust);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(BorderFactory.createTitledBorder ("Issue History"));
-		scrollPane_1.setBackground(new Color(255, 255, 255));
 		panel_3.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableGetHistory = new JTable();
@@ -232,7 +225,6 @@ public class JPanelCustmList extends JPanel {
 		scrollPane_1.setViewportView(jtableGetHistory);
 
 		JPanel panel_bottom = new JPanel();
-		panel_bottom.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_bottom.getLayout();
 		flowLayout.setVgap(10);
 		flowLayout.setHgap(20);
@@ -455,7 +447,7 @@ public class JPanelCustmList extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 68, 98));
 			return comp;
 		}
 	}

@@ -29,6 +29,7 @@ import javax.swing.table.TableCellRenderer;
 
 import demo.JPanelAuthorList.HeaderRenderer;
 import entities.Category;
+import entities.Employee;
 import models.Book_CategoryModel;
 import models.CategoryModel;
 import javax.swing.ImageIcon;
@@ -50,6 +51,9 @@ public class JPanelCategoryList extends JPanel {
 //	Global Variable
 	CategoryModel categoryModel = new CategoryModel();
 	Book_CategoryModel book_CategoryModel = new Book_CategoryModel();
+	private Map<String, Object> dataPut;
+	private Map<String, Object> data;
+	private Employee employee;
 
 	/**
 	 * Create the panel.
@@ -60,21 +64,19 @@ public class JPanelCategoryList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel(" Category List");
-		lblNewLabel.setIcon(
-				new ImageIcon(JPanelCategoryList.class.getResource("/resources/images/icons8-diversity-52.png")));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		flowLayout_1.setVgap(15);
 		flowLayout_1.setHgap(10);
 		add(panel_1);
@@ -91,7 +93,7 @@ public class JPanelCategoryList extends JPanel {
 		jtextFieldKeyword.setMinimumSize(new Dimension(200, 30));
 		jtextFieldKeyword.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(jtextFieldKeyword);
-		jtextFieldKeyword.setColumns(20);
+		jtextFieldKeyword.setColumns(30);
 
 		jbuttonSearch = new JButton("Search");
 		jbuttonSearch.addActionListener(new ActionListener() {
@@ -122,12 +124,10 @@ public class JPanelCategoryList extends JPanel {
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBackground(new Color(255, 255, 255));
 		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
 		panel_2.add(scrollPane, BorderLayout.CENTER);
 
 		jtableCategory = new JTable();
-		jtableCategory.setSelectionBackground(new Color(255, 51, 51));
 		jtableCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableCategory.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtableCategory.addMouseListener(new MouseAdapter() {
@@ -139,8 +139,8 @@ public class JPanelCategoryList extends JPanel {
 		scrollPane.setViewportView(jtableCategory);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		flowLayout_2.setVgap(10);
 		flowLayout_2.setHgap(10);
 		add(panel_3);
@@ -180,17 +180,31 @@ public class JPanelCategoryList extends JPanel {
 		jbuttonEdit.setMaximumSize(new Dimension(100, 30));
 		jbuttonEdit.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_3.add(jbuttonEdit);
+	}
 
+	public JPanelCategoryList(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
 		initJFrame();
-
 	}
 
 //	Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
 		fillDataToJTable(categoryModel.findAll());
 		jbuttonCancel.setVisible(false);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
+		if (employee.isIs_admin() == true) {
+			jbuttonDelete.setEnabled(false);
+			jbuttonEdit.setEnabled(false);
+
+		} else {
+			jbuttonDelete.setVisible(false);
+			jbuttonEdit.setVisible(false);
+			jbuttonAdd.setVisible(false);
+		}
+		jbuttonCancel.setVisible(false);
 	}
 
 	private void jbuttonSearch_actionPerformed(ActionEvent e) {
@@ -219,7 +233,7 @@ public class JPanelCategoryList extends JPanel {
 
 	private void jbuttonAdd_actionPerformed(ActionEvent e) {
 		clearScreen();
-		JPanelCategoryAdd jPanelCategoryAdd = new JPanelCategoryAdd(jpanelRight);
+		JPanelCategoryAdd jPanelCategoryAdd = new JPanelCategoryAdd(jpanelRight, dataPut);
 		jpanelRight.add(jPanelCategoryAdd);
 		jPanelCategoryAdd.setVisible(true);
 	}
@@ -228,11 +242,10 @@ public class JPanelCategoryList extends JPanel {
 		int selectedRow = jtableCategory.getSelectedRow();
 		int id = Integer.parseInt(jtableCategory.getValueAt(selectedRow, 0).toString());
 
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("id", id);
+		dataPut.put("id", id);
 
 		clearScreen();
-		JPanelCategoryEdit jPanelCategoryEdit = new JPanelCategoryEdit(jpanelRight, data);
+		JPanelCategoryEdit jPanelCategoryEdit = new JPanelCategoryEdit(jpanelRight, dataPut);
 		jpanelRight.add(jPanelCategoryEdit);
 		jPanelCategoryEdit.setVisible(true);
 	}
@@ -272,8 +285,8 @@ public class JPanelCategoryList extends JPanel {
 			}
 		};
 
-		defaultTableModel.addColumn("ID");
 		defaultTableModel.addColumn("Name");
+		defaultTableModel.addColumn("ID");
 
 		for (Category category : categoryList) {
 			defaultTableModel.addRow(new Object[] { category.getId(), category.getName() });
@@ -301,7 +314,7 @@ public class JPanelCategoryList extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 68, 98));
 			return comp;
 		}
 	}

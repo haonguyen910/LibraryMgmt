@@ -58,13 +58,12 @@ public class JPanelDashBoard extends JPanel {
 		JPanel panel_head = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_head.getLayout();
 		flowLayout.setVgap(15);
-		panel_head.setBackground(new Color(255, 255, 255));
+		panel_head.setBackground(new Color(52, 52, 52));
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("  Dash Board");
-		lblNewLabel.setIcon(new ImageIcon(JPanelDashBoard.class.getResource("/resources/images/icons8-dashboard-layout-54.png")));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_head.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -72,13 +71,11 @@ public class JPanelDashBoard extends JPanel {
 		panel_1.setLayout(new GridLayout(0, 6, 0, 0));
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		panel_2.setPreferredSize(new Dimension(100, 150));
 		panel_1.add(panel_2);
 		panel_2.setLayout(null);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_3);
 		panel_3.setLayout(null);
 
@@ -88,6 +85,7 @@ public class JPanelDashBoard extends JPanel {
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		jlabelNBook = new JLabel("");
+		jlabelNBook.setBackground(new Color(255, 255, 255));
 		jlabelNBook.setForeground(new Color(102, 102, 102));
 		jlabelNBook
 				.setIcon(new ImageIcon(JPanelDashBoard.class.getResource("/resources/images/icons8_Book_Shelf_50px.png")));
@@ -96,11 +94,9 @@ public class JPanelDashBoard extends JPanel {
 		jlabelNBook.setOpaque(true);
 		jlabelNBook.setHorizontalAlignment(SwingConstants.CENTER);
 		jlabelNBook.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 51, 51)));
-		jlabelNBook.setBackground(new Color(240, 240, 240));
+		jlabelNBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(128, 128, 192)));
 
 		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
 
@@ -110,6 +106,7 @@ public class JPanelDashBoard extends JPanel {
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		jlabelNCust = new JLabel("");
+		jlabelNCust.setBackground(new Color(255, 255, 255));
 		jlabelNCust.setForeground(new Color(102, 102, 102));
 		jlabelNCust.setIcon(new ImageIcon(JPanelDashBoard.class.getResource("/resources/images/icons8_People_50px.png")));
 		jlabelNCust.setBounds(0, 36, 166, 100);
@@ -117,11 +114,9 @@ public class JPanelDashBoard extends JPanel {
 		jlabelNCust.setOpaque(true);
 		jlabelNCust.setHorizontalAlignment(SwingConstants.CENTER);
 		jlabelNCust.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNCust.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(102, 102, 255)));
-		jlabelNCust.setBackground(new Color(240, 240, 240));
+		jlabelNCust.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(70, 67, 98)));
 
 		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_5);
 		panel_5.setLayout(null);
 
@@ -131,6 +126,7 @@ public class JPanelDashBoard extends JPanel {
 		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		jlabelNIssueBook = new JLabel("");
+		jlabelNIssueBook.setBackground(new Color(255, 255, 255));
 		jlabelNIssueBook.setIcon(new ImageIcon(JPanelDashBoard.class.getResource("/resources/images/icons8_Sell_50px.png")));
 		jlabelNIssueBook.setBounds(0, 36, 166, 100);
 		panel_5.add(jlabelNIssueBook);
@@ -138,11 +134,9 @@ public class JPanelDashBoard extends JPanel {
 		jlabelNIssueBook.setHorizontalAlignment(SwingConstants.CENTER);
 		jlabelNIssueBook.setForeground(new Color(102, 102, 102));
 		jlabelNIssueBook.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNIssueBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(255, 51, 51)));
-		jlabelNIssueBook.setBackground(new Color(240, 240, 240));
+		jlabelNIssueBook.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(128, 128, 192)));
 
 		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_6);
 		panel_6.setLayout(null);
 
@@ -152,6 +146,7 @@ public class JPanelDashBoard extends JPanel {
 		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		jlabelNDefaulter = new JLabel("");
+		jlabelNDefaulter.setBackground(new Color(255, 255, 255));
 		jlabelNDefaulter.setForeground(new Color(102, 102, 102));
 		jlabelNDefaulter.setIcon(
 				new ImageIcon(JPanelDashBoard.class.getResource("/resources/images/icons8_List_of_Thumbnails_50px.png")));
@@ -160,16 +155,13 @@ public class JPanelDashBoard extends JPanel {
 		jlabelNDefaulter.setOpaque(true);
 		jlabelNDefaulter.setHorizontalAlignment(SwingConstants.CENTER);
 		jlabelNDefaulter.setFont(new Font("Tahoma", Font.BOLD, 30));
-		jlabelNDefaulter.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(102, 102, 255)));
-		jlabelNDefaulter.setBackground(new Color(240, 240, 240));
+		jlabelNDefaulter.setBorder(new MatteBorder(15, 0, 0, 0, (Color) new Color(70, 67, 98)));
 
 		JPanel panel_7 = new JPanel();
-		panel_7.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_7);
 		panel_7.setLayout(null);
 
 		JPanel panel_11 = new JPanel();
-		panel_11.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_11.getLayout();
 		flowLayout_1.setVgap(10);
 		add(panel_11);
@@ -179,18 +171,15 @@ public class JPanelDashBoard extends JPanel {
 		panel_body.setLayout(new BorderLayout(0, 0));
 
 		panelPieChart = new JPanel();
-		panelPieChart.setBackground(new Color(255, 255, 255));
 		panelPieChart.setPreferredSize(new Dimension(400, 10));
 		panel_body.add(panelPieChart, BorderLayout.WEST);
 		panelPieChart.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
 		panel_body.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		JPanel panel_9 = new JPanel();
-		panel_9.setBackground(new Color(255, 255, 255));
 		panel.add(panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
 
@@ -199,13 +188,11 @@ public class JPanelDashBoard extends JPanel {
 		panel_9.add(scrollPane, BorderLayout.CENTER);
 
 		jtableBookDetail = new JTable();
-		jtableBookDetail.setSelectionBackground(new Color(255, 51, 51));
 		jtableBookDetail.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableBookDetail.setPreferredScrollableViewportSize(new Dimension(450, 250));
 		scrollPane.setViewportView(jtableBookDetail);
 
 		JPanel panel_10 = new JPanel();
-		panel_10.setBackground(new Color(255, 255, 255));
 		panel.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
 
@@ -214,7 +201,6 @@ public class JPanelDashBoard extends JPanel {
 		panel_10.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableCustDetail = new JTable();
-		jtableCustDetail.setSelectionBackground(new Color(255, 51, 51));
 		jtableCustDetail.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableCustDetail.getTableHeader().setOpaque(false);
 		jtableCustDetail.setPreferredScrollableViewportSize(new Dimension(450, 250));
@@ -376,7 +362,7 @@ public class JPanelDashBoard extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 68, 98));
 			return comp;
 		}
 	}

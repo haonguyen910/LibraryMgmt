@@ -11,12 +11,15 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import entities.Category;
+import entities.Employee;
 import models.CategoryModel;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
 public class JPanelCategoryAdd extends JPanel {
@@ -30,6 +33,9 @@ public class JPanelCategoryAdd extends JPanel {
 //	Global Variable
 	CategoryModel categoryModel = new CategoryModel();
 	private Category category;
+	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
+	private Employee employee;
 
 	/**
 	 * Create the panel.
@@ -40,20 +46,18 @@ public class JPanelCategoryAdd extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setHgap(10);
 		flowLayout.setVgap(15);
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Category");
-		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 10));
 
@@ -69,10 +73,9 @@ public class JPanelCategoryAdd extends JPanel {
 		jtextFieldName.setMinimumSize(new Dimension(200, 30));
 		jtextFieldName.setPreferredSize(new Dimension(200, 30));
 		panel_1.add(jtextFieldName);
-		jtextFieldName.setColumns(10);
+		jtextFieldName.setColumns(30);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
 		flowLayout_1.setVgap(10);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
@@ -110,13 +113,24 @@ public class JPanelCategoryAdd extends JPanel {
 		panel_3.add(jbuttonCancel);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		add(panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 	}
 
+	public JPanelCategoryAdd(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
+		initJFrame();
+	}
+
 //	Functions
+	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
+	}
+
 	private void jbuttonSave_actionPerformed(ActionEvent e) {
 		try {
 			category = new Category();
@@ -126,7 +140,7 @@ public class JPanelCategoryAdd extends JPanel {
 				JOptionPane.showMessageDialog(this, "Success");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
-				JPanelCategoryList jPanelCategoryList = new JPanelCategoryList(jpanelRight);
+				JPanelCategoryList jPanelCategoryList = new JPanelCategoryList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelCategoryList);
 				jPanelCategoryList.setVisible(true);
 			} else {
@@ -140,9 +154,9 @@ public class JPanelCategoryAdd extends JPanel {
 	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight);
-		jpanelRight.add(jPanelAuthorList);
-		jPanelAuthorList.setVisible(true);
+		JPanelCategoryList jPanelCategoryList = new JPanelCategoryList(jpanelRight, dataPut);
+		jpanelRight.add(jPanelCategoryList);
+		jPanelCategoryList.setVisible(true);
 	}
 
 }

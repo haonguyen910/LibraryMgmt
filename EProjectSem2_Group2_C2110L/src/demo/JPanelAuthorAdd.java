@@ -11,12 +11,15 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import entities.Author;
+import entities.Employee;
 import models.AuthorModel;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
 public class JPanelAuthorAdd extends JPanel {
@@ -30,6 +33,9 @@ public class JPanelAuthorAdd extends JPanel {
 //	Global Variable
 	AuthorModel authorModel = new AuthorModel();
 	private Author author;
+	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
+	private Employee employee;
 
 	/**
 	 * Create the panel.
@@ -40,20 +46,18 @@ public class JPanelAuthorAdd extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setHgap(20);
 		flowLayout.setVgap(15);
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Author");
-		lblNewLabel.setForeground(new Color(255, 51, 51));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
 
@@ -69,10 +73,9 @@ public class JPanelAuthorAdd extends JPanel {
 		jtextFieldName.setMinimumSize(new Dimension(200, 30));
 		jtextFieldName.setPreferredSize(new Dimension(200, 30));
 		panel_1.add(jtextFieldName);
-		jtextFieldName.setColumns(10);
+		jtextFieldName.setColumns(30);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
 		flowLayout_1.setVgap(10);
 		flowLayout_1.setHgap(20);
@@ -85,6 +88,13 @@ public class JPanelAuthorAdd extends JPanel {
 				jbuttonSave_actionPerformed(e);
 			}
 		});
+
+		JLabel lblNewLabel_1_1 = new JLabel("");
+		lblNewLabel_1_1.setPreferredSize(new Dimension(50, 30));
+		lblNewLabel_1_1.setMinimumSize(new Dimension(50, 30));
+		lblNewLabel_1_1.setMaximumSize(new Dimension(50, 30));
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_3.add(lblNewLabel_1_1);
 		panel_3.add(jbuttonSave);
 		jbuttonSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jbuttonSave.setPreferredSize(new Dimension(80, 30));
@@ -104,13 +114,24 @@ public class JPanelAuthorAdd extends JPanel {
 		panel_3.add(jbuttonCancel);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		add(panel_2);
 		panel_2.setLayout(new BorderLayout(30, 0));
 
 	}
 
+	public JPanelAuthorAdd(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
+		initJFrame();
+	}
+
 //	Functions
+	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
+	}
+
 	private void jbuttonSave_actionPerformed(ActionEvent e) {
 		try {
 			author = new Author();
@@ -120,7 +141,7 @@ public class JPanelAuthorAdd extends JPanel {
 				JOptionPane.showMessageDialog(this, "Success");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
-				JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight);
+				JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelAuthorList);
 				jPanelAuthorList.setVisible(true);
 			} else {
@@ -134,7 +155,7 @@ public class JPanelAuthorAdd extends JPanel {
 	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight);
+		JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight, dataPut);
 		jpanelRight.add(jPanelAuthorList);
 		jPanelAuthorList.setVisible(true);
 	}

@@ -35,6 +35,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.awt.BorderLayout;
@@ -85,6 +86,7 @@ public class JPanelBorrowedAdd extends JPanel {
 	private List<BorrowDetail> borrowDetailList;
 	private List<Book> bookBorrowList;
 	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
 	private Borrowed borrowed;
 	private int overdueDay;
 	private double fines;
@@ -99,16 +101,16 @@ public class JPanelBorrowedAdd extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
+		panel.setForeground(new Color(52, 52, 52));
 		panel.setMaximumSize(new Dimension(32767, 200));
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
 		fl_panel.setVgap(15);
-		fl_panel.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Borrowed");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -116,7 +118,6 @@ public class JPanelBorrowedAdd extends JPanel {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelBorrowTicket = new JPanel();
-		jpanelBorrowTicket.setBackground(new Color(255, 255, 255));
 		jpanelBorrowTicket
 				.setBorder(new TitledBorder(null, "Borrow Ticket", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		jpanelBorrowTicket.setPreferredSize(new Dimension(800, 650));
@@ -126,25 +127,25 @@ public class JPanelBorrowedAdd extends JPanel {
 
 		JLabel lblNewLabel_1_1 = new JLabel("Employee:");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(45, 89, 110, 13);
+		lblNewLabel_1_1.setBounds(45, 95, 110, 29);
 		jpanelBorrowTicket.add(lblNewLabel_1_1);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("Customer:");
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_1.setBounds(45, 129, 110, 13);
+		lblNewLabel_1_1_1.setBounds(45, 135, 110, 30);
 		jpanelBorrowTicket.add(lblNewLabel_1_1_1);
 
 		jtextFieldborrowEmployee = new JTextField();
 		jtextFieldborrowEmployee.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldborrowEmployee.setEditable(false);
-		jtextFieldborrowEmployee.setColumns(10);
+		jtextFieldborrowEmployee.setColumns(30);
 		jtextFieldborrowEmployee.setBounds(165, 95, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldborrowEmployee);
 
 		jtextFieldBorrowCustomer = new JTextField();
 		jtextFieldBorrowCustomer.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowCustomer.setEditable(false);
-		jtextFieldBorrowCustomer.setColumns(10);
+		jtextFieldBorrowCustomer.setColumns(30);
 		jtextFieldBorrowCustomer.setBounds(165, 135, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowCustomer);
 
@@ -152,42 +153,42 @@ public class JPanelBorrowedAdd extends JPanel {
 		jtextFieldBorrowCreated.setText("<dynamic>");
 		jtextFieldBorrowCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowCreated.setEditable(false);
-		jtextFieldBorrowCreated.setColumns(10);
+		jtextFieldBorrowCreated.setColumns(30);
 		jtextFieldBorrowCreated.setBounds(165, 175, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowCreated);
 
 		JLabel lblNewLabel_1_2 = new JLabel("Borrow Created:");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(45, 183, 110, 13);
+		lblNewLabel_1_2.setBounds(45, 176, 110, 29);
 		jpanelBorrowTicket.add(lblNewLabel_1_2);
 
 		JLabel lblNewLabel_1_3 = new JLabel("Borrow Due Date:");
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_3.setBounds(45, 216, 110, 13);
+		lblNewLabel_1_3.setBounds(45, 216, 110, 29);
 		jpanelBorrowTicket.add(lblNewLabel_1_3);
 
 		jtextFieldBorrowDueDate = new JTextField();
 		jtextFieldBorrowDueDate.setText("<dynamic>");
 		jtextFieldBorrowDueDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowDueDate.setEditable(false);
-		jtextFieldBorrowDueDate.setColumns(10);
+		jtextFieldBorrowDueDate.setColumns(30);
 		jtextFieldBorrowDueDate.setBounds(165, 215, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowDueDate);
 
 		jtextFieldCreated = new JTextField();
 		jtextFieldCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldCreated.setEditable(false);
-		jtextFieldCreated.setColumns(10);
+		jtextFieldCreated.setColumns(30);
 		jtextFieldCreated.setBounds(165, 257, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldCreated);
 
 		JLabel lblNewLabel_1_4 = new JLabel("Created:");
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_4.setBounds(45, 254, 110, 13);
+		lblNewLabel_1_4.setBounds(45, 254, 110, 33);
 		jpanelBorrowTicket.add(lblNewLabel_1_4);
 
 		JLabel lblNewLabel_1_6 = new JLabel("Book List");
-		lblNewLabel_1_6.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_1_6.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1_6.setBounds(397, 55, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_6);
 
@@ -197,67 +198,66 @@ public class JPanelBorrowedAdd extends JPanel {
 		jpanelBorrowTicket.add(scrollPane);
 
 		jtableBorrowBook = new JTable();
-		jtableBorrowBook.setBackground(new Color(255, 255, 255));
 		jtableBorrowBook.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(jtableBorrowBook);
 
 		JLabel lblNewLabel_1_4_1 = new JLabel("Overdue Days:");
 		lblNewLabel_1_4_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_4_1.setBounds(45, 297, 110, 13);
+		lblNewLabel_1_4_1.setBounds(45, 297, 110, 30);
 		jpanelBorrowTicket.add(lblNewLabel_1_4_1);
 
 		jtextFieldOverdueDay = new JTextField();
 		jtextFieldOverdueDay.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldOverdueDay.setEditable(false);
-		jtextFieldOverdueDay.setColumns(10);
+		jtextFieldOverdueDay.setColumns(30);
 		jtextFieldOverdueDay.setBounds(165, 297, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldOverdueDay);
 
 		JLabel lblNewLabel_1_4_2 = new JLabel("Deposit:");
 		lblNewLabel_1_4_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_4_2.setBounds(45, 337, 110, 13);
+		lblNewLabel_1_4_2.setBounds(45, 337, 110, 30);
 		jpanelBorrowTicket.add(lblNewLabel_1_4_2);
 
 		jtextFieldBorrowDeposit = new JTextField();
 		jtextFieldBorrowDeposit.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowDeposit.setEditable(false);
-		jtextFieldBorrowDeposit.setColumns(10);
+		jtextFieldBorrowDeposit.setColumns(30);
 		jtextFieldBorrowDeposit.setBounds(165, 337, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowDeposit);
 
 		JLabel lblNewLabel_1_4_3 = new JLabel("Fines:");
 		lblNewLabel_1_4_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_4_3.setBounds(45, 377, 110, 13);
+		lblNewLabel_1_4_3.setBounds(45, 377, 110, 30);
 		jpanelBorrowTicket.add(lblNewLabel_1_4_3);
 
 		jtextFieldFines = new JTextField();
 		jtextFieldFines.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldFines.setEditable(false);
-		jtextFieldFines.setColumns(10);
+		jtextFieldFines.setColumns(30);
 		jtextFieldFines.setBounds(165, 377, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldFines);
 
 		JLabel lblNewLabel_1_4_4 = new JLabel("Total:");
 		lblNewLabel_1_4_4.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_4_4.setBounds(45, 417, 110, 13);
+		lblNewLabel_1_4_4.setBounds(45, 417, 110, 30);
 		jpanelBorrowTicket.add(lblNewLabel_1_4_4);
 
 		jtextFieldTotal = new JTextField();
-		jtextFieldTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtextFieldTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jtextFieldTotal.setEditable(false);
-		jtextFieldTotal.setColumns(10);
+		jtextFieldTotal.setColumns(30);
 		jtextFieldTotal.setBounds(165, 417, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldTotal);
 
 		JLabel lblNewLabel_1_4_5 = new JLabel("ID Borrow:");
 		lblNewLabel_1_4_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_4_5.setBounds(45, 55, 110, 13);
+		lblNewLabel_1_4_5.setBounds(45, 55, 110, 30);
 		jpanelBorrowTicket.add(lblNewLabel_1_4_5);
 
 		jtextFieldBorrowId = new JTextField();
 		jtextFieldBorrowId.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldBorrowId.setEditable(false);
-		jtextFieldBorrowId.setColumns(10);
+		jtextFieldBorrowId.setColumns(30);
 		jtextFieldBorrowId.setBounds(165, 55, 200, 30);
 		jpanelBorrowTicket.add(jtextFieldBorrowId);
 
@@ -321,11 +321,15 @@ public class JPanelBorrowedAdd extends JPanel {
 
 //	Event Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
+		
 
 		calendarToday = Calendar.getInstance();
 		today = calendarToday.getTime();
 
-		int idBorrow = Integer.parseInt(this.data.get("idBorrow").toString());
+		int idBorrow = Integer.parseInt(data.get("idBorrow").toString());
 		borrow = borrowModel.find(idBorrow);
 
 		borrowDetailList = borrowDetailModel.findByBorrowId(idBorrow);
@@ -340,7 +344,7 @@ public class JPanelBorrowedAdd extends JPanel {
 		jtextFieldBorrowDeposit.setText(String.valueOf(borrow.getDeposit()));
 
 		jtextFieldCreated.setText(simpleDateFormat.format(today));
-//		Overdue Days
+
 		LocalDate borrowDueDate = LocalDate.parse(simpleDateFormatSQL.format(borrow.getDue_date()),
 				DateTimeFormatter.ISO_LOCAL_DATE);
 		LocalDate todayDate = LocalDate.parse(simpleDateFormatSQL.format(today), DateTimeFormatter.ISO_LOCAL_DATE);
@@ -350,8 +354,7 @@ public class JPanelBorrowedAdd extends JPanel {
 		overdueDay = diffDaysInt;
 		fines = diffDaysInt * 10;
 		total = fines;
-//		System.out.println(overdueDays.toString());
-//========================================================
+
 		if (overdueDay > 0) {
 			jtextFieldOverdueDay.setText(String.valueOf(overdueDay));
 			jtextFieldFines.setText(String.valueOf(fines));
@@ -377,7 +380,7 @@ public class JPanelBorrowedAdd extends JPanel {
 
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
-				JPanelBorrowedList jPanelBorrowedList = new JPanelBorrowedList(jpanelRight);
+				JPanelBorrowedList jPanelBorrowedList = new JPanelBorrowedList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelBorrowedList);
 				jPanelBorrowedList.setVisible(true);
 
@@ -390,9 +393,9 @@ public class JPanelBorrowedAdd extends JPanel {
 	private void jbuttonCancel_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBorrowedList jPanelBorrowedList = new JPanelBorrowedList(jpanelRight);
-		jpanelRight.add(jPanelBorrowedList);
-		jPanelBorrowedList.setVisible(true);
+		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight, dataPut);
+		jpanelRight.add(jPanelBorrowList);
+		jPanelBorrowList.setVisible(true);
 	}
 
 	private boolean updateBookInLibrary() {
@@ -473,7 +476,7 @@ public class JPanelBorrowedAdd extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 67, 98));
 			return comp;
 		}
 	}

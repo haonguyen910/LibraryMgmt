@@ -21,10 +21,12 @@ import java.util.Map;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import entities.Book;
 import entities.Borrow;
 import entities.BorrowDetail;
+import entities.Employee;
 import models.BookModel;
 import models.BorrowDetailModel;
 import models.BorrowModel;
@@ -38,8 +40,13 @@ import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
+
+import demo.JPanelBorrowedList.HeaderRenderer;
+
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.UIResource;
+import javax.swing.ListSelectionModel;
 
 public class JPanelBorrowList extends JPanel {
 	private JPanel jpanelRight;
@@ -63,8 +70,6 @@ public class JPanelBorrowList extends JPanel {
 	private JButton jbuttonSearchByCreated;
 	private JPanel panel_5;
 	private JLabel lblNewLabel_3;
-	private JPanel panel_6;
-	private JLabel lblNewLabel_4;
 	private JPanel jpanelDetail;
 	private JScrollPane scrollPane;
 	private JTable jtableDetails;
@@ -73,6 +78,9 @@ public class JPanelBorrowList extends JPanel {
 	private JTable jtableBorrow;
 	private JButton jbuttonSetBorrowed;
 	private JComboBox jcomboBoxSort;
+	private Map<String, Object> data;
+	private Employee employee;
+	private Map<String, Object> dataPut;
 
 	/**
 	 * Create the panel.
@@ -83,14 +91,13 @@ public class JPanelBorrowList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 128, 192));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Borrow List");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -110,7 +117,7 @@ public class JPanelBorrowList extends JPanel {
 		jtextFieldKeyword.setMinimumSize(new Dimension(500, 30));
 		jtextFieldKeyword.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(jtextFieldKeyword);
-		jtextFieldKeyword.setColumns(20);
+		jtextFieldKeyword.setColumns(30);
 
 		jbuttonSearch = new JButton("Search");
 		jbuttonSearch.setMinimumSize(new Dimension(80, 30));
@@ -223,6 +230,8 @@ public class JPanelBorrowList extends JPanel {
 		jpanelDetail.add(scrollPane);
 
 		jtableDetails = new JTable();
+		jtableDetails.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtableDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(jtableDetails);
 
 		jpanelBorrow = new JPanel();
@@ -233,6 +242,8 @@ public class JPanelBorrowList extends JPanel {
 		jpanelBorrow.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableBorrow = new JTable();
+		jtableBorrow.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		jtableBorrow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtableBorrow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -240,16 +251,6 @@ public class JPanelBorrowList extends JPanel {
 			}
 		});
 		scrollPane_1.setViewportView(jtableBorrow);
-
-		panel_6 = new JPanel();
-		add(panel_6);
-
-		lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setPreferredSize(new Dimension(60, 30));
-		lblNewLabel_4.setMinimumSize(new Dimension(60, 30));
-		lblNewLabel_4.setMaximumSize(new Dimension(60, 30));
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		panel_6.add(lblNewLabel_4);
 
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
@@ -306,12 +307,24 @@ public class JPanelBorrowList extends JPanel {
 		jbuttonSetBorrowed.setEnabled(false);
 		panel_3.add(jbuttonSetBorrowed);
 
-		initJFrame();
+	}
 
+//	Dynamic Data
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public JPanelBorrowList(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
+		initJFrame();
 	}
 
 	// Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
+		
 		fillDataToJTableBorrow(borrowModel.findAll());
 		fillDataToJComboBox();
 		fillDataToJComboBoxSort();
@@ -415,7 +428,8 @@ public class JPanelBorrowList extends JPanel {
 	private void jbuttonAdd_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBorrowAdd jPanelBorrowAdd = new JPanelBorrowAdd(jpanelRight);
+		
+		JPanelBorrowAdd jPanelBorrowAdd = new JPanelBorrowAdd(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBorrowAdd);
 		jPanelBorrowAdd.setVisible(true);
 
@@ -460,12 +474,11 @@ public class JPanelBorrowList extends JPanel {
 		int selectedRow = jtableBorrow.getSelectedRow();
 		int idBorrow = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
 
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("idBorrow", idBorrow);
+		dataPut.put("idBorrow", idBorrow);
 
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBorrowEdit jPanelBorrowEdit = new JPanelBorrowEdit(jpanelRight, data);
+		JPanelBorrowEdit jPanelBorrowEdit = new JPanelBorrowEdit(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBorrowEdit);
 		jPanelBorrowEdit.setVisible(true);
 	}
@@ -473,13 +486,10 @@ public class JPanelBorrowList extends JPanel {
 	private void jbuttonSetBorrowed_actionPerformed(ActionEvent e) {
 		int selectedRow = jtableBorrow.getSelectedRow();
 		int idBorrow = Integer.parseInt(jtableBorrow.getValueAt(selectedRow, 0).toString());
-
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("idBorrow", idBorrow);
-
+		dataPut.put("idBorrow", idBorrow);
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBorrowedAdd jPanelBorrowedAdd = new JPanelBorrowedAdd(jpanelRight, data);
+		JPanelBorrowedAdd jPanelBorrowedAdd = new JPanelBorrowedAdd(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBorrowedAdd);
 		jPanelBorrowedAdd.setVisible(true);
 	}
@@ -509,6 +519,11 @@ public class JPanelBorrowList extends JPanel {
 		jtableBorrow.setModel(defaultTableModel);
 		jtableBorrow.getTableHeader().setReorderingAllowed(false);
 		jtableBorrow.setRowHeight(50);
+		
+		HeaderRenderer header = new HeaderRenderer(jtableBorrow.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableBorrow.getModel().getColumnCount(); i++) {
+			jtableBorrow.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
 
 	private void fillDataToJTableDetails(List<BorrowDetail> borrowDetailList) {
@@ -534,6 +549,11 @@ public class JPanelBorrowList extends JPanel {
 		jtableDetails.setModel(defaultTableModel);
 		jtableDetails.getTableHeader().setReorderingAllowed(false);
 		jtableDetails.setRowHeight(50);
+		
+		HeaderRenderer header = new HeaderRenderer(jtableDetails.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableDetails.getModel().getColumnCount(); i++) {
+			jtableDetails.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
 
 	private void fillDataToJTableDetailsInit() {
@@ -553,13 +573,18 @@ public class JPanelBorrowList extends JPanel {
 		jtableDetails.setModel(defaultTableModel);
 		jtableDetails.getTableHeader().setReorderingAllowed(false);
 		jtableDetails.setRowHeight(50);
+		
+		HeaderRenderer header = new HeaderRenderer(jtableDetails.getTableHeader().getDefaultRenderer());
+		for (int i = 0; i < jtableDetails.getModel().getColumnCount(); i++) {
+			jtableDetails.getColumnModel().getColumn(i).setHeaderRenderer(header);
+		}
 	}
 
 	private void fillDataToJComboBox() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
 		defaultComboBoxModel.addElement("Customer Name");
-		defaultComboBoxModel.addElement("ID Borrow");
 		defaultComboBoxModel.addElement("Employee Name");
+		defaultComboBoxModel.addElement("ID Borrow");
 		jcomboBoxSearchType.setModel(defaultComboBoxModel);
 	}
 
@@ -586,6 +611,23 @@ public class JPanelBorrowList extends JPanel {
 			jlabel.setIcon(imageIcon);
 			jlabel.setHorizontalAlignment(jlabel.CENTER);
 			return jlabel;
+		}
+	}
+	
+	public class HeaderRenderer implements UIResource, TableCellRenderer {
+		private TableCellRenderer original;
+		
+		public HeaderRenderer(TableCellRenderer original) {
+			this.original = original;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
+			comp.setForeground(new Color(70, 67, 98));
+			return comp;
 		}
 	}
 

@@ -99,19 +99,17 @@ public class JPanelEmpList extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_head = new JPanel();
-		panel_head.setBackground(new Color(255, 255, 255));
+		panel_head.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head.getLayout();
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("  Employee List");
-		lblNewLabel.setIcon(new ImageIcon(JPanelEmpList.class.getResource("/resources/images/icons8-staff-52.png")));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		panel_head.add(lblNewLabel);
 
 		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
 		flowLayout_2.setVgap(15);
 		add(panel_2);
@@ -121,7 +119,6 @@ public class JPanelEmpList extends JPanel {
 		panel_body.setLayout(new BorderLayout(0, 0));
 
 		panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
 		panel.setPreferredSize(new Dimension(340, 200));
 		panel_body.add(panel, BorderLayout.WEST);
 		panel.setLayout(null);
@@ -256,12 +253,10 @@ public class JPanelEmpList extends JPanel {
 		panel.add(jbuttonGetRecord);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		panel_body.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 
 		panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
 
@@ -270,8 +265,7 @@ public class JPanelEmpList extends JPanel {
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 
 		jtableEmp = new JTable();
-		jtableEmp.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		jtableEmp.setSelectionBackground(new Color(255, 51, 51));
+		jtableEmp.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtableEmp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -281,7 +275,6 @@ public class JPanelEmpList extends JPanel {
 		scrollPane.setViewportView(jtableEmp);
 
 		panel_4 = new JPanel();
-		panel_4.setBackground(new Color(255, 255, 255));
 		panel_1.add(panel_4);
 		panel_4.setLayout(new BorderLayout(0, 0));
 
@@ -291,11 +284,9 @@ public class JPanelEmpList extends JPanel {
 
 		jtableGetRecord = new JTable();
 		jtableGetRecord.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		jtableGetRecord.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane_1.setViewportView(jtableGetRecord);
 
 		JPanel panel_bottom = new JPanel();
-		panel_bottom.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_bottom.getLayout();
 		flowLayout.setVgap(10);
 		flowLayout.setHgap(20);
@@ -575,7 +566,7 @@ public class JPanelEmpList extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 68, 98));
 			return comp;
 		}
 	}

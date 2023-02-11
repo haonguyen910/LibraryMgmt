@@ -28,6 +28,7 @@ import entities.Book;
 import entities.Book_Author;
 import entities.Book_Category;
 import entities.Category;
+import entities.Employee;
 import models.AuthorModel;
 import models.BookModel;
 import models.Book_AuthorModel;
@@ -49,6 +50,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
+import javax.swing.ListSelectionModel;
 
 public class JPanelBookList extends JPanel {
 	private JPanel jpanelRight;
@@ -83,31 +85,33 @@ public class JPanelBookList extends JPanel {
 	Book_AuthorModel book_AuthorModel = new Book_AuthorModel();
 	Book_CategoryModel book_CategoryModel = new Book_CategoryModel();
 	BorrowDetailModel borrowDetailModel = new BorrowDetailModel();
-	
+	private Map<String, Object> data;
+	private Map<String, Object> dataPut;
+	private Employee employee;
 
 	/**
 	 * Create the panel.
 	 */
 	public JPanelBookList(JPanel JpanelRight) {
+		setBackground(new Color(240, 240, 240));
 		jpanelRight = JpanelRight;
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
 		flowLayout_1.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel(" Book");
-		lblNewLabel.setIcon(new ImageIcon(JPanelBookList.class.getResource("/resources/images/icons8-literature-52.png")));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-		lblNewLabel.setForeground(new Color(255, 51, 51));
+		JLabel lblNewLabel = new JLabel(" Book List");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
 		flowLayout.setVgap(15);
 		flowLayout.setHgap(10);
 		add(panel_1);
@@ -124,7 +128,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldKeyword.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldKeyword.setPreferredSize(new Dimension(200, 30));
 		panel_1.add(jtextFieldKeyword);
-		jtextFieldKeyword.setColumns(20);
+		jtextFieldKeyword.setColumns(30);
 
 		jbuttonSearch = new JButton("Search");
 		jbuttonSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -137,7 +141,7 @@ public class JPanelBookList extends JPanel {
 		});
 
 		jcomboBoxSearchType = new JComboBox();
-		jcomboBoxSearchType.setBackground(new Color(255, 255, 255));
+		jcomboBoxSearchType.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jcomboBoxSearchType.setPreferredSize(new Dimension(150, 30));
 		jcomboBoxSearchType.setMinimumSize(new Dimension(150, 30));
 		panel_1.add(jcomboBoxSearchType);
@@ -160,7 +164,6 @@ public class JPanelBookList extends JPanel {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		panel_7 = new JPanel();
-		panel_7.setBackground(new Color(255, 255, 255));
 		panel_7.setBorder(new TitledBorder(null, "Book Detail", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_7.setMinimumSize(new Dimension(400, 400));
 		panel_7.setPreferredSize(new Dimension(400, 400));
@@ -172,7 +175,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(172, 55, 100, 30);
+		lblNewLabel_1_1.setBounds(172, 24, 100, 30);
 		panel_7.add(lblNewLabel_1_1);
 
 		jtextFieldDetailCallNumber = new JTextField();
@@ -181,7 +184,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailCallNumber.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailCallNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailCallNumber.setColumns(20);
-		jtextFieldDetailCallNumber.setBounds(172, 85, 206, 30);
+		jtextFieldDetailCallNumber.setBounds(172, 54, 206, 30);
 		panel_7.add(jtextFieldDetailCallNumber);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("ISBN:");
@@ -189,7 +192,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_1.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_1.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_1.setBounds(172, 115, 100, 30);
+		lblNewLabel_1_1_1.setBounds(172, 84, 100, 30);
 		panel_7.add(lblNewLabel_1_1_1);
 
 		jtextFieldDetailISBN = new JTextField();
@@ -198,7 +201,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailISBN.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailISBN.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailISBN.setColumns(20);
-		jtextFieldDetailISBN.setBounds(172, 144, 206, 30);
+		jtextFieldDetailISBN.setBounds(172, 113, 206, 30);
 		panel_7.add(jtextFieldDetailISBN);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("Title:");
@@ -206,7 +209,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_2.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_2.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_2.setBounds(172, 174, 100, 30);
+		lblNewLabel_1_1_2.setBounds(172, 143, 100, 30);
 		panel_7.add(lblNewLabel_1_1_2);
 
 		jtextFieldDetailTitle = new JTextField();
@@ -215,7 +218,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailTitle.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailTitle.setColumns(20);
-		jtextFieldDetailTitle.setBounds(172, 204, 206, 30);
+		jtextFieldDetailTitle.setBounds(172, 173, 206, 30);
 		panel_7.add(jtextFieldDetailTitle);
 
 		JLabel lblNewLabel_1_1_3 = new JLabel("Author:");
@@ -223,7 +226,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_3.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_3.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_3.setBounds(172, 229, 100, 30);
+		lblNewLabel_1_1_3.setBounds(172, 198, 100, 30);
 		panel_7.add(lblNewLabel_1_1_3);
 
 		jtextFieldDetailAuthor = new JTextField();
@@ -232,7 +235,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailAuthor.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailAuthor.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailAuthor.setColumns(20);
-		jtextFieldDetailAuthor.setBounds(172, 259, 206, 30);
+		jtextFieldDetailAuthor.setBounds(172, 228, 206, 30);
 		panel_7.add(jtextFieldDetailAuthor);
 
 		JLabel lblNewLabel_1_1_4 = new JLabel("Category:");
@@ -240,7 +243,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_4.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_4.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_4.setBounds(172, 289, 100, 30);
+		lblNewLabel_1_1_4.setBounds(172, 258, 100, 30);
 		panel_7.add(lblNewLabel_1_1_4);
 
 		jtextFieldDetailCategory = new JTextField();
@@ -249,7 +252,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailCategory.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailCategory.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailCategory.setColumns(20);
-		jtextFieldDetailCategory.setBounds(172, 318, 206, 30);
+		jtextFieldDetailCategory.setBounds(172, 287, 206, 30);
 		panel_7.add(jtextFieldDetailCategory);
 
 		JLabel lblNewLabel_1_1_5 = new JLabel("Quantity:");
@@ -257,7 +260,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_5.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_5.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_5.setBounds(10, 288, 100, 30);
+		lblNewLabel_1_1_5.setBounds(10, 258, 100, 30);
 		panel_7.add(lblNewLabel_1_1_5);
 
 		jtextFieldDetailQuantity = new JTextField();
@@ -266,7 +269,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailQuantity.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailQuantity.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailQuantity.setColumns(20);
-		jtextFieldDetailQuantity.setBounds(10, 318, 140, 30);
+		jtextFieldDetailQuantity.setBounds(10, 288, 140, 30);
 		panel_7.add(jtextFieldDetailQuantity);
 
 		JLabel lblNewLabel_1_1_6 = new JLabel("Price:");
@@ -274,7 +277,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_6.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_6.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_6.setBounds(10, 351, 100, 30);
+		lblNewLabel_1_1_6.setBounds(10, 321, 100, 30);
 		panel_7.add(lblNewLabel_1_1_6);
 
 		jtextFieldDetailPrice = new JTextField();
@@ -283,7 +286,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailPrice.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailPrice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailPrice.setColumns(20);
-		jtextFieldDetailPrice.setBounds(10, 380, 140, 30);
+		jtextFieldDetailPrice.setBounds(10, 350, 140, 30);
 		panel_7.add(jtextFieldDetailPrice);
 
 		JLabel lblNewLabel_1_1_7 = new JLabel("Created:");
@@ -291,7 +294,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_7.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_7.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_7.setBounds(172, 351, 100, 30);
+		lblNewLabel_1_1_7.setBounds(172, 320, 100, 30);
 		panel_7.add(lblNewLabel_1_1_7);
 
 		jtextFieldDetailCreated = new JTextField();
@@ -300,7 +303,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailCreated.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailCreated.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailCreated.setColumns(20);
-		jtextFieldDetailCreated.setBounds(172, 380, 206, 30);
+		jtextFieldDetailCreated.setBounds(172, 349, 206, 30);
 		panel_7.add(jtextFieldDetailCreated);
 
 		JLabel lblNewLabel_1_1_8 = new JLabel("Issue Status:");
@@ -308,7 +311,7 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_8.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_8.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_8.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_8.setBounds(10, 410, 100, 30);
+		lblNewLabel_1_1_8.setBounds(10, 380, 100, 30);
 		panel_7.add(lblNewLabel_1_1_8);
 
 		jtextFieldDetailStatus = new JTextField();
@@ -317,7 +320,7 @@ public class JPanelBookList extends JPanel {
 		jtextFieldDetailStatus.setMinimumSize(new Dimension(200, 30));
 		jtextFieldDetailStatus.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextFieldDetailStatus.setColumns(20);
-		jtextFieldDetailStatus.setBounds(10, 440, 140, 30);
+		jtextFieldDetailStatus.setBounds(10, 410, 140, 30);
 		panel_7.add(jtextFieldDetailStatus);
 
 		JLabel lblNewLabel_1_1_9 = new JLabel("Description:");
@@ -325,20 +328,21 @@ public class JPanelBookList extends JPanel {
 		lblNewLabel_1_1_9.setMinimumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_9.setMaximumSize(new Dimension(100, 30));
 		lblNewLabel_1_1_9.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_9.setBounds(172, 409, 100, 30);
+		lblNewLabel_1_1_9.setBounds(172, 380, 100, 30);
 		panel_7.add(lblNewLabel_1_1_9);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(172, 439, 206, 100);
+		scrollPane.setBounds(172, 410, 206, 160);
 		panel_7.add(scrollPane);
 
 		jtextAreaDetailDescription = new JTextArea();
+		jtextAreaDetailDescription.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		jtextAreaDetailDescription.setEditable(false);
 		scrollPane.setViewportView(jtextAreaDetailDescription);
 
 		jlabelPhoto = new JLabel("");
 		jlabelPhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		jlabelPhoto.setBounds(10, 55, 140, 200);
+		jlabelPhoto.setBounds(10, 24, 140, 200);
 		panel_7.add(jlabelPhoto);
 
 		panel_8 = new JPanel();
@@ -350,9 +354,8 @@ public class JPanelBookList extends JPanel {
 		panel_8.add(scrollPane_1, BorderLayout.CENTER);
 
 		jtableBook = new JTable();
+		jtableBook.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtableBook.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		jtableBook.setSelectionBackground(new Color(255, 51, 51));
-		jtableBook.setBackground(new Color(255, 255, 255));
 		jtableBook.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -362,8 +365,8 @@ public class JPanelBookList extends JPanel {
 		scrollPane_1.setViewportView(jtableBook);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		flowLayout_2.setVgap(10);
 		add(panel_3);
 
@@ -403,17 +406,35 @@ public class JPanelBookList extends JPanel {
 		});
 		panel_3.add(jbuttonEdit);
 
-		initJFrame();
+	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public JPanelBookList(JPanel JpanelRight, Map<String, Object> data) {
+		this(JpanelRight);
+		this.data = data;
+		initJFrame();
 	}
 
 	// Functions
 	private void initJFrame() {
+		employee = (Employee) data.get("employee");
+		dataPut = new HashMap<String, Object>();
+		dataPut.put("employee", employee);
 		fillDataToJTable(bookModel.findAll());
 		fillDataToJComboBox();
+
+		if (employee.isIs_admin() == true) {
+			jbuttonDelete.setEnabled(false);
+			jbuttonEdit.setEnabled(false);
+		} else {
+			jbuttonDelete.setVisible(false);
+			jbuttonEdit.setVisible(false);
+			jbuttonAdd.setVisible(false);
+		}
 		jbuttonCancelSearch.setVisible(false);
-		jbuttonDelete.setEnabled(false);
-		jbuttonEdit.setEnabled(false);
+
 	}
 
 	private void jbuttonSearch_actionPerformed(ActionEvent e) {
@@ -445,7 +466,7 @@ public class JPanelBookList extends JPanel {
 	private void jbuttonAdd_actionPerformed(ActionEvent e) {
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBookAdd jPanelBookAdd = new JPanelBookAdd(jpanelRight);
+		JPanelBookAdd jPanelBookAdd = new JPanelBookAdd(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBookAdd);
 		jPanelBookAdd.setVisible(true);
 	}
@@ -471,10 +492,10 @@ public class JPanelBookList extends JPanel {
 		ImageIcon photo = new ImageIcon(new ImageIcon(imageData).getImage().getScaledInstance(jlabelPhoto.getWidth(),
 				jlabelPhoto.getHeight(), Image.SCALE_DEFAULT));
 		jlabelPhoto.setIcon(photo);
-		
-		if(borrowDetailModel.findOneByBookId(callNumber) != null) {
+
+		if (borrowDetailModel.findOneByBookId(callNumber) != null) {
 			jbuttonDelete.setEnabled(false);
-		}else {
+		} else {
 			jbuttonDelete.setEnabled(true);
 		}
 		jbuttonEdit.setEnabled(true);
@@ -513,12 +534,11 @@ public class JPanelBookList extends JPanel {
 		int selectedRow = jtableBook.getSelectedRow();
 		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
 
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("callNumber", callNumber);
+		dataPut.put("callNumber", callNumber);
 
 		jpanelRight.removeAll();
 		jpanelRight.revalidate();
-		JPanelBookEdit jPanelBookEdit = new JPanelBookEdit(jpanelRight, data);
+		JPanelBookEdit jPanelBookEdit = new JPanelBookEdit(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBookEdit);
 		jPanelBookEdit.setVisible(true);
 	}
@@ -569,7 +589,7 @@ public class JPanelBookList extends JPanel {
 		jtableBook.getTableHeader().setReorderingAllowed(false);
 		jtableBook.setRowHeight(50);
 		jtableBook.getColumnModel().getColumn(2).setCellRenderer(new ImageCellRender());
-		
+
 		HeaderRenderer header = new HeaderRenderer(jtableBook.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableBook.getModel().getColumnCount(); i++) {
 			jtableBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -578,10 +598,10 @@ public class JPanelBookList extends JPanel {
 
 	private void fillDataToJComboBox() {
 		DefaultComboBoxModel<String> defaultComboBoxModel = new DefaultComboBoxModel<String>();
-		defaultComboBoxModel.addElement("Call Number");
-		defaultComboBoxModel.addElement("ISBN");
 		defaultComboBoxModel.addElement("Title");
 		defaultComboBoxModel.addElement("Author");
+		defaultComboBoxModel.addElement("Call Number");
+		defaultComboBoxModel.addElement("ISBN");
 		jcomboBoxSearchType.setModel(defaultComboBoxModel);
 	}
 
@@ -600,10 +620,10 @@ public class JPanelBookList extends JPanel {
 			return jlabel;
 		}
 	}
-	
+
 	public class HeaderRenderer implements UIResource, TableCellRenderer {
 		private TableCellRenderer original;
-		
+
 		public HeaderRenderer(TableCellRenderer original) {
 			this.original = original;
 		}
@@ -613,7 +633,7 @@ public class JPanelBookList extends JPanel {
 				int row, int column) {
 			Component comp = original.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			comp.setFont(comp.getFont().deriveFont(Font.BOLD, 15));
-			comp.setForeground(new Color(102, 102, 255));
+			comp.setForeground(new Color(70, 67, 98));
 			return comp;
 		}
 	}
