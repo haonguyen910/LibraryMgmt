@@ -70,6 +70,7 @@ public class JPanelCustmList extends JPanel {
 		JPanel panel_head_1 = new JPanel();
 		panel_head_1.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel_head_1 = (FlowLayout) panel_head_1.getLayout();
+		fl_panel_head_1.setVgap(15);
 		add(panel_head_1);
 
 		JLabel lblNewLabel = new JLabel("  Customer List");
@@ -221,7 +222,6 @@ public class JPanelCustmList extends JPanel {
 
 		jtableGetHistory = new JTable();
 		jtableGetHistory.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		jtableGetHistory.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane_1.setViewportView(jtableGetHistory);
 
 		JPanel panel_bottom = new JPanel();

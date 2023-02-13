@@ -39,6 +39,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
 
 public class JPanelRecord extends JPanel {
 	private JDateChooser jdateChooserStart;
@@ -72,10 +73,17 @@ public class JPanelRecord extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_1.getLayout();
+		flowLayout_2.setVgap(15);
 		panel_1.setBackground(new Color(52, 52, 52));
 		add(panel_1);
 
 		JLabel lblNewLabel = new JLabel("  Issue Register ");
+		lblNewLabel.setMinimumSize(new Dimension(78, 30));
+		lblNewLabel.setMaximumSize(new Dimension(78, 30));
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setPreferredSize(new Dimension(300, 30));
 		lblNewLabel.setBackground(new Color(51, 51, 51));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));

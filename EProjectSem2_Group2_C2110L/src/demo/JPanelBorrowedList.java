@@ -222,7 +222,7 @@ public class JPanelBorrowedList extends JPanel {
 
 		JPanel panel_2 = new JPanel();
 		add(panel_2);
-		panel_2.setLayout(new BorderLayout(0, 0));
+		panel_2.setLayout(new BorderLayout(10, 0));
 
 		jpanelDetail = new JPanel();
 		jpanelDetail.setBorder(
@@ -245,7 +245,7 @@ public class JPanelBorrowedList extends JPanel {
 
 		jpanelBorrow = new JPanel();
 		panel_2.add(jpanelBorrow, BorderLayout.CENTER);
-		jpanelBorrow.setLayout(new BorderLayout(0, 0));
+		jpanelBorrow.setLayout(new BorderLayout(20, 20));
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setOpaque(false);
