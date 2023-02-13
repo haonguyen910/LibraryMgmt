@@ -123,12 +123,6 @@ public class JPanelBorrowAdd extends JPanel {
 	private JButton jbuttonCancel;
 	private Map<String, Object> data;
 	private Map<String, Object> dataPut;
-	int selectedRowCustomer;
-	int idCustomer;
-	int selectedRowBook;
-	String callNumberBook;
-	int selectedRowBorrowBook;
-	String callNumberBorrowBook;
 
 	/**
 	 * Create the panel.
@@ -142,20 +136,16 @@ public class JPanelBorrowAdd extends JPanel {
 		panel.setMaximumSize(new Dimension(32767, 200));
 		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
-		fl_panel.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Borrow");
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setPreferredSize(new Dimension(300, 30));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1);
-		panel_1.setLayout(new BorderLayout(10, 20));
+		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelBorrowTicket = new JPanel();
 		jpanelBorrowTicket
@@ -290,15 +280,13 @@ public class JPanelBorrowAdd extends JPanel {
 		jpanelSearch.setLayout(new BoxLayout(jpanelSearch, BoxLayout.Y_AXIS));
 
 		JPanel jpanelCustomer = new JPanel();
-		jpanelCustomer.setBorder(new TitledBorder(null, "Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		jpanelCustomer.setFont(new Font("Tahoma", Font.BOLD, 16));
+		jpanelCustomer.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jpanelSearch.add(jpanelCustomer);
 		jpanelCustomer.setLayout(new BoxLayout(jpanelCustomer, BoxLayout.Y_AXIS));
 
 		JPanel panel_6 = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panel_6.getLayout();
-		flowLayout_4.setHgap(10);
-		flowLayout_4.setVgap(20);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		jpanelCustomer.add(panel_6);
 
@@ -348,7 +336,7 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel panel_7 = new JPanel();
 		jpanelCustomer.add(panel_7);
-		panel_7.setLayout(new BorderLayout(20, 20));
+		panel_7.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane_2 = new JScrollPane();
 		panel_7.add(scrollPane_2, BorderLayout.CENTER);
@@ -371,8 +359,6 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel panel_8 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_8.getLayout();
-		flowLayout_3.setVgap(20);
-		flowLayout_3.setHgap(10);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		jpanelBook.add(panel_8);
 
@@ -422,18 +408,12 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel panel_9 = new JPanel();
 		jpanelBook.add(panel_9);
-		panel_9.setLayout(new BorderLayout(20, 20));
+		panel_9.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane_3 = new JScrollPane();
 		panel_9.add(scrollPane_3, BorderLayout.CENTER);
 
 		jtableBook = new JTable();
-		jtableBook.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				jtableBook_mouseClicked(e);
-			}
-		});
 		jtableBook.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_3.setViewportView(jtableBook);
 
@@ -443,8 +423,6 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel panel_11 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_11.getLayout();
-		flowLayout.setVgap(20);
-		flowLayout.setHgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_10.add(panel_11);
 
@@ -555,34 +533,17 @@ public class JPanelBorrowAdd extends JPanel {
 		jbuttonClearCustomer.setVisible(false);
 		jbuttonClearBook.setVisible(false);
 		jbuttonRemoveBookList.setEnabled(false);
-		jbuttonAddBookList.setEnabled(false);
 
 		borrowDetailListTemp = new ArrayList<BorrowDetail>();
 		bookBorrowList = new ArrayList<Book>();
 
 	}
 
-	private void jtableBook_mouseClicked(MouseEvent e) {
-		selectedRowBook = jtableBook.getSelectedRow();
-		callNumberBook = jtableBook.getValueAt(selectedRowBook, 0).toString();
-		jbuttonAddBookList.setEnabled(true);
-	}
-
-	private void jtableBorrowBook_mouseClicked(MouseEvent e) {
-		selectedRowBorrowBook = jtableBorrowBook.getSelectedRow();
-		callNumberBorrowBook = jtableBorrowBook.getValueAt(selectedRowBorrowBook, 0).toString();
-		jbuttonRemoveBookList.setEnabled(true);
-	}
-
-	private void jtableCustomer_mouseClicked(MouseEvent e) {
-		selectedRowCustomer = jtableCustomer.getSelectedRow();
-		idCustomer = Integer.parseInt(jtableCustomer.getValueAt(selectedRowCustomer, 0).toString());
-		customer = customerModel.find(idCustomer);
-		jtextFieldBorrowCustomer.setText(customer.getName());
-	}
-
 	private void jbuttonAddBookList_actionPerformed(ActionEvent e) {
-		Book bookSelected = bookModel.find(callNumberBook);
+
+		int selectedRow = jtableBook.getSelectedRow();
+		String callNumber = jtableBook.getValueAt(selectedRow, 0).toString();
+		Book bookSelected = bookModel.find(callNumber);
 
 		if (bookSelected.getQuantity() > 0 && bookSelected.isStatus() == true) {
 			BorrowDetail borrowDetail = setValueBorrowDetailTemp(bookSelected.getCallNumber(), 1,
@@ -602,12 +563,15 @@ public class JPanelBorrowAdd extends JPanel {
 			JFrame f = new JFrame();
 			JOptionPane.showMessageDialog(f, "Book Invalid");
 		}
-		jbuttonAddBookList.setEnabled(false);
+
 	}
 
 	private void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
+		int selectedRow = jtableBorrowBook.getSelectedRow();
+		String callNumber = jtableBorrowBook.getValueAt(selectedRow, 0).toString();
+
 		for (int i = 0; i < bookBorrowList.size(); i++) {
-			if (bookBorrowList.get(i).getCallNumber() == callNumberBorrowBook) {
+			if (bookBorrowList.get(i).getCallNumber() == callNumber) {
 
 				if (bookBorrowList.remove(bookBorrowList.get(i))) {
 
@@ -616,7 +580,7 @@ public class JPanelBorrowAdd extends JPanel {
 			}
 		}
 		for (int i = 0; i < borrowDetailListTemp.size(); i++) {
-			if (borrowDetailListTemp.get(i).getId_book() == callNumberBorrowBook) {
+			if (borrowDetailListTemp.get(i).getId_book() == callNumber) {
 
 				if (borrowDetailListTemp.remove(borrowDetailListTemp.get(i))) {
 
@@ -681,6 +645,17 @@ public class JPanelBorrowAdd extends JPanel {
 		JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight, dataPut);
 		jpanelRight.add(jPanelBorrowList);
 		jPanelBorrowList.setVisible(true);
+	}
+
+	private void jtableBorrowBook_mouseClicked(MouseEvent e) {
+		jbuttonRemoveBookList.setEnabled(true);
+	}
+
+	private void jtableCustomer_mouseClicked(MouseEvent e) {
+		int selectedRow = jtableCustomer.getSelectedRow();
+		int id = Integer.parseInt(jtableCustomer.getValueAt(selectedRow, 0).toString());
+		customer = customerModel.find(id);
+		jtextFieldBorrowCustomer.setText(customer.getName());
 	}
 
 	private void jbuttonSearchCustomer_actionPerformed(ActionEvent e) {
@@ -817,7 +792,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jtableBorrowBook.setModel(defaultTableModel);
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
 		jtableBorrowBook.setRowHeight(50);
-
+		
 		HeaderRenderer header = new HeaderRenderer(jtableBorrowBook.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableBorrowBook.getModel().getColumnCount(); i++) {
 			jtableBorrowBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -845,7 +820,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jtableCustomer.setModel(defaultTableModel);
 		jtableCustomer.getTableHeader().setReorderingAllowed(false);
 		jtableCustomer.setRowHeight(50);
-
+		
 		HeaderRenderer header = new HeaderRenderer(jtableCustomer.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableCustomer.getModel().getColumnCount(); i++) {
 			jtableCustomer.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -881,7 +856,7 @@ public class JPanelBorrowAdd extends JPanel {
 		jtableBook.getTableHeader().setReorderingAllowed(false);
 		jtableBook.setRowHeight(50);
 		jtableBook.getColumnModel().getColumn(2).setCellRenderer(new ImageCellRender());
-
+		
 		HeaderRenderer header = new HeaderRenderer(jtableBook.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableBook.getModel().getColumnCount(); i++) {
 			jtableBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -918,10 +893,10 @@ public class JPanelBorrowAdd extends JPanel {
 			return jlabel;
 		}
 	}
-
+	
 	public class HeaderRenderer implements UIResource, TableCellRenderer {
 		private TableCellRenderer original;
-
+		
 		public HeaderRenderer(TableCellRenderer original) {
 			this.original = original;
 		}

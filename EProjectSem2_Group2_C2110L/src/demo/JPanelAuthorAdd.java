@@ -59,7 +59,7 @@ public class JPanelAuthorAdd extends JPanel {
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
 
 		JLabel lblNewLabel_1 = new JLabel("Name:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -119,9 +119,6 @@ public class JPanelAuthorAdd extends JPanel {
 
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public JPanelAuthorAdd(JPanel JpanelRight, Map<String, Object> data) {
 		this(JpanelRight);
 		this.data = data;

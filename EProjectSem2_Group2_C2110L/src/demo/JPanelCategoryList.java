@@ -77,7 +77,7 @@ public class JPanelCategoryList extends JPanel {
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		flowLayout_1.setVgap(20);
+		flowLayout_1.setVgap(15);
 		flowLayout_1.setHgap(10);
 		add(panel_1);
 
@@ -121,7 +121,7 @@ public class JPanelCategoryList extends JPanel {
 
 		JPanel panel_2 = new JPanel();
 		add(panel_2);
-		panel_2.setLayout(new BorderLayout(20, 20));
+		panel_2.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
@@ -141,7 +141,7 @@ public class JPanelCategoryList extends JPanel {
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		flowLayout_2.setVgap(20);
+		flowLayout_2.setVgap(10);
 		flowLayout_2.setHgap(10);
 		add(panel_3);
 
@@ -182,9 +182,6 @@ public class JPanelCategoryList extends JPanel {
 		panel_3.add(jbuttonEdit);
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public JPanelCategoryList(JPanel JpanelRight, Map<String, Object> data) {
 		this(JpanelRight);
 		this.data = data;

@@ -103,6 +103,7 @@ public class JPanelBorrowEdit extends JPanel {
 	private JButton jbuttonClearBook;
 	private JButton jbuttonAddBookList;
 	private JButton jbuttonRemoveBookList;
+	private JButton jbuttonAddCustomer;
 	private JButton jbuttonSave;
 //	Global Variable
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -133,7 +134,7 @@ public class JPanelBorrowEdit extends JPanel {
 		panel.setMaximumSize(new Dimension(32767, 200));
 		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
-		fl_panel.setVgap(15);
+		fl_panel.setVgap(10);
 		fl_panel.setHgap(20);
 		add(panel);
 
@@ -144,7 +145,7 @@ public class JPanelBorrowEdit extends JPanel {
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1);
-		panel_1.setLayout(new BorderLayout(10, 20));
+		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelBorrowTicket = new JPanel();
 		jpanelBorrowTicket
@@ -280,16 +281,12 @@ public class JPanelBorrowEdit extends JPanel {
 
 		JPanel jpanelCustomer = new JPanel();
 		jpanelCustomer.setFont(new Font("Tahoma", Font.BOLD, 16));
-		jpanelCustomer.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jpanelCustomer.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jpanelSearch.add(jpanelCustomer);
 		jpanelCustomer.setLayout(new BoxLayout(jpanelCustomer, BoxLayout.Y_AXIS));
 
 		JPanel panel_6 = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panel_6.getLayout();
-		flowLayout_4.setVgap(10);
-		flowLayout_4.setHgap(20);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		jpanelCustomer.add(panel_6);
 
@@ -362,8 +359,6 @@ public class JPanelBorrowEdit extends JPanel {
 
 		JPanel panel_8 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_8.getLayout();
-		flowLayout_3.setHgap(10);
-		flowLayout_3.setVgap(20);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		jpanelBook.add(panel_8);
 
@@ -419,12 +414,6 @@ public class JPanelBorrowEdit extends JPanel {
 		panel_9.add(scrollPane_3, BorderLayout.CENTER);
 
 		jtableBook = new JTable();
-		jtableBook.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				jtableBook_mouseClicked(e);
-			}
-		});
 		jtableBook.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_3.setViewportView(jtableBook);
 
@@ -434,8 +423,6 @@ public class JPanelBorrowEdit extends JPanel {
 
 		JPanel panel_11 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_11.getLayout();
-		flowLayout.setVgap(20);
-		flowLayout.setHgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_10.add(panel_11);
 
@@ -450,6 +437,18 @@ public class JPanelBorrowEdit extends JPanel {
 		jbuttonAddBookList.setMinimumSize(new Dimension(120, 30));
 		jbuttonAddBookList.setMaximumSize(new Dimension(120, 30));
 		jbuttonAddBookList.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+		JPanel panel_12 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_12.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.RIGHT);
+		panel_10.add(panel_12);
+
+		jbuttonAddCustomer = new JButton("Add Customer");
+		jbuttonAddCustomer.setPreferredSize(new Dimension(120, 30));
+		jbuttonAddCustomer.setMinimumSize(new Dimension(120, 30));
+		jbuttonAddCustomer.setMaximumSize(new Dimension(120, 30));
+		jbuttonAddCustomer.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel_12.add(jbuttonAddCustomer);
 	}
 
 	/**
@@ -549,7 +548,7 @@ public class JPanelBorrowEdit extends JPanel {
 		employee = (Employee) data.get("employee");
 		dataPut = new HashMap<String, Object>();
 		dataPut.put("employee", employee);
-
+		
 		borrowDetailListTemp = new ArrayList<BorrowDetail>();
 		bookBorrowList = new ArrayList<Book>();
 		bookBorrowListOld = new ArrayList<Book>();
@@ -595,15 +594,11 @@ public class JPanelBorrowEdit extends JPanel {
 		fillDataToJComboBoxCustomer();
 		fillDataToJComboBoxBook();
 
+
 		jbuttonClearCustomer.setVisible(false);
 		jbuttonClearBook.setVisible(false);
 		jbuttonRemoveBookList.setEnabled(false);
-		jbuttonAddBookList.setEnabled(false);
 
-	}
-
-	public void jtableBook_mouseClicked(MouseEvent e) {
-		jbuttonAddBookList.setEnabled(true);
 	}
 
 	private void jbuttonAddBookList_actionPerformed(ActionEvent e) {
@@ -630,7 +625,6 @@ public class JPanelBorrowEdit extends JPanel {
 			JFrame f = new JFrame();
 			JOptionPane.showMessageDialog(f, "Book Invalid");
 		}
-		jbuttonAddBookList.setEnabled(false);
 	}
 
 	private void jbuttonRemoveBookList_actionPerformed(ActionEvent e) {
@@ -842,7 +836,7 @@ public class JPanelBorrowEdit extends JPanel {
 		jtableBorrowBook.setRowHeight(50);
 
 		jtextFieldBorrowDeposit.setText(String.valueOf(setValueDeposit(borrowDetailListTemp)));
-
+		
 		HeaderRenderer header = new HeaderRenderer(jtableBorrowBook.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableBorrowBook.getModel().getColumnCount(); i++) {
 			jtableBorrowBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -865,7 +859,7 @@ public class JPanelBorrowEdit extends JPanel {
 		jtableBorrowBook.setModel(defaultTableModel);
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
 		jtableBorrowBook.setRowHeight(50);
-
+		
 		HeaderRenderer header = new HeaderRenderer(jtableBorrowBook.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableBorrowBook.getModel().getColumnCount(); i++) {
 			jtableBorrowBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -893,7 +887,7 @@ public class JPanelBorrowEdit extends JPanel {
 		jtableCustomer.setModel(defaultTableModel);
 		jtableCustomer.getTableHeader().setReorderingAllowed(false);
 		jtableCustomer.setRowHeight(50);
-
+		
 		HeaderRenderer header = new HeaderRenderer(jtableCustomer.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableCustomer.getModel().getColumnCount(); i++) {
 			jtableCustomer.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -928,7 +922,7 @@ public class JPanelBorrowEdit extends JPanel {
 		jtableBook.getTableHeader().setReorderingAllowed(false);
 		jtableBook.setRowHeight(50);
 		jtableBook.getColumnModel().getColumn(2).setCellRenderer(new ImageCellRender());
-
+		
 		HeaderRenderer header = new HeaderRenderer(jtableBook.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableBook.getModel().getColumnCount(); i++) {
 			jtableBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -965,10 +959,10 @@ public class JPanelBorrowEdit extends JPanel {
 			return jlabel;
 		}
 	}
-
+	
 	public class HeaderRenderer implements UIResource, TableCellRenderer {
 		private TableCellRenderer original;
-
+		
 		public HeaderRenderer(TableCellRenderer original) {
 			this.original = original;
 		}

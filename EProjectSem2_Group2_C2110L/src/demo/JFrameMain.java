@@ -113,7 +113,7 @@ public class JFrameMain extends JFrame {
 
 		jpanelMain = new JPanel();
 		contentPane.add(jpanelMain, BorderLayout.WEST);
-		jpanelMain.setLayout(new BorderLayout(0, 40));
+		jpanelMain.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelLeft = new JPanel();
 		jpanelLeft.setBackground(new Color(51, 51, 51));

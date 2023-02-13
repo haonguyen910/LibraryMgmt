@@ -47,7 +47,6 @@ import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 
 public class JPanelBorrowList extends JPanel {
 	private JPanel jpanelRight;
@@ -94,21 +93,15 @@ public class JPanelBorrowList extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
-		flowLayout_1.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Borrow List");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setPreferredSize(new Dimension(300, 30));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
-		flowLayout.setVgap(10);
-		flowLayout.setHgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(panel_1);
 
@@ -158,8 +151,6 @@ public class JPanelBorrowList extends JPanel {
 
 		panel_4 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_4.getLayout();
-		flowLayout_3.setVgap(10);
-		flowLayout_3.setHgap(10);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		add(panel_4);
 
@@ -202,8 +193,6 @@ public class JPanelBorrowList extends JPanel {
 
 		panel_5 = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panel_5.getLayout();
-		flowLayout_4.setVgap(10);
-		flowLayout_4.setHgap(10);
 		flowLayout_4.setAlignment(FlowLayout.RIGHT);
 		add(panel_5);
 
@@ -227,7 +216,7 @@ public class JPanelBorrowList extends JPanel {
 
 		JPanel panel_2 = new JPanel();
 		add(panel_2);
-		panel_2.setLayout(new BorderLayout(10, 0));
+		panel_2.setLayout(new BorderLayout(0, 0));
 
 		jpanelDetail = new JPanel();
 		jpanelDetail.setBorder(
@@ -247,7 +236,7 @@ public class JPanelBorrowList extends JPanel {
 
 		jpanelBorrow = new JPanel();
 		panel_2.add(jpanelBorrow, BorderLayout.CENTER);
-		jpanelBorrow.setLayout(new BorderLayout(20, 20));
+		jpanelBorrow.setLayout(new BorderLayout(0, 0));
 
 		scrollPane_1 = new JScrollPane();
 		jpanelBorrow.add(scrollPane_1, BorderLayout.CENTER);
@@ -265,8 +254,6 @@ public class JPanelBorrowList extends JPanel {
 
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
-		flowLayout_2.setVgap(20);
-		flowLayout_2.setHgap(10);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		add(panel_3);
 

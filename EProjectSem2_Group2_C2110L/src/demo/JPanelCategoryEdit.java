@@ -60,7 +60,7 @@ public class JPanelCategoryEdit extends JPanel {
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 20));
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 10));
 
 		JLabel lblNewLabel_1 = new JLabel("ID:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -79,7 +79,7 @@ public class JPanelCategoryEdit extends JPanel {
 
 		JPanel panel_1_1 = new JPanel();
 		add(panel_1_1);
-		panel_1_1.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		panel_1_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 10));
 
 		JLabel lblNewLabel_1_2 = new JLabel("Name:");
 		lblNewLabel_1_2.setPreferredSize(new Dimension(50, 30));
@@ -98,7 +98,7 @@ public class JPanelCategoryEdit extends JPanel {
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
 		flowLayout_1.setHgap(10);
-		flowLayout_1.setVgap(20);
+		flowLayout_1.setVgap(10);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel_3);
 
