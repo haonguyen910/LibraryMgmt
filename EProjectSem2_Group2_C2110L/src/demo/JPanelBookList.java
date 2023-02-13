@@ -112,7 +112,7 @@ public class JPanelBookList extends JPanel {
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		flowLayout.setVgap(15);
+		flowLayout.setVgap(20);
 		flowLayout.setHgap(10);
 		add(panel_1);
 
@@ -161,7 +161,7 @@ public class JPanelBookList extends JPanel {
 
 		panel_6 = new JPanel();
 		add(panel_6);
-		panel_6.setLayout(new BorderLayout(0, 0));
+		panel_6.setLayout(new BorderLayout(10, 0));
 
 		panel_7 = new JPanel();
 		panel_7.setBorder(new TitledBorder(null, "Book Detail", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -347,7 +347,7 @@ public class JPanelBookList extends JPanel {
 
 		panel_8 = new JPanel();
 		panel_6.add(panel_8, BorderLayout.CENTER);
-		panel_8.setLayout(new BorderLayout(0, 0));
+		panel_8.setLayout(new BorderLayout(20, 20));
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBorder(new LineBorder(new Color(130, 135, 144), 1, true));
@@ -366,8 +366,9 @@ public class JPanelBookList extends JPanel {
 
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
+		flowLayout_2.setHgap(10);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		flowLayout_2.setVgap(10);
+		flowLayout_2.setVgap(20);
 		add(panel_3);
 
 		jbuttonAdd = new JButton("Add");

@@ -59,7 +59,7 @@ public class JPanelCategoryAdd extends JPanel {
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 10));
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 20));
 
 		JLabel lblNewLabel_1 = new JLabel("Name:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -77,6 +77,7 @@ public class JPanelCategoryAdd extends JPanel {
 
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
+		flowLayout_1.setHgap(10);
 		flowLayout_1.setVgap(10);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(panel_3);
@@ -118,6 +119,9 @@ public class JPanelCategoryAdd extends JPanel {
 
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public JPanelCategoryAdd(JPanel JpanelRight, Map<String, Object> data) {
 		this(JpanelRight);
 		this.data = data;

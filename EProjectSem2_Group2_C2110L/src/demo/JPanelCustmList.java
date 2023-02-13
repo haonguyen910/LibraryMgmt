@@ -222,7 +222,6 @@ public class JPanelCustmList extends JPanel {
 
 		jtableGetHistory = new JTable();
 		jtableGetHistory.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		jtableGetHistory.setSelectionBackground(new Color(255, 51, 51));
 		scrollPane_1.setViewportView(jtableGetHistory);
 
 		JPanel panel_bottom = new JPanel();

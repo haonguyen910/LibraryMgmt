@@ -105,6 +105,8 @@ public class JPanelEmpList extends JPanel {
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("  Employee List");
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel.setPreferredSize(new Dimension(300, 30));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
