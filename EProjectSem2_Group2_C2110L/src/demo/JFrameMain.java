@@ -45,6 +45,8 @@ public class JFrameMain extends JFrame {
 	private JButton jbuttonLogOut;
 	private Employee employee;
 	private Map<String, Object> dataPut;
+	private JButton jbuttonProfile;
+	private JButton jbuttonEmplList;
 
 	/**
 	 * Launch the application.
@@ -262,7 +264,7 @@ public class JFrameMain extends JFrame {
 				.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Read_Online_26px.png")));
 		jpanelLeft.add(jbuttonCustmList);
 
-		JButton jbuttonEmplList = new JButton("   Employee");
+		jbuttonEmplList = new JButton("   Employee");
 		jbuttonEmplList.setHorizontalAlignment(SwingConstants.LEFT);
 		jbuttonEmplList.setMaximumSize(new Dimension(200, 60));
 		jbuttonEmplList.setBorderPainted(false);
@@ -284,6 +286,21 @@ public class JFrameMain extends JFrame {
 				jbuttonLogOut_actionPerformed(e);
 			}
 		});
+		
+		jbuttonProfile = new JButton("   Profile");
+		jbuttonProfile.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8-settings-24.png")));
+		jbuttonProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonProfile_actionPerformed(e);
+			}
+		});
+		jbuttonProfile.setMaximumSize(new Dimension(200, 60));
+		jbuttonProfile.setHorizontalAlignment(SwingConstants.LEFT);
+		jbuttonProfile.setForeground(Color.LIGHT_GRAY);
+		jbuttonProfile.setFont(new Font("SansSerif", Font.BOLD, 14));
+		jbuttonProfile.setContentAreaFilled(false);
+		jbuttonProfile.setBorderPainted(false);
+		jpanelLeft.add(jbuttonProfile);
 		jbuttonLogOut.setBorderPainted(false);
 		jbuttonLogOut.setHorizontalAlignment(SwingConstants.LEFT);
 		jbuttonLogOut.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Exit_26px_2.png")));
@@ -316,6 +333,10 @@ public class JFrameMain extends JFrame {
 		JPanelDashBoard jpanelHome = new JPanelDashBoard();
 		jpanelRight.add(jpanelHome);
 		jpanelHome.setVisible(true);
+		
+		if(employee.isIs_admin() == false) {
+			jbuttonEmplList.setVisible(false);
+		}
 	}
 
 	public void jbuttonRecord_actionPerformed(ActionEvent e) {
@@ -344,6 +365,13 @@ public class JFrameMain extends JFrame {
 		JPanelEmpList jpanelEmpList = new JPanelEmpList();
 		jpanelRight.add(jpanelEmpList);
 		jpanelEmpList.setVisible(true);
+	}
+	
+	public void jbuttonProfile_actionPerformed(ActionEvent e) {
+		clearScreen();
+		JPanelProfile jpanelProfile = new JPanelProfile(dataPut);
+		jpanelRight.add(jpanelProfile);
+		jpanelProfile.setVisible(true);
 	}
 
 	private void jbuttonBookList_actionPerformed(ActionEvent e) {

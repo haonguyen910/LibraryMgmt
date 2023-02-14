@@ -101,6 +101,7 @@ public class JPanelEmpList extends JPanel {
 		JPanel panel_head = new JPanel();
 		panel_head.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_head.getLayout();
+		flowLayout_1.setVgap(15);
 		add(panel_head);
 
 		JLabel lblNewLabel = new JLabel("  Employee List");
@@ -432,7 +433,7 @@ public class JPanelEmpList extends JPanel {
 				setDataToTableEmp(employeeModel.findAll());
 				jbuttonDelete.setEnabled(false);
 			} else {
-				JOptionPane.showMessageDialog(this, "Employee still has Issue Record, cannot delete");
+				JOptionPane.showMessageDialog(this, "Can not delete, please check issue history");
 			}
 		}
 	}
@@ -541,12 +542,6 @@ public class JPanelEmpList extends JPanel {
 			jtableGetRecord.setRowHeight(30);
 			jtableGetRecord.getTableHeader().setReorderingAllowed(false);
 		}
-//		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-//		headerRenderer.setBackground(new Color(102, 102, 255));
-//		headerRenderer.setForeground(new Color(255, 255, 255));
-//		for (int i = 0; i < jtableGetRecord.getModel().getColumnCount(); i++) {
-//			jtableGetRecord.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-//		}
 
 		HeaderRenderer header = new HeaderRenderer(jtableGetRecord.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableGetRecord.getModel().getColumnCount(); i++) {

@@ -41,8 +41,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
 
-import demo.JPanelBorrowedList.HeaderRenderer;
-
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.UIResource;
@@ -220,7 +218,7 @@ public class JPanelBorrowList extends JPanel {
 
 		jpanelDetail = new JPanel();
 		jpanelDetail.setBorder(
-				new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Issue Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				new TitledBorder(null, "Borrow Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		jpanelDetail.setMinimumSize(new Dimension(400, 400));
 		jpanelDetail.setPreferredSize(new Dimension(400, 400));
 		panel_2.add(jpanelDetail, BorderLayout.WEST);

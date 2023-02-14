@@ -51,6 +51,7 @@ import javax.swing.plaf.UIResource;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EtchedBorder;
 
 public class JPanelBookList extends JPanel {
 	private JPanel jpanelRight;
@@ -104,7 +105,7 @@ public class JPanelBookList extends JPanel {
 		flowLayout_1.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel(" Book List");
+		JLabel lblNewLabel = new JLabel("Issue Book");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
@@ -164,7 +165,7 @@ public class JPanelBookList extends JPanel {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		panel_7 = new JPanel();
-		panel_7.setBorder(new TitledBorder(null, "Book Detail", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_7.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Issue Detail", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_7.setMinimumSize(new Dimension(400, 400));
 		panel_7.setPreferredSize(new Dimension(400, 400));
 		panel_6.add(panel_7, BorderLayout.WEST);

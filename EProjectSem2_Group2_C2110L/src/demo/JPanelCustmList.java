@@ -70,6 +70,7 @@ public class JPanelCustmList extends JPanel {
 		JPanel panel_head_1 = new JPanel();
 		panel_head_1.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel_head_1 = (FlowLayout) panel_head_1.getLayout();
+		fl_panel_head_1.setVgap(15);
 		add(panel_head_1);
 
 		JLabel lblNewLabel = new JLabel("  Customer List");
@@ -347,6 +348,7 @@ public class JPanelCustmList extends JPanel {
 				setDataToTableCust(customerModel.findAll());
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Can not delete, please check issue history");
 			}
 		} else {
 			JOptionPane.showMessageDialog(this, "Please try again");

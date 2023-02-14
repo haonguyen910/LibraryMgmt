@@ -37,7 +37,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
 public class JPanelRecord extends JPanel {
@@ -72,6 +71,8 @@ public class JPanelRecord extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_1.getLayout();
+		flowLayout_2.setVgap(15);
 		panel_1.setBackground(new Color(52, 52, 52));
 		add(panel_1);
 
