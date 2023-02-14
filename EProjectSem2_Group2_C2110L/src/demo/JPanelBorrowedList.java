@@ -224,8 +224,6 @@ public class JPanelBorrowedList extends JPanel {
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		jpanelDetail = new JPanel();
-		jpanelDetail.setBorder(
-				new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Issue Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jpanelDetail.setMinimumSize(new Dimension(400, 400));
 		jpanelDetail.setPreferredSize(new Dimension(400, 400));
 		panel_2.add(jpanelDetail, BorderLayout.WEST);
@@ -233,7 +231,7 @@ public class JPanelBorrowedList extends JPanel {
 
 		scrollPane = new JScrollPane();
 		scrollPane.setOpaque(false);
-		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
+		scrollPane.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Borrowed Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(70, 68, 98)));
 		jpanelDetail.add(scrollPane);
 
 		jtableDetails = new JTable();

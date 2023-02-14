@@ -83,7 +83,7 @@ public class JPanelAuthorList extends JPanel {
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		flowLayout_1.setHgap(10);
-		flowLayout_1.setVgap(15);
+		flowLayout_1.setVgap(20);
 		add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("Keyword:");
@@ -142,7 +142,7 @@ public class JPanelAuthorList extends JPanel {
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		flowLayout_2.setVgap(10);
+		flowLayout_2.setVgap(20);
 		flowLayout_2.setHgap(10);
 		add(panel_3);
 
@@ -182,6 +182,9 @@ public class JPanelAuthorList extends JPanel {
 		panel_3.add(jbuttonEdit);
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public JPanelAuthorList(JPanel JpanelRight, Map<String, Object> data) {
 		this(JpanelRight);
 		this.data = data;
@@ -262,10 +265,10 @@ public class JPanelAuthorList extends JPanel {
 			int id = Integer.parseInt(jtableAuthor.getValueAt(selectedRow, 0).toString());
 
 			if (authorModel.delete(id)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Author has been deleted...");
 				fillDataToJTable(authorModel.findAll());
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		}
 		jbuttonDelete.setEnabled(false);
@@ -294,7 +297,7 @@ public class JPanelAuthorList extends JPanel {
 
 		jtableAuthor.setModel(defaultTableModel);
 		jtableAuthor.getTableHeader().setReorderingAllowed(false);
-		jtableAuthor.setRowHeight(30);
+		jtableAuthor.setRowHeight(50);
 
 		HeaderRenderer header = new HeaderRenderer(jtableAuthor.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableAuthor.getModel().getColumnCount(); i++) {

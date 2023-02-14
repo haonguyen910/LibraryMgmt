@@ -136,6 +136,7 @@ public class JPanelBorrowAdd extends JPanel {
 		panel.setMaximumSize(new Dimension(32767, 200));
 		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout fl_panel = (FlowLayout) panel.getLayout();
+		fl_panel.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Add Borrow");
@@ -149,7 +150,7 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel jpanelBorrowTicket = new JPanel();
 		jpanelBorrowTicket
-				.setBorder(new TitledBorder(null, "Borrow Ticket", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Borrow Ticket", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(70, 68, 98)));
 		jpanelBorrowTicket.setPreferredSize(new Dimension(400, 650));
 		jpanelBorrowTicket.setMinimumSize(new Dimension(400, 650));
 		panel_1.add(jpanelBorrowTicket, BorderLayout.WEST);
@@ -217,13 +218,9 @@ public class JPanelBorrowAdd extends JPanel {
 		lblNewLabel_1_4.setBounds(35, 229, 90, 13);
 		jpanelBorrowTicket.add(lblNewLabel_1_4);
 
-		JLabel lblNewLabel_1_6 = new JLabel("Book List");
-		lblNewLabel_1_6.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_6.setBounds(10, 290, 90, 13);
-		jpanelBorrowTicket.add(lblNewLabel_1_6);
-
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 315, 380, 250);
+		scrollPane.setBorder(new TitledBorder(null, "Book List", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(70, 68, 98)));
+		scrollPane.setBounds(10, 295, 380, 270);
 		jpanelBorrowTicket.add(scrollPane);
 
 		jtableBorrowBook = new JTable();
@@ -268,7 +265,7 @@ public class JPanelBorrowAdd extends JPanel {
 				jbuttonRemoveBookList_actionPerformed(e);
 			}
 		});
-		jbuttonRemoveBookList.setBounds(240, 575, 150, 30);
+		jbuttonRemoveBookList.setBounds(240, 576, 150, 30);
 		jpanelBorrowTicket.add(jbuttonRemoveBookList);
 		jbuttonRemoveBookList.setPreferredSize(new Dimension(150, 30));
 		jbuttonRemoveBookList.setMinimumSize(new Dimension(150, 30));
@@ -281,12 +278,14 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel jpanelCustomer = new JPanel();
 		jpanelCustomer.setFont(new Font("Tahoma", Font.BOLD, 16));
-		jpanelCustomer.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jpanelCustomer.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Customer Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(70, 68, 98)));
 		jpanelSearch.add(jpanelCustomer);
 		jpanelCustomer.setLayout(new BoxLayout(jpanelCustomer, BoxLayout.Y_AXIS));
 
 		JPanel panel_6 = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panel_6.getLayout();
+		flowLayout_4.setVgap(20);
+		flowLayout_4.setHgap(10);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		jpanelCustomer.add(panel_6);
 
@@ -353,12 +352,14 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel jpanelBook = new JPanel();
 		jpanelBook.setFont(new Font("Tahoma", Font.BOLD, 16));
-		jpanelBook.setBorder(new TitledBorder(null, "Book Search", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		jpanelBook.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Book Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(70, 68, 98)));
 		jpanelSearch.add(jpanelBook);
 		jpanelBook.setLayout(new BoxLayout(jpanelBook, BoxLayout.Y_AXIS));
 
 		JPanel panel_8 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_8.getLayout();
+		flowLayout_3.setVgap(20);
+		flowLayout_3.setHgap(10);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		jpanelBook.add(panel_8);
 
@@ -423,6 +424,8 @@ public class JPanelBorrowAdd extends JPanel {
 
 		JPanel panel_11 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_11.getLayout();
+		flowLayout.setVgap(20);
+		flowLayout.setHgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_10.add(panel_11);
 
@@ -596,7 +599,7 @@ public class JPanelBorrowAdd extends JPanel {
 
 		try {
 			if (createBorrow(customer.getId(), employee.getId(), setValueDeposit(borrowDetailListTemp))) {
-				JOptionPane.showMessageDialog(this, "Success Borrow");
+//				JOptionPane.showMessageDialog(this, "Success Borrow");
 
 				List<BorrowDetail> borrowDetailList = new ArrayList<BorrowDetail>();
 				int borrowCreatedId = borrowModel.findOneByCustomerID(customer.getId()).getId();
@@ -624,7 +627,7 @@ public class JPanelBorrowAdd extends JPanel {
 					}
 
 				}
-				JOptionPane.showMessageDialog(this, "Success Borrow Detail");
+				JOptionPane.showMessageDialog(this, "Successful created borrow!");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
 				JPanelBorrowList jPanelBorrowList = new JPanelBorrowList(jpanelRight, dataPut);
@@ -632,7 +635,7 @@ public class JPanelBorrowAdd extends JPanel {
 				jPanelBorrowList.setVisible(true);
 
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());

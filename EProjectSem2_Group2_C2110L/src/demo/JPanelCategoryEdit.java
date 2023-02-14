@@ -167,10 +167,10 @@ public class JPanelCategoryEdit extends JPanel {
 			category.setName(jtextFieldName.getText());
 
 			if (categoryModel.update(category)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Successful updated category!");
 				backJPanelList();
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());

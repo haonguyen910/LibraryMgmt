@@ -138,14 +138,14 @@ public class JPanelAuthorAdd extends JPanel {
 			author.setName(jtextFieldName.getText());
 
 			if (authorModel.create(author)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Successful created author!");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
 				JPanelAuthorList jPanelAuthorList = new JPanelAuthorList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelAuthorList);
 				jPanelAuthorList.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());

@@ -118,8 +118,6 @@ public class JPanelBorrowedAdd extends JPanel {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel jpanelBorrowTicket = new JPanel();
-		jpanelBorrowTicket
-				.setBorder(new TitledBorder(null, "Borrow Ticket", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		jpanelBorrowTicket.setPreferredSize(new Dimension(800, 650));
 		jpanelBorrowTicket.setMinimumSize(new Dimension(800, 650));
 		panel_1.add(jpanelBorrowTicket);
@@ -187,14 +185,10 @@ public class JPanelBorrowedAdd extends JPanel {
 		lblNewLabel_1_4.setBounds(45, 254, 110, 33);
 		jpanelBorrowTicket.add(lblNewLabel_1_4);
 
-		JLabel lblNewLabel_1_6 = new JLabel("Book List");
-		lblNewLabel_1_6.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_6.setBounds(397, 55, 90, 13);
-		jpanelBorrowTicket.add(lblNewLabel_1_6);
-
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
-		scrollPane.setBounds(400, 95, 424, 352);
+		scrollPane.setBorder(new TitledBorder(null, "Book List", TitledBorder.LEADING, TitledBorder.TOP, null,
+				new Color(70, 68, 98)));
+		scrollPane.setBounds(400, 55, 424, 392);
 		jpanelBorrowTicket.add(scrollPane);
 
 		jtableBorrowBook = new JTable();
@@ -324,7 +318,6 @@ public class JPanelBorrowedAdd extends JPanel {
 		employee = (Employee) data.get("employee");
 		dataPut = new HashMap<String, Object>();
 		dataPut.put("employee", employee);
-		
 
 		calendarToday = Calendar.getInstance();
 		today = calendarToday.getTime();
@@ -376,7 +369,7 @@ public class JPanelBorrowedAdd extends JPanel {
 			if (createBorrowed(borrow.getId(), borrow.getCreated(), borrow.getDue_date(), today, overdueDay,
 					borrow.getDeposit(), fines, total) && updateBookInLibrary()
 					&& borrowModel.updateStatus(borrow, true)) {
-				JOptionPane.showMessageDialog(this, "Success Borrowed");
+				JOptionPane.showMessageDialog(this, "Successful created borrowed!");
 
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
@@ -384,6 +377,8 @@ public class JPanelBorrowedAdd extends JPanel {
 				jpanelRight.add(jPanelBorrowedList);
 				jPanelBorrowedList.setVisible(true);
 
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());
@@ -442,7 +437,7 @@ public class JPanelBorrowedAdd extends JPanel {
 		jtableBorrowBook.setModel(defaultTableModel);
 		jtableBorrowBook.getTableHeader().setReorderingAllowed(false);
 		jtableBorrowBook.setRowHeight(50);
-		
+
 		HeaderRenderer header = new HeaderRenderer(jtableBorrowBook.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableBorrowBook.getModel().getColumnCount(); i++) {
 			jtableBorrowBook.getColumnModel().getColumn(i).setHeaderRenderer(header);
@@ -463,10 +458,10 @@ public class JPanelBorrowedAdd extends JPanel {
 			return jlabel;
 		}
 	}
-	
+
 	public class HeaderRenderer implements UIResource, TableCellRenderer {
 		private TableCellRenderer original;
-		
+
 		public HeaderRenderer(TableCellRenderer original) {
 			this.original = original;
 		}

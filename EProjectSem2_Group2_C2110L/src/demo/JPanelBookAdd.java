@@ -368,14 +368,14 @@ public class JPanelBookAdd extends JPanel {
 
 			if (bookModel.create(book) && book_AuthorModel.create(book_Author)
 					&& book_CategoryModel.create(book_Category)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Successful created book!");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
 				JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelBookList);
 				jPanelBookList.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());

@@ -91,6 +91,7 @@ public class JPanelBorrowList extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(52, 52, 52));
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
+		flowLayout_1.setVgap(15);
 		add(panel);
 
 		JLabel lblNewLabel = new JLabel("Borrow List");
@@ -459,9 +460,9 @@ public class JPanelBorrowList extends JPanel {
 				}
 			}
 			if ((borrowDetailModel.deleteByBorrowId(id) && borrowModel.delete(id)) == false) {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
-			JOptionPane.showMessageDialog(this, "Success");
+			JOptionPane.showMessageDialog(this, "Borrow has been delete...");
 			fillDataToJTableBorrow(borrowModel.findAll());
 			fillDataToJTableDetailsInit();
 		}

@@ -77,7 +77,7 @@ public class JPanelCategoryList extends JPanel {
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		flowLayout_1.setVgap(15);
+		flowLayout_1.setVgap(20);
 		flowLayout_1.setHgap(10);
 		add(panel_1);
 
@@ -141,7 +141,7 @@ public class JPanelCategoryList extends JPanel {
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		flowLayout_2.setVgap(10);
+		flowLayout_2.setVgap(20);
 		flowLayout_2.setHgap(10);
 		add(panel_3);
 
@@ -182,6 +182,9 @@ public class JPanelCategoryList extends JPanel {
 		panel_3.add(jbuttonEdit);
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public JPanelCategoryList(JPanel JpanelRight, Map<String, Object> data) {
 		this(JpanelRight);
 		this.data = data;
@@ -262,10 +265,10 @@ public class JPanelCategoryList extends JPanel {
 			int id = Integer.parseInt(jtableCategory.getValueAt(selectedRow, 0).toString());
 
 			if (categoryModel.delete(id)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Successful created category!");
 				fillDataToJTable(categoryModel.findAll());
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		}
 		jbuttonDelete.setEnabled(false);
@@ -294,7 +297,7 @@ public class JPanelCategoryList extends JPanel {
 
 		jtableCategory.setModel(defaultTableModel);
 		jtableCategory.getTableHeader().setReorderingAllowed(false);
-		jtableCategory.setRowHeight(30);
+		jtableCategory.setRowHeight(50);
 
 		HeaderRenderer header = new HeaderRenderer(jtableCategory.getTableHeader().getDefaultRenderer());
 		for (int i = 0; i < jtableCategory.getModel().getColumnCount(); i++) {

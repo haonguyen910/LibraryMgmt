@@ -418,14 +418,14 @@ public class JPanelBookEdit extends JPanel {
 
 			if (bookModel.update(book) && book_AuthorModel.update(book_Author)
 					&& book_CategoryModel.update(book_Category)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Successful updated book!");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
 				JPanelBookList jPanelBookList = new JPanelBookList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelBookList);
 				jPanelBookList.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());

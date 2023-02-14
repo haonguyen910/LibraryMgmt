@@ -73,6 +73,7 @@ public class JFrameMain extends JFrame {
 	 * Create the frame.
 	 */
 	public JFrameMain() {
+		setTitle("Mohan Library Management System");
 		setBounds(100, 100, 1059, 701);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -199,7 +200,7 @@ public class JFrameMain extends JFrame {
 		});
 		jpanelLeft.add(jbuttonCategory);
 
-		jbuttonBorrowList = new JButton("   Issue Book");
+		jbuttonBorrowList = new JButton("   Borrow List");
 		jbuttonBorrowList.setHorizontalAlignment(SwingConstants.LEFT);
 		jbuttonBorrowList.setMaximumSize(new Dimension(200, 60));
 		jbuttonBorrowList.setMinimumSize(new Dimension(90, 50));
@@ -216,7 +217,7 @@ public class JFrameMain extends JFrame {
 				.setIcon(new ImageIcon(JFrameMain.class.getResource("/resources/images/icons8_Sell_26px.png")));
 		jpanelLeft.add(jbuttonBorrowList);
 
-		jbuttonBorrowedList = new JButton("   Returned List");
+		jbuttonBorrowedList = new JButton("   Returned List     ");
 		jbuttonBorrowedList.setHorizontalAlignment(SwingConstants.LEFT);
 		jbuttonBorrowedList.setMaximumSize(new Dimension(200, 60));
 		jbuttonBorrowedList.setBorderPainted(false);

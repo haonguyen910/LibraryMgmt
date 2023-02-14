@@ -105,7 +105,7 @@ public class JPanelBookList extends JPanel {
 		flowLayout_1.setVgap(15);
 		add(panel);
 
-		JLabel lblNewLabel = new JLabel("Issue Book");
+		JLabel lblNewLabel = new JLabel("Book List");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblNewLabel.setForeground(new Color(192, 192, 192));
 		panel.add(lblNewLabel);
@@ -113,7 +113,7 @@ public class JPanelBookList extends JPanel {
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		flowLayout.setVgap(15);
+		flowLayout.setVgap(20);
 		flowLayout.setHgap(10);
 		add(panel_1);
 
@@ -165,7 +165,8 @@ public class JPanelBookList extends JPanel {
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		panel_7 = new JPanel();
-		panel_7.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Issue Detail", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_7.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Book Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(70, 68, 98)));
+		panel_7.setFont(new Font("Tahoma", Font.BOLD, 14));
 		panel_7.setMinimumSize(new Dimension(400, 400));
 		panel_7.setPreferredSize(new Dimension(400, 400));
 		panel_6.add(panel_7, BorderLayout.WEST);
@@ -368,7 +369,7 @@ public class JPanelBookList extends JPanel {
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_3.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		flowLayout_2.setVgap(10);
+		flowLayout_2.setVgap(20);
 		add(panel_3);
 
 		jbuttonAdd = new JButton("Add");
@@ -522,10 +523,10 @@ public class JPanelBookList extends JPanel {
 
 			if (book_AuthorModel.delete(book_Author.getId()) && book_CategoryModel.delete(book_Category.getId())
 					&& bookModel.delete(callNumber)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Book has been deleted...");
 				fillDataToJTable(bookModel.findAll());
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		}
 		jbuttonDelete.setEnabled(false);

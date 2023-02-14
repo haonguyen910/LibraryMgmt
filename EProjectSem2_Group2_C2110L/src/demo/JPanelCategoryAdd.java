@@ -137,14 +137,14 @@ public class JPanelCategoryAdd extends JPanel {
 			category.setName(jtextFieldName.getText());
 
 			if (categoryModel.create(category)) {
-				JOptionPane.showMessageDialog(this, "Success");
+				JOptionPane.showMessageDialog(this, "Successful created category!");
 				jpanelRight.removeAll();
 				jpanelRight.revalidate();
 				JPanelCategoryList jPanelCategoryList = new JPanelCategoryList(jpanelRight, dataPut);
 				jpanelRight.add(jPanelCategoryList);
 				jPanelCategoryList.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed");
+				JOptionPane.showMessageDialog(this, "Failed, something went wrong...");
 			}
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(this, e2.getMessage());
