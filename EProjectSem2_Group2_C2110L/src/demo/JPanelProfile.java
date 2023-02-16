@@ -72,117 +72,117 @@ public class JPanelProfile extends JPanel {
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(null);
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Information", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_3.setBounds(26, 39, 342, 768);
 		panel_2.add(panel_3);
 		panel_3.setLayout(null);
-		
-				jlablePhoto = new JLabel("");
-				jlablePhoto.setBounds(94, 29, 150, 150);
-				panel_3.add(jlablePhoto);
-				jlablePhoto.setIconTextGap(8);
-				jlablePhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
-				
-						jbuttonBrowse = new JButton("Browse...");
-						jbuttonBrowse.setBounds(94, 190, 150, 30);
-						panel_3.add(jbuttonBrowse);
-						jbuttonBrowse.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								jbuttonBrowse_actionPerformed(e);
-							}
-						});
-						jbuttonBrowse.setPreferredSize(new Dimension(79, 30));
-						jbuttonBrowse.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						
-						JLabel lblNewLabel_1_3 = new JLabel("ID");
-						lblNewLabel_1_3.setBounds(50, 256, 46, 22);
-						panel_3.add(lblNewLabel_1_3);
-						lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
-						lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						
-						jtextFieldID = new JTextField();
-						jtextFieldID.setBounds(134, 252, 150, 35);
-						panel_3.add(jtextFieldID);
-						jtextFieldID.setColumns(10);
-						
-								JLabel lblNewLabel_1 = new JLabel("Name");
-								lblNewLabel_1.setBounds(50, 317, 46, 22);
-								panel_3.add(lblNewLabel_1);
-								lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-								lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-								
-										jtextFieldName = new JTextField();
-										jtextFieldName.setBounds(134, 313, 150, 35);
-										panel_3.add(jtextFieldName);
-										jtextFieldName.setColumns(10);
-										
-												JLabel lblNewLabel_1_1 = new JLabel("Address");
-												lblNewLabel_1_1.setBounds(50, 371, 62, 22);
-												panel_3.add(lblNewLabel_1_1);
-												lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-												lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-												
-														jtextFieldAddress = new JTextField();
-														jtextFieldAddress.setBounds(134, 367, 150, 35);
-														panel_3.add(jtextFieldAddress);
-														jtextFieldAddress.setColumns(10);
-														
-																JLabel lblNewLabel_1_2 = new JLabel("Phone");
-																lblNewLabel_1_2.setBounds(50, 427, 46, 22);
-																panel_3.add(lblNewLabel_1_2);
-																lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-																lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-																
-																		jtextFieldPhone = new JTextField();
-																		jtextFieldPhone.setBounds(134, 423, 150, 35);
-																		panel_3.add(jtextFieldPhone);
-																		jtextFieldPhone.setPreferredSize(new Dimension(7, 35));
-																		jtextFieldPhone.setColumns(10);
-																		
-																				JLabel lblNewLabel_1_3_1 = new JLabel("Email");
-																				lblNewLabel_1_3_1.setBounds(50, 479, 74, 22);
-																				panel_3.add(lblNewLabel_1_3_1);
-																				lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.LEFT);
-																				lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-																				
-																						jtextFieldEmail = new JTextField();
-																						jtextFieldEmail.setBounds(134, 475, 150, 35);
-																						panel_3.add(jtextFieldEmail);
-																						jtextFieldEmail.setColumns(10);
-																						
-																								JLabel lblNewLabel_1_1_1 = new JLabel("Username");
-																								lblNewLabel_1_1_1.setBounds(50, 565, 62, 22);
-																								panel_3.add(lblNewLabel_1_1_1);
-																								lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-																								lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-																								
-																										jtextFieldUsername = new JTextField();
-																										jtextFieldUsername.setBounds(134, 561, 150, 35);
-																										panel_3.add(jtextFieldUsername);
-																										jtextFieldUsername.setColumns(10);
-																										
-																												JLabel lblNewLabel_1_1_1_1 = new JLabel("Password");
-																												lblNewLabel_1_1_1_1.setBounds(50, 621, 62, 22);
-																												panel_3.add(lblNewLabel_1_1_1_1);
-																												lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-																												lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-																												
-																														jpasswordFieldPassword = new JPasswordField();
-																														jpasswordFieldPassword.setBounds(134, 617, 150, 35);
-																														panel_3.add(jpasswordFieldPassword);
-																														
-																																JButton jbuttonEdit = new JButton("Edit");
-																																jbuttonEdit.setBounds(94, 690, 150, 35);
-																																panel_3.add(jbuttonEdit);
-																																jbuttonEdit.addActionListener(new ActionListener() {
-																																	public void actionPerformed(ActionEvent e) {
-																																		jbuttonEdit_actionPerformed(e);
-																																	}
-																																});
-																																jbuttonEdit.setPreferredSize(new Dimension(89, 25));
-																																jbuttonEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jlablePhoto = new JLabel("");
+		jlablePhoto.setBounds(94, 29, 150, 150);
+		panel_3.add(jlablePhoto);
+		jlablePhoto.setIconTextGap(8);
+		jlablePhoto.setBorder(new LineBorder(new Color(0, 0, 0)));
+
+		jbuttonBrowse = new JButton("Browse...");
+		jbuttonBrowse.setBounds(94, 190, 150, 30);
+		panel_3.add(jbuttonBrowse);
+		jbuttonBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonBrowse_actionPerformed(e);
+			}
+		});
+		jbuttonBrowse.setPreferredSize(new Dimension(79, 30));
+		jbuttonBrowse.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		JLabel lblNewLabel_1_3 = new JLabel("ID");
+		lblNewLabel_1_3.setBounds(50, 256, 46, 22);
+		panel_3.add(lblNewLabel_1_3);
+		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jtextFieldID = new JTextField();
+		jtextFieldID.setBounds(134, 252, 150, 35);
+		panel_3.add(jtextFieldID);
+		jtextFieldID.setColumns(10);
+
+		JLabel lblNewLabel_1 = new JLabel("Name");
+		lblNewLabel_1.setBounds(50, 317, 46, 22);
+		panel_3.add(lblNewLabel_1);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jtextFieldName = new JTextField();
+		jtextFieldName.setBounds(134, 313, 150, 35);
+		panel_3.add(jtextFieldName);
+		jtextFieldName.setColumns(10);
+
+		JLabel lblNewLabel_1_1 = new JLabel("Address");
+		lblNewLabel_1_1.setBounds(50, 371, 62, 22);
+		panel_3.add(lblNewLabel_1_1);
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jtextFieldAddress = new JTextField();
+		jtextFieldAddress.setBounds(134, 367, 150, 35);
+		panel_3.add(jtextFieldAddress);
+		jtextFieldAddress.setColumns(10);
+
+		JLabel lblNewLabel_1_2 = new JLabel("Phone");
+		lblNewLabel_1_2.setBounds(50, 427, 46, 22);
+		panel_3.add(lblNewLabel_1_2);
+		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jtextFieldPhone = new JTextField();
+		jtextFieldPhone.setBounds(134, 423, 150, 35);
+		panel_3.add(jtextFieldPhone);
+		jtextFieldPhone.setPreferredSize(new Dimension(7, 35));
+		jtextFieldPhone.setColumns(10);
+
+		JLabel lblNewLabel_1_3_1 = new JLabel("Email");
+		lblNewLabel_1_3_1.setBounds(50, 479, 74, 22);
+		panel_3.add(lblNewLabel_1_3_1);
+		lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jtextFieldEmail = new JTextField();
+		jtextFieldEmail.setBounds(134, 475, 150, 35);
+		panel_3.add(jtextFieldEmail);
+		jtextFieldEmail.setColumns(10);
+
+		JLabel lblNewLabel_1_1_1 = new JLabel("Username");
+		lblNewLabel_1_1_1.setBounds(50, 565, 62, 22);
+		panel_3.add(lblNewLabel_1_1_1);
+		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jtextFieldUsername = new JTextField();
+		jtextFieldUsername.setBounds(134, 561, 150, 35);
+		panel_3.add(jtextFieldUsername);
+		jtextFieldUsername.setColumns(10);
+
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("Password");
+		lblNewLabel_1_1_1_1.setBounds(50, 621, 62, 22);
+		panel_3.add(lblNewLabel_1_1_1_1);
+		lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		jpasswordFieldPassword = new JPasswordField();
+		jpasswordFieldPassword.setBounds(134, 617, 150, 35);
+		panel_3.add(jpasswordFieldPassword);
+
+		JButton jbuttonEdit = new JButton("Edit");
+		jbuttonEdit.setBounds(94, 690, 150, 35);
+		panel_3.add(jbuttonEdit);
+		jbuttonEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jbuttonEdit_actionPerformed(e);
+			}
+		});
+		jbuttonEdit.setPreferredSize(new Dimension(89, 25));
+		jbuttonEdit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 	}
 
@@ -196,7 +196,8 @@ public class JPanelProfile extends JPanel {
 		employee = (Employee) data.get("employee");
 		int id = employee.getId();
 		try {
-			PreparedStatement ps = ConnectDB.connection().prepareStatement("select * from employee where id = '" + id + "'");
+			PreparedStatement ps = ConnectDB.connection()
+					.prepareStatement("select * from employee where id = '" + id + "'");
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				jtextFieldID.setText(rs.getString("id"));
@@ -215,9 +216,9 @@ public class JPanelProfile extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void jbuttonEdit_actionPerformed(ActionEvent e) {
-		
+
 		String sql = "update employee set name = ?, address = ?, phone = ?, email = ?, username = ?, password = ?, photo = ? where id = ?";
 		try {
 			PreparedStatement ps = ConnectDB.connection().prepareStatement(sql);
@@ -235,7 +236,7 @@ public class JPanelProfile extends JPanel {
 			JOptionPane.showMessageDialog(this, e2.getMessage());
 		}
 	}
-	
+
 	public void jbuttonBrowse_actionPerformed(ActionEvent e) {
 		JFileChooser jfileChooser = new JFileChooser("C:\\Users\\admin\\Desktop\\Image");
 		jfileChooser.setDialogTitle("Select a Photo");
